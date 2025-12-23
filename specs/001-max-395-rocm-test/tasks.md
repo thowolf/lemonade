@@ -121,12 +121,12 @@ Based on plan.md project structure:
 
 ### Implementation for User Story 3
 
-- [ ] T030 [P] [US3] Create tests/rocm_max395/test_rag_integration.py with pytest structure
+- [X] T030 [P] [US3] Create tests/rocm_max395/test_rag_integration.py with pytest structure
 - [ ] T031 [US3] Implement test_context_incorporation() to validate LLM response accuracy with provided context (AS1)
 - [ ] T032 [US3] Implement test_document_qa_pipeline() to test full RAG pipeline with vector store and document corpus (AS2)
 - [ ] T033 [US3] Implement test_variable_context_windows() to validate handling of 4K, 8K, 16K+ token contexts (AS3)
 - [ ] T034 [US3] Implement test_rag_streaming() to validate streaming responses with context processing (AS4)
-- [ ] T035 [US3] Add fixtures for RAG test scenarios (sample documents, expected Q&A pairs) in tests/rocm_max395/fixtures/rag_scenarios.json
+- [X] T035 [US3] Add fixtures for RAG test scenarios (sample documents, expected Q&A pairs) in tests/rocm_max395/fixtures/rag_scenarios.json
 - [ ] T036 [US3] Add error handling for context truncation and oversized context windows
 
 **Checkpoint**: At this point, User Stories 1, 2, AND 3 should all work independently - basic inference + performance + RAG validated
