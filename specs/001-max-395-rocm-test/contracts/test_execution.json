@@ -1,0 +1,248 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://lemonade-server.ai/schemas/rocm-test/test_execution.json",
+  "title": "Test Execution Contract",
+  "description": "Contract for executing ROCm LLM tests and collecting results",
+  "type": "object",
+  "required": ["test_configuration", "expected_result_schema"],
+  "properties": {
+    "test_configuration": {
+      "type": "object",
+      "description": "Configuration for test execution",
+      "required": ["test_id", "test_name", "user_story", "model_config", "execution_config"],
+      "properties": {
+        "test_id": {
+          "type": "string",
+          "pattern": "^P[1-4]-[a-z]+-[a-z0-9]+-[0-9]{3}$",
+          "description": "Unique test identifier (e.g., P1-basic-7b-001)",
+          "examples": ["P1-basic-7b-001", "P2-perf-13b-005"]
+        },
+        "test_name": {
+          "type": "string",
+          "minLength": 5,
+          "maxLength": 100,
+          "description": "Human-readable test name"
+        },
+        "user_story": {
+          "type": "string",
+          "enum": ["P1", "P2", "P3", "P4"],
+          "description": "Priority level from feature spec"
+        },
+        "model_config": {
+          "$ref": "#/definitions/ModelConfiguration"
+        },
+        "execution_config": {
+          "$ref": "#/definitions/ExecutionConfiguration"
+        },
+        "test_prompts": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 100,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "description": "Input prompts for LLM"
+        },
+        "expected_metrics": {
+          "$ref": "#/definitions/ExpectedMetrics"
+        },
+        "environment": {
+          "$ref": "#/definitions/EnvironmentInfo"
+        }
+      }
+    },
+    "expected_result_schema": {
+      "type": "object",
+      "description": "Schema for test result output",
+      "const": {
+        "type": "TestResult",
+        "schema_ref": "benchmark_results.json#/definitions/TestResult"
+      }
+    }
+  },
+  "definitions": {
+    "ModelConfiguration": {
+      "type": "object",
+      "required": ["model_name", "model_size", "quantization", "context_length"],
+      "properties": {
+        "model_name": {
+          "type": "string",
+          "description": "Model identifier from Lemonade Model Manager"
+        },
+        "model_size": {
+          "type": "string",
+          "enum": ["1B", "3B", "7B", "13B", "30B", "70B"],
+          "description": "Parameter count category"
+        },
+        "quantization": {
+          "type": "string",
+          "pattern": "^(Q[2-8]_[0K](_[SM])?|F16|F32)$",
+          "description": "GGUF quantization format",
+          "examples": ["Q4_K_M", "Q8_0", "F16"]
+        },
+        "context_length": {
+          "type": "integer",
+          "minimum": 512,
+          "maximum": 131072,
+          "description": "Maximum context window in tokens"
+        },
+        "model_path": {
+          "type": "string",
+          "description": "Local filesystem path to model file"
+        },
+        "model_source": {
+          "type": "string",
+          "enum": ["HuggingFace", "local", "custom"],
+          "default": "HuggingFace"
+        }
+      }
+    },
+    "ExecutionConfiguration": {
+      "type": "object",
+      "required": ["backend"],
+      "properties": {
+        "backend": {
+          "type": "string",
+          "enum": ["rocm", "vulkan", "cpu"],
+          "description": "llama.cpp backend selection"
+        },
+        "temperature": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 2.0,
+          "default": 0.7,
+          "description": "Sampling temperature"
+        },
+        "max_tokens": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 8192,
+          "default": 512,
+          "description": "Maximum tokens to generate"
+        },
+        "top_p": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "default": 0.9,
+          "description": "Nucleus sampling threshold"
+        },
+        "streaming": {
+          "type": "boolean",
+          "default": false,
+          "description": "Enable streaming inference"
+        },
+        "batch_size": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100,
+          "default": 1,
+          "description": "Number of concurrent requests"
+        },
+        "num_iterations": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100,
+          "default": 5,
+          "description": "Repeat count for averaging"
+        },
+        "api_base_url": {
+          "type": "string",
+          "format": "uri",
+          "default": "http://localhost:8000/api/v1",
+          "description": "Lemonade Server endpoint"
+        }
+      }
+    },
+    "ExpectedMetrics": {
+      "type": "object",
+      "description": "Performance targets from success criteria",
+      "properties": {
+        "min_tokens_per_second": {
+          "type": "number",
+          "minimum": 0.1,
+          "description": "Minimum throughput (tokens/sec)"
+        },
+        "max_time_to_first_token_ms": {
+          "type": "integer",
+          "minimum": 100,
+          "description": "Maximum latency (milliseconds)"
+        },
+        "min_vram_utilization_percent": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 100.0,
+          "description": "Minimum VRAM usage percentage"
+        },
+        "min_uptime_percent": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 100.0,
+          "description": "Minimum stability percentage"
+        },
+        "min_response_accuracy_percent": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 100.0,
+          "description": "Minimum correctness percentage"
+        }
+      }
+    },
+    "EnvironmentInfo": {
+      "type": "object",
+      "required": ["os", "gpu_model", "gpu_architecture", "vram_total_gb", "rocm_version", "lemonade_version"],
+      "properties": {
+        "os": {
+          "type": "string",
+          "description": "Operating system name"
+        },
+        "os_version": {
+          "type": "string",
+          "description": "OS build version"
+        },
+        "gpu_model": {
+          "type": "string",
+          "description": "GPU identifier"
+        },
+        "gpu_architecture": {
+          "type": "string",
+          "pattern": "^gfx[0-9]+$",
+          "description": "AMD architecture code",
+          "examples": ["gfx1151", "gfx1100", "gfx1102"]
+        },
+        "vram_total_gb": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Total VRAM in gigabytes"
+        },
+        "rocm_version": {
+          "type": "string",
+          "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$",
+          "description": "ROCm driver version",
+          "examples": ["7.1.1", "7.2.0"]
+        },
+        "lemonade_version": {
+          "type": "string",
+          "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$",
+          "description": "Lemonade Server version",
+          "examples": ["9.1.1", "9.2.0"]
+        },
+        "python_version": {
+          "type": "string",
+          "pattern": "^3\\.(10|11|12|13)\\.[0-9]+$",
+          "description": "Python runtime version"
+        },
+        "cpu_model": {
+          "type": "string",
+          "description": "CPU identifier"
+        },
+        "ram_total_gb": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "System RAM in gigabytes"
+        }
+      }
+    }
+  }
+}
