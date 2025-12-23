@@ -95,7 +95,7 @@ Based on plan.md project structure:
 
 ### Implementation for User Story 2
 
-- [ ] T023 [P] [US2] Create tests/rocm_max395/test_performance.py with pytest structure
+- [X] T023 [P] [US2] Create tests/rocm_max395/test_performance.py with pytest structure
 - [ ] T024 [US2] Implement test_perplexity_benchmark() to run perplexity tests and collect metrics (AS1)
 - [ ] T025 [US2] Implement test_model_size_scaling() to benchmark 7B, 13B, 30B+ models and validate scaling (AS2)
 - [ ] T026 [US2] Implement test_backend_comparison() to compare ROCm vs CPU/Vulkan performance (AS3)
