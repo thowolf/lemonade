@@ -110,7 +110,7 @@ The following table explains what checkpoints work with each recipe, the hardwar
   </tr>
 </table>
 
-<sup>[1]</sup> Compatible GPUs are those that support PyTorch's `.to("cuda")` function. Ensure you have the appropriate version of PyTorch installed (e.g., CUDA or vendor-specific AMD GPU drivers) for your specific GPU. **Note**: Lemonade does not install PyTorch with CUDA or ROCm for you. For installation instructions, see [PyTorch's Get Started Guide](https://pytorch.org/get-started/locally/).
+<sup>[1]</sup> Compatible GPUs are those that support PyTorch's `.to("cuda")` function. Ensure you have the appropriate version of PyTorch installed (e.g., CUDA or vendor-specific AMD GPU drivers) for your specific GPU. **Note**: Lemonade does not install PyTorch with CUDA or vendor-specific AMD GPU drivers for you. For installation instructions, see [PyTorch's Get Started Guide](https://pytorch.org/get-started/locally/).
 
 ## 🔄 Converting Models to OGA
 

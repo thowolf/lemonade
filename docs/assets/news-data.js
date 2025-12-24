@@ -46,11 +46,11 @@ const newsData = [
     type: "blog"
     },
     {
-    title: "llamacpp+ROCm7 beta is now supported on Lemonade",
+    title: "llamacpp + AMD GPU support",
     url: "https://www.reddit.com/r/LocalLLaMA/comments/1mjgj2x/llamacpprocm7_beta_is_now_supported_on_lemonade/",
     date: "August 6, 2025",
-    description: "Unlock the power of ROCm7 on your STX Halo or Radeon GPU with Lemonade 8.1.1.",
-    image: "https://raw.githubusercontent.com/lemonade-sdk/assets/refs/heads/main/docs/rocm_hero.png",
+    description: "llamacpp support for AMD GPUs was added in Lemonade 8.1.1.",
+    image: "https://raw.githubusercontent.com/lemonade-sdk/assets/refs/heads/main/docs/amd_gpu_hero.png",
     imageStyle: "width: 100%; height: 100%; object-position: center top; ",
     type: "blog"
     },

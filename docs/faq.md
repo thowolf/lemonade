@@ -137,7 +137,7 @@
 
 ### 1. **Does hybrid inference with the NPU only work on Windows?**
 
-   Yes, hybrid inference is currently supported only on Windows. NPU-only inference is coming to Linux soon, followed by hybrid (NPU+iGPU) support via ROCm.
+   Yes, hybrid inference is currently supported only on Windows. NPU-only inference is coming to Linux soon, followed by hybrid (NPU+iGPU) support via vendor-specific AMD GPU drivers.
 
 ### 2. **I loaded a hybrid model, but the NPU is barely active. Is that expected?**
 

@@ -881,7 +881,7 @@ curl -X POST http://localhost:8000/api/v1/load \
   -d '{
     "model_name": "llama-3.2-3b-instruct-GGUF",
     "ctx_size": 8192,
-    "llamacpp_backend": "rocm",
+    "llamacpp_backend": "vulkan",
     "llamacpp_args": "--flash-attn on --no-mmap"
   }'
 ```
