@@ -34,6 +34,12 @@ Specify a particular results file:
 python scripts/create_weave_dashboard.py --file evaluation_results_large/large_benchmark_1766.json
 ```
 
+Compare two models (offline) and optionally upload to W&B:
+
+```bash
+python scripts/benchmarks/compare_models.py --mode offline --models qwen,Llama-3.1-8B-Instruct-Hybrid --results-dir tests/data --out-dir reports --wandb --project lemonade-ryzenai-evals-demo
+```
+
 Output directory
 ----------------
 By default the report is saved in `reports/lemonade_quick_benchmark_overview.html`.
@@ -45,6 +51,8 @@ To upload summary metrics and chart images to W&B and create a Weave saved view,
 ```bash
 python scripts/create_weave_dashboard.py --weave --project lemonade-ryzenai-evals-demo
 ```
+
+Learn more about W&B model tracking and visualization: https://docs.wandb.ai/models/track
 
 Notes
 -----
