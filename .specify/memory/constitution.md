@@ -1,31 +1,18 @@
 <!--
   SYNC IMPACT REPORT
   ==================
-  Version: 0.0.0 → 1.0.0
-  Date: 2025-12-23
+  Version: 1.0.0 → 1.0.1
+  Date: 2025-12-24
   
   Changes:
-  - Initial constitution ratification
-  - Established 8 core principles for Lemonade SDK development
-  - Defined open source collaboration and AMD hardware optimization principles
+  - Added explicit health and readiness endpoint requirement under OpenAI API Compatibility
+  - Clarified observability requirements for server health endpoints
   
-  Principles Defined:
-  1. OpenAI API Compatibility (NEW)
-  2. Multi-Backend Architecture (NEW)
-  3. Hardware-Optimized Performance (NEW)
-  4. Open Source Collaboration (NEW)
-  5. Developer Experience First (NEW)
-  6. Production-Ready Quality (NEW)
-  7. Cross-Platform Support (NEW)
-  8. Observability & Debugging (NEW)
-  
-  Templates Status:
-  ✅ plan-template.md - Reviewed, aligns with constitution
-  ✅ spec-template.md - Reviewed, aligns with constitution
-  ✅ tasks-template.md - Reviewed, aligns with constitution
+  Principles Affected:
+  - I. OpenAI API Compatibility (clarification)
   
   Follow-up Actions:
-  - None required - initial constitution establishment
+  - Add tests and documentation references for `/api/v1/health` and `/api/v1/ready`
 -->
 
 # Lemonade SDK Constitution
@@ -43,6 +30,7 @@ All server endpoints MUST maintain OpenAI API compatibility to ensure seamless i
 - Support streaming and non-streaming responses
 - Accept standard message formats and parameters
 - Return OpenAI-compatible response structures
+- Expose health and readiness endpoints: `/api/v1/health` (returns server status and loaded models) and `/api/v1/ready` (returns readiness state). These endpoints MUST be accessible at the base URL and included in tests, monitoring, and documentation.
 
 ### II. Multi-Backend Architecture
 
@@ -271,4 +259,4 @@ This constitution supersedes all other development practices and guidelines. All
 
 **Runtime Guidance**: For agent-specific development guidance, refer to `.github/prompts/` directory. Constitution provides project-wide principles; runtime guidance provides tactical execution details.
 
-**Version**: 1.0.0 | **Ratified**: 2025-12-23 | **Last Amended**: 2025-12-23
+**Version**: 1.0.1 | **Ratified**: 2025-12-23 | **Last Amended**: 2025-12-24

@@ -21,11 +21,11 @@ Single project structure extending Lemonade SDK at repository root with `src/`, 
 
 **Purpose**: Project initialization and basic structure
 
-- [ ] T001 Create evaluation module directory structure in src/lemonade/evaluation/
-- [ ] T002 [P] Add W&B dependencies (wandb, weave) to requirements.txt or pyproject.toml
-- [ ] T003 [P] Add lm-eval dependency to requirements.txt or pyproject.toml
-- [ ] T004 [P] Configure Python import paths for new evaluation module in src/lemonade/evaluation/__init__.py
-- [ ] T005 Create test directories for evaluation module: tests/unit/evaluation/, tests/integration/evaluation/, tests/contract/wandb/
+- [X] T001 Create evaluation module directory structure in src/lemonade/evaluation/
+- [X] T002 [P] Add W&B dependencies (wandb, weave) to requirements.txt or pyproject.toml
+- [X] T003 [P] Add lm-eval dependency to requirements.txt or pyproject.toml
+- [X] T004 [P] Configure Python import paths for new evaluation module in src/lemonade/evaluation/__init__.py
+- [X] T005 Create test directories for evaluation module: tests/unit/evaluation/, tests/integration/evaluation/, tests/contract/wandb/
 
 ---
 
@@ -35,17 +35,17 @@ Single project structure extending Lemonade SDK at repository root with `src/`, 
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T006 [P] Create EvaluationRun entity model in src/lemonade/evaluation/models.py based on data-model.md
-- [ ] T007 [P] Create ModelConfiguration entity model in src/lemonade/evaluation/models.py based on data-model.md
-- [ ] T008 [P] Create BenchmarkResult entity model in src/lemonade/evaluation/models.py based on data-model.md
-- [ ] T009 [P] Create ComparisonSet entity model in src/lemonade/evaluation/models.py based on data-model.md
-- [ ] T010 [P] Create HardwarePlatform entity model in src/lemonade/evaluation/models.py based on data-model.md
-- [ ] T011 Implement Pydantic validation schemas for evaluation configuration in src/lemonade/evaluation/config.py based on contracts/evaluation-config.schema.json
-- [ ] T012 Create WandbMetricsCollector base class extending existing MetricsCollector pattern in src/lemonade/evaluation/wandb_logger.py
-- [ ] T013 Implement W&B Weave initialization wrapper (one-time project init) in src/lemonade/evaluation/wandb_logger.py
-- [ ] T014 Create LMEvalHarness wrapper class for server-based integration in src/lemonade/evaluation/harness.py
-- [ ] T015 Implement error handling utilities for evaluation failures in src/lemonade/evaluation/errors.py
-- [ ] T016 Create logging configuration for evaluation workflows in src/lemonade/evaluation/logging_config.py
+- [X] T006 [P] Create EvaluationRun entity model in src/lemonade/evaluation/models.py based on data-model.md
+- [X] T007 [P] Create ModelConfiguration entity model in src/lemonade/evaluation/models.py based on data-model.md
+- [X] T008 [P] Create BenchmarkResult entity model in src/lemonade/evaluation/models.py based on data-model.md
+- [X] T009 [P] Create ComparisonSet entity model in src/lemonade/evaluation/models.py based on data-model.md
+- [X] T010 [P] Create HardwarePlatform entity model in src/lemonade/evaluation/models.py based on data-model.md
+- [X] T011 Implement Pydantic validation schemas for evaluation configuration in src/lemonade/evaluation/config.py based on contracts/evaluation-config.schema.json
+- [X] T012 Create WandbMetricsCollector base class extending existing MetricsCollector pattern in src/lemonade/evaluation/wandb_logger.py
+- [X] T013 Implement W&B Weave initialization wrapper (one-time project init) in src/lemonade/evaluation/wandb_logger.py
+- [X] T014 Create LMEvalHarness wrapper class for server-based integration in src/lemonade/evaluation/harness.py
+- [X] T015 Implement error handling utilities for evaluation failures in src/lemonade/evaluation/errors.py
+- [X] T016 Create logging configuration for evaluation workflows in src/lemonade/evaluation/logging_config.py
 
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel
 
@@ -59,16 +59,16 @@ Single project structure extending Lemonade SDK at repository root with `src/`, 
 
 ### Implementation for User Story 1
 
-- [ ] T017 [P] [US1] Implement metric collection for accuracy scores in src/lemonade/evaluation/wandb_logger.py following contracts/wandb-schema.yaml accuracy namespace
-- [ ] T018 [P] [US1] Implement metric collection for performance metrics (TPS, latency) in src/lemonade/evaluation/wandb_logger.py following contracts/wandb-schema.yaml perf namespace
-- [ ] T019 [P] [US1] Implement metric collection for resource utilization (VRAM, CPU, GPU) in src/lemonade/evaluation/wandb_logger.py following contracts/wandb-schema.yaml resources namespace
-- [ ] T020 [US1] Create evaluation runner orchestration in src/lemonade/evaluation/runners.py to coordinate benchmark execution
-- [ ] T021 [US1] Implement W&B run initialization with hierarchical grouping in src/lemonade/evaluation/wandb_logger.py following contracts/wandb-schema.yaml run_config
-- [ ] T022 [US1] Implement tag generation following prefix-based schema (model:, quant:, backend:, device:) in src/lemonade/evaluation/wandb_logger.py
-- [ ] T023 [US1] Integrate LM Eval Harness for MMLU benchmark execution in src/lemonade/evaluation/harness.py using existing ServerRunner pattern
-- [ ] T024 [US1] Integrate LM Eval Harness for HellaSwag benchmark execution in src/lemonade/evaluation/harness.py using existing ServerRunner pattern
-- [ ] T025 [US1] Implement @weave.op() decorators for evaluation functions to enable tracing in src/lemonade/evaluation/runners.py
-- [ ] T026 [US1] Create CLI command for running evaluations in src/lemonade/cli/evaluate.py with model config and benchmark suite parameters
+- [X] T017 [P] [US1] Implement metric collection for accuracy scores in src/lemonade/evaluation/wandb_logger.py following contracts/wandb-schema.yaml accuracy namespace
+- [X] T018 [P] [US1] Implement metric collection for performance metrics (TPS, latency) in src/lemonade/evaluation/wandb_logger.py following contracts/wandb-schema.yaml perf namespace
+- [X] T019 [P] [US1] Implement metric collection for resource utilization (VRAM, CPU, GPU) in src/lemonade/evaluation/wandb_logger.py following contracts/wandb-schema.yaml resources namespace
+- [X] T020 [US1] Create evaluation runner orchestration in src/lemonade/evaluation/runners.py to coordinate benchmark execution
+- [X] T021 [US1] Implement W&B run initialization with hierarchical grouping in src/lemonade/evaluation/wandb_logger.py following contracts/wandb-schema.yaml run_config
+- [X] T022 [US1] Implement tag generation following prefix-based schema (model:, quant:, backend:, device:) in src/lemonade/evaluation/wandb_logger.py
+- [X] T023 [US1] Integrate LM Eval Harness for MMLU benchmark execution in src/lemonade/evaluation/harness.py using existing ServerRunner pattern
+- [X] T024 [US1] Integrate LM Eval Harness for HellaSwag benchmark execution in src/lemonade/evaluation/harness.py using existing ServerRunner pattern
+- [X] T025 [US1] Implement @weave.op() decorators for evaluation functions to enable tracing in src/lemonade/evaluation/runners.py
+- [X] T026 [US1] Create CLI command for running evaluations in src/lemonade/cli/evaluate.py with model config and benchmark suite parameters
 - [ ] T027 [US1] Implement configuration loading from YAML files in src/lemonade/evaluation/config.py
 - [ ] T028 [US1] Create example evaluation configuration files in examples/evaluation/config_qwen3_q4.yaml and examples/evaluation/config_qwen3_q8.yaml
 - [ ] T029 [US1] Implement comparison dashboard grouping logic in src/lemonade/evaluation/wandb_logger.py using group_pattern from contracts/wandb-schema.yaml

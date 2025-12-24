@@ -6,7 +6,14 @@
       "Bash(pip install:*)",
       "Bash(python:*)",
       "Bash($env:PYTHONIOENCODING=\"utf-8\")",
-      "Bash(curl:*)"
+      "Bash(curl:*)",
+      "Bash(git fetch:*)",
+      "Bash(powershell -ExecutionPolicy Bypass -Command \".specify/scripts/powershell/create-new-feature.ps1 -Json -Number 3 -ShortName ''wandb-model-comparison'' ''Workflow \\(verschiedene Modelle / Quant-Stufen / MoE-Configs auf Ryzen AI vergleichen\\): W&B als Haupt-Dashboard . spaeter vielleicht zeno''\")",
+      "Bash(powershell -ExecutionPolicy Bypass -Command \"& ''.\\\\.specify\\\\scripts\\\\powershell\\\\create-new-feature.ps1'' -Json -Number 3 -ShortName ''wandb-model-comparison'' ''Workflow \\(verschiedene Modelle / Quant-Stufen / MoE-Configs auf Ryzen AI vergleichen\\): W&B als Haupt-Dashboard . spaeter vielleicht zeno''\")",
+      "Bash(dir .specifyscriptspowershell)",
+      "Bash(dir:*)",
+      "Bash(powershell -ExecutionPolicy Bypass -Command:*)",
+      "Bash(git add:*)"
     ]
   }
 }

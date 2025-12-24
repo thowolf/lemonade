@@ -378,12 +378,49 @@ def main():
         except Exception as e:
             print(f"Failed to create enhanced view: {e}")
 
+    def create_interactive_saved_views(project_name: str | None = None) -> None:
+        """Create SavedView objects with interactive table/columns for runs and traces."""
+        try:
+            import weave
+        except Exception:
+            print("weave not available; skipping SavedView creation")
+            return
+
+        project_to_use = project_name or "lemonade-ryzenai-evals-demo"
+        weave.init(project_name=project_to_use)
+
+        # 1) Create a runs-level view with basic columns
+        runs_view = weave.SavedView(view_type='runs', label='lemonade_runs_overview')
+        try:
+            runs_view.set_columns('display_name', 'started_at')
+            runs_view.add_filter('started_at', '>=', None)  # noop placeholder to ensure query exists
+        except Exception:
+            # ignore filter errors
+            pass
+        try:
+            runs_view.save()
+            print('Saved runs view URL:', runs_view.ui_url())
+        except Exception as e:
+            print('Failed to save runs view:', e)
+
+        # 2) Create a traces-level view with latency and sample columns
+        traces_view = weave.SavedView(view_type='traces', label='lemonade_traces_table')
+        try:
+            traces_view.set_columns('trace_id', 'started_at', 'summary.weave.latency_ms', 'inputs.benchmark_result')
+            traces_view.save()
+            print('Saved traces view URL:', traces_view.ui_url())
+        except Exception as e:
+            print('Failed to save traces view:', e)
+
     if args.weave:
         # First try to log to W&B so metrics/charts are available in the project's runs
         log_to_wandb(args.project or "lemonade-ryzenai-evals", stats, img_hist, img_tps, out_html)
 
         # Then create an enhanced view that embeds the uploaded chart images and metrics
         create_enhanced_weave_view_from_wandb(args.project or "tom-rally-/lemonade-ryzenai-evals-demo")
+
+        # Also create interactive SavedViews (runs + traces) that expose columns and tables
+        create_interactive_saved_views(args.project or "tom-rally-/lemonade-ryzenai-evals-demo")
 
 
 if __name__ == "__main__":
