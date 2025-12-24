@@ -291,3 +291,73 @@ class MetricsCollector:
         }
 
         return comparison
+
+
+def create_benchmark_result(
+    test_name: str,
+    model_name: str,
+    model_size: str,
+    backend: str,
+    metrics: List[PerformanceMetrics],
+    environment: Dict[str, Any]
+) -> BenchmarkResult:
+    """
+    Create a benchmark result from collected metrics.
+
+    Args:
+        test_name: Name of the test
+        model_name: Name of the model used
+        model_size: Size/category of the model
+        backend: Backend used (e.g., 'rocm', 'cpu')
+        metrics: List of performance metrics
+        environment: Environment information
+
+    Returns:
+        BenchmarkResult object with computed summary statistics
+    """
+    if not metrics:
+        raise ValueError("Cannot create benchmark result with empty metrics")
+
+    # Calculate summary statistics
+    tokens_per_second_values = [m.tokens_per_second for m in metrics]
+    latency_values = [m.latency_ms for m in metrics]
+    memory_values = [m.peak_memory_mb for m in metrics if m.peak_memory_mb is not None]
+
+    summary = {
+        "tokens_per_second": {
+            "mean": statistics.mean(tokens_per_second_values),
+            "median": statistics.median(tokens_per_second_values),
+            "std_dev": statistics.stdev(tokens_per_second_values) if len(tokens_per_second_values) > 1 else 0,
+            "min": min(tokens_per_second_values),
+            "max": max(tokens_per_second_values)
+        },
+        "latency_ms": {
+            "mean": statistics.mean(latency_values),
+            "median": statistics.median(latency_values),
+            "std_dev": statistics.stdev(latency_values) if len(latency_values) > 1 else 0,
+            "min": min(latency_values),
+            "max": max(latency_values),
+            "p95": statistics.quantiles(latency_values, n=20)[18] if len(latency_values) >= 20 else max(latency_values),
+            "p99": statistics.quantiles(latency_values, n=100)[98] if len(latency_values) >= 100 else max(latency_values)
+        },
+        "total_samples": len(metrics),
+        "total_tokens": sum(m.total_tokens for m in metrics),
+        "total_prompt_tokens": sum(m.prompt_tokens for m in metrics),
+        "total_completion_tokens": sum(m.completion_tokens for m in metrics)
+    }
+
+    if memory_values:
+        summary["peak_memory_mb"] = {
+            "mean": statistics.mean(memory_values),
+            "max": max(memory_values)
+        }
+
+    return BenchmarkResult(
+        test_name=test_name,
+        model_name=model_name,
+        model_size=model_size,
+        backend=backend,
+        metrics=metrics,
+        summary=summary,
+        environment=environment
+    )

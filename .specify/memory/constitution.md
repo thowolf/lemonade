@@ -63,7 +63,7 @@ All supported configurations MUST be optimized for AMD hardware platforms, with 
 **Rationale**: Lemonade SDK is sponsored by AMD to showcase optimal local LLM performance on AMD hardware. Performance optimization is a core differentiator.
 
 **Requirements**:
-- Test and validate on Ryzen AI Max+ 395 with 128 GB VRAM
+- Test and validate on Ryzen AI Max+ 395 with **96 GB VRAM** (system RAM: 128 GB)
 - Support ROCm for AMD GPU acceleration (Windows and Linux)
 - Support Vulkan for cross-platform GPU execution
 - Provide clear performance expectations per hardware configuration
@@ -156,6 +156,67 @@ All operations MUST produce clear, structured logs. Performance profiling tools 
 
 **Platforms**: Windows 11, Ubuntu 24.04/25.04, dev container (Debian GNU/Linux 12)
 
+## External Documentation & Resources
+
+**Lemonade SDK**:
+- Official Documentation: https://lemonade-server.ai
+- Public Repository: https://github.com/lemonade-sdk/lemonade
+- Discord Community: https://discord.gg/5xXzkMu8Zk
+- Support Email: lemonade@amd.com
+
+**AMD Hardware Documentation**:
+- Ryzen AI (NPU): https://ryzenai.docs.amd.com
+- ROCm (GPU): https://rocm.docs.amd.com/en/latest/
+- ROCm Windows Installation: https://rocm.docs.amd.com/projects/install-on-windows/en/latest/
+- AMD Graphics Drivers: https://www.amd.com/en/support
+- Radeon RX 9100 Support: https://www.amd.com/en/support/graphics/radeon-9000-series/radeon-rx-9000-series/amd-radeon-rx-9100
+
+**Third-Party Dependencies**:
+- llama.cpp: https://github.com/ggerganov/llama.cpp
+- ONNX Runtime GenAI: https://github.com/microsoft/onnxruntime-genai
+- Hugging Face Hub: https://huggingface.co/docs
+
+## Test Environment Configuration
+
+**Lemonade Server Installation**:
+- **Executable Path**: `C:\Users\tomwo\AppData\Local\lemonade_server\bin\`
+- **Router Binary**: `lemonade-router.exe`
+- **Server Binary**: `lemonade-server.exe`
+
+**Model Storage Locations**:
+- **Huggingface Models**: `C:\Users\tomwo\.cache\huggingface\hub`
+- **FLM Models**: `C:\Users\tomwo\Documents\flm\models`
+
+**Standard Launch Commands**:
+```powershell
+# Router (OpenAI-compatible API endpoint)
+"C:\Users\tomwo\AppData\Local\lemonade_server\bin\lemonade-router.exe" --port 8000 --host 0.0.0.0 --ctx-size 4096 --llamacpp vulkan --log-level debug --max-loaded-models 1 1 1 1
+
+# Server (Background service)
+"C:\Users\tomwo\AppData\Local\lemonade_server\bin\lemonade-server.exe" serve
+```
+
+**Test Hardware**: AMD AI Max+ 395 with **96GB VRAM** (gfx1151), ROCm-enabled Windows 11 system — system RAM: 128 GB
+
+**Verified Software Stack**:
+- **ROCm Version**: 7.11.0a20251129
+- **ROCm SDK**: `rocm-sdk-libraries-gfx1151==7.11.0a20251129`
+- **PyTorch**: 2.10.0a0+rocm7.11.0a20251129 (with ROCm 7.11)
+- **Python**: 3.13.11 (3.10-3.13 supported)
+- **GPU Architecture**: gfx1151 (AMD Radeon 8060S / AI Max+ 395)
+- **Total VRAM**: ~110 GB available for inference
+
+**ROCm Performance Optimizations**:
+```python
+# Required for optimal AMD GPU performance
+torch.backends.cudnn.enabled = False
+```
+
+**Additional Test Hardware**:
+- AMD Radeon 8060S (gfx1151): 110457 MB VRAM - Verified compatible with same architecture as Max+ 395
+- System RAM: 32 GB minimum recommended
+- Pinned Memory: ~14.5 GB enabled for faster transfers
+
 ## Development Workflow
 
 **Issue-First Development**: All contributions start with an Issue describing the proposal, use case, and maintainer approval. Exceptions: typo fixes, documentation clarifications.
@@ -164,11 +225,22 @@ All operations MUST produce clear, structured logs. Performance profiling tools 
 
 **Testing Requirements**: New features MUST include tests. Tests are OPTIONAL for specs but REQUIRED before merging implementation. Contract tests for API changes, integration tests for multi-component features, unit tests for isolated logic.
 
-**Git Workflow**:
-- Public repository: `https://github.com/lemonade-sdk/lemonade`
-- Private forks: Use mirror workflow (upstream = public, origin = private)
-- Feature branches: `feature/description` or `###-feature-name`
-- Update from upstream regularly: `git fetch upstream && git rebase upstream/main`
+**Upstream File Protection**: Files from the original public repository MUST NOT be overwritten in private fork operations. This includes but is not limited to:
+- `docs/contribute.md` (upstream contribution guidelines)
+- Core documentation from public repository
+- Upstream configuration files
+
+Private fork customizations should be maintained in separate files or clearly marked sections to avoid conflicts during upstream synchronization.
+
+### Git Workflow
+
+**Public Repository**: `https://github.com/lemonade-sdk/lemonade`
+
+**Feature Branches**: `feature/description` or `###-feature-name`
+
+#### Private Fork Mirror Workflow
+
+Policy note: use a mirror workflow for private forks; the full step-by-step procedure is maintained in `docs/git-workflow.md` (see repository `docs/` directory). The Constitution retains policy-level guidance; operational details live in the docs file to keep the Constitution concise and maintainable.
 
 **Code Review**: Maintainers (@danielholanda, @jeremyfowers, @ramkrishna, @vgodsoe) review all PRs. Reviews verify constitution compliance, test coverage, documentation updates, and platform compatibility.
 

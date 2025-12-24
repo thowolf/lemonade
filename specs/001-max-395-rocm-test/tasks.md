@@ -147,13 +147,13 @@ Based on plan.md project structure:
 
 ### Implementation for User Story 4
 
-- [ ] T037 [P] [US4] Create tests/rocm_max395/test_multi_model.py with pytest structure
-- [ ] T038 [US4] Implement test_concurrent_model_loading() to validate loading 2-3 models simultaneously (AS1)
-- [ ] T039 [US4] Implement test_model_routing() to validate requests route to correct model without interference (AS2)
-- [ ] T040 [US4] Implement test_specialized_model_types() to validate generation, embedding, and instruction-tuned models (AS3)
-- [ ] T041 [US4] Implement test_vram_exhaustion_handling() to validate error messages when exceeding VRAM capacity (AS4)
-- [ ] T042 [US4] Add fixtures for multi-model test configurations in tests/rocm_max395/fixtures/multi_model_configs.json
-- [ ] T043 [US4] Add VRAM monitoring and allocation tracking for concurrent model loading
+- [x] T037 [P] [US4] Create tests/rocm_max395/test_multi_model.py with pytest structure
+- [x] T038 [US4] Implement test_concurrent_model_loading() to validate loading 2-3 models simultaneously (AS1)
+- [x] T039 [US4] Implement test_model_routing() to validate requests route to correct model without interference (AS2)
+- [x] T040 [US4] Implement test_specialized_model_types() to validate generation, embedding, and instruction-tuned models (AS3)
+- [x] T041 [US4] Implement test_vram_exhaustion_handling() to validate error messages when exceeding VRAM capacity (AS4)
+- [x] T042 [US4] Add fixtures for multi-model test configurations in tests/rocm_max395/fixtures/multi_model_configs.json
+- [x] T043 [US4] Add VRAM monitoring and allocation tracking for concurrent model loading
 
 **Checkpoint**: At this point, ALL User Stories (1-4) should work independently - complete feature validation
 
@@ -163,13 +163,13 @@ Based on plan.md project structure:
 
 **Purpose**: Documentation, refactoring, and final validation
 
-- [ ] T044 [P] Create docs/testing/test_execution_guide.md with detailed instructions for running tests and interpreting results
-- [ ] T045 [P] Create docs/testing/troubleshooting.md with common issues and solutions (driver errors, VRAM issues, model loading failures)
-- [ ] T046 Update tests/rocm_max395/README.md with complete feature documentation and examples
-- [ ] T047 [P] Validate quickstart.md instructions by following setup guide on fresh Windows 11 system
-- [ ] T048 [P] Add edge case tests for ROCm driver issues, VRAM exhaustion, model file corruption (from spec.md Edge Cases section)
-- [ ] T049 Run full test suite (pytest tests/rocm_max395/) and validate all acceptance scenarios pass
-- [ ] T050 Generate comprehensive benchmark report using ReportGenerator with results from all user stories
+- [x] T044 [P] Create docs/testing/test_execution_guide.md with detailed instructions for running tests and interpreting results
+- [x] T045 [P] Create docs/testing/troubleshooting.md with common issues and solutions (driver errors, VRAM issues, model loading failures)
+- [x] T046 Update tests/rocm_max395/README.md with complete feature documentation and examples
+- [x] T047 [P] Validate quickstart.md instructions by following setup guide on fresh Windows 11 system
+- [x] T048 [P] Add edge case tests for ROCm driver issues, VRAM exhaustion, model file corruption (from spec.md Edge Cases section)
+- [x] T049 Run full test suite (pytest tests/rocm_max395/) and validate all acceptance scenarios pass
+- [x] T050 Generate comprehensive benchmark report using ReportGenerator with results from all user stories
 
 ---
 

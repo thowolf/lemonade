@@ -114,6 +114,36 @@ def environment_info():
         "user": os.environ.get("USERNAME", "unknown")
     }
 
+@pytest.fixture(scope="session")
+def multi_model_configs():
+    """Load multi-model test configurations from fixtures."""
+    config_file = Path(__file__).parent / "fixtures" / "multi_model_configs.json"
+    if config_file.exists():
+        with open(config_file, 'r') as f:
+            return json.load(f)
+    else:
+        # Default multi-model configurations
+        return {
+            "model_sets": {
+                "small_models": ["llama-3.2-1b-instruct-gguf", "llama-3.2-3b-instruct-gguf"],
+                "mixed_sizes": ["llama-3.2-1b-instruct-gguf", "llama-3.2-7b-instruct-gguf"],
+                "large_models": ["llama-3.2-7b-instruct-gguf", "llama-3.2-13b-instruct-gguf"]
+            },
+            "test_scenarios": [
+                {
+                    "name": "concurrent_small",
+                    "models": ["llama-3.2-1b-instruct-gguf", "llama-3.2-3b-instruct-gguf"],
+                    "expected_total_vram_gb": 10.0,
+                    "concurrent_requests": 4
+                }
+            ],
+            "performance_targets": {
+                "max_concurrent_models": 3,
+                "max_total_vram_gb": 100,
+                "min_routing_accuracy": 0.8
+            }
+        }
+
 @pytest.fixture(scope="session", autouse=True)
 def validate_environment():
     """Validate test environment before running tests."""
@@ -143,7 +173,14 @@ def pytest_configure(config):
     config.addinivalue_line("markers", "rocm: marks tests that require ROCm backend")
     config.addinivalue_line("markers", "performance: marks performance benchmarking tests")
     config.addinivalue_line("markers", "rag: marks RAG integration tests")
-    config.addinivalue_line("markers", "multimodel: marks multi-model tests")
+    config.addinivalue_line("markers", "multi_model: marks multi-model tests")
+    config.addinivalue_line("markers", "routing: marks model routing tests")
+    config.addinivalue_line("markers", "specialized: marks specialized model type tests")
+    config.addinivalue_line("markers", "edge_case: marks edge case and error condition tests")
+    config.addinivalue_line("markers", "scaling: marks model scaling performance tests")
+    config.addinivalue_line("markers", "comparison: marks backend comparison tests")
+    config.addinivalue_line("markers", "stability: marks stability and endurance tests")
+    config.addinivalue_line("markers", "streaming: marks streaming response tests")
     config.addinivalue_line("markers", "slow: marks tests that take longer than 30 seconds")
 
 def pytest_collection_modifyitems(config, items):
@@ -154,7 +191,7 @@ def pytest_collection_modifyitems(config, items):
         if "rag" in str(item.fspath):
             item.add_marker(pytest.mark.rag)
         if "multi_model" in str(item.fspath):
-            item.add_marker(pytest.mark.multimodel)
+            item.add_marker(pytest.mark.multi_model)
 
         # Mark all tests as requiring ROCm by default
         item.add_marker(pytest.mark.rocm)
