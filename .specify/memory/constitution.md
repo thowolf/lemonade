@@ -39,7 +39,7 @@ The system MUST support multiple inference backends (ONNX Runtime GenAI, llama.c
 **Rationale**: Different models and hardware configurations perform optimally with different backends. Providing choice maximizes performance across diverse deployment scenarios.
 
 **Requirements**:
-- Support GGUF models via llama.cpp with Vulkan/ROCm/Metal backends
+- Support GGUF models via llama.cpp with Vulkan/Metal backends
 - Support ONNX models via ONNX Runtime GenAI for CPU/GPU/NPU
 - Support FLM models for AMD Ryzen AI NPU acceleration
 - Enable runtime backend selection via CLI flags
@@ -52,7 +52,6 @@ All supported configurations MUST be optimized for AMD hardware platforms, with 
 
 **Requirements**:
 - Test and validate on Ryzen AI Max+ 395 with **96 GB VRAM** (system RAM: 128 GB)
-- Support ROCm for AMD GPU acceleration (Windows and Linux)
 - Support Vulkan for cross-platform GPU execution
 - Provide clear performance expectations per hardware configuration
 - Document supported AMD platforms in README with architecture details
@@ -154,8 +153,6 @@ All operations MUST produce clear, structured logs. Performance profiling tools 
 
 **AMD Hardware Documentation**:
 - Ryzen AI (NPU): https://ryzenai.docs.amd.com
-- ROCm (GPU): https://rocm.docs.amd.com/en/latest/
-- ROCm Windows Installation: https://rocm.docs.amd.com/projects/install-on-windows/en/latest/
 - AMD Graphics Drivers: https://www.amd.com/en/support
 - Radeon RX 9100 Support: https://www.amd.com/en/support/graphics/radeon-9000-series/radeon-rx-9000-series/amd-radeon-rx-9100
 
@@ -187,18 +184,12 @@ All operations MUST produce clear, structured logs. Performance profiling tools 
 **Test Hardware**: AMD AI Max+ 395 with **96GB VRAM** (gfx1151), ROCm-enabled Windows 11 system — system RAM: 128 GB
 
 **Verified Software Stack**:
-- **ROCm Version**: 7.11.0a20251129
-- **ROCm SDK**: `rocm-sdk-libraries-gfx1151==7.11.0a20251129`
-- **PyTorch**: 2.10.0a0+rocm7.11.0a20251129 (with ROCm 7.11)
 - **Python**: 3.13.11 (3.10-3.13 supported)
 - **GPU Architecture**: gfx1151 (AMD Radeon 8060S / AI Max+ 395)
 - **Total VRAM**: ~110 GB available for inference
 
-**ROCm Performance Optimizations**:
-```python
-# Required for optimal AMD GPU performance
-torch.backends.cudnn.enabled = False
-```
+**Performance Optimizations**:
+- Follow platform-specific best practices for GPU/NPU drivers and backend libraries (Vulkan/ONNX/FLM) as documented in the README and platform pages.
 
 **Additional Test Hardware**:
 - AMD Radeon 8060S (gfx1151): 110457 MB VRAM - Verified compatible with same architecture as Max+ 395

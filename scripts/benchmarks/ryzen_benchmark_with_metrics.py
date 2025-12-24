@@ -36,7 +36,7 @@ except Exception as e:
     raise SystemExit(1)
 
 DEFAULT_URL = "http://127.0.0.1:8001/v1/completions"
-RESULTS_DIR = Path("tests/rocm_max395/results")
+RESULTS_DIR = Path("tests/results")
 RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 
 

@@ -39,16 +39,7 @@ hardware = HardwarePlatform(
     total_vram_gb=32,
     system_ram_gb=128,
     os="Windows 11",
-    driver_version="ROCm"
-)
-
-model_name_val = summary.get('model', 'unknown')
-model_config = ModelConfiguration(
-    model_name=model_name_val,
-    model_family="llama",
-    checkpoint=f"llama/{model_name_val}:model",
-    quantization="fp16",
-    size_gb=15.0,
+        driver_version=None
     context_length=8192
 )
 

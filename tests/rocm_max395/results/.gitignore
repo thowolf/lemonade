@@ -1,5 +1,0 @@
-# Test Results - Exclude generated files but keep directory structure
-*
-!.gitignore
-!README.md
-!benchmark_template.json

@@ -100,7 +100,7 @@ def demonstrate_wandb_logging(evaluations):
                 total_vram_gb=32,
                 system_ram_gb=32,
                 os="Windows 11",
-                driver_version="ROCm 6.1"
+                driver_version=None
             )
 
             # Create evaluation run

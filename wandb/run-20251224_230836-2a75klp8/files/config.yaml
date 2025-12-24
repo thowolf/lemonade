@@ -1,0 +1,54 @@
+_wandb:
+    value:
+        cli_version: 0.23.1
+        e:
+            krk73fb0sjvkhd7lkmiy98en32c37xqw:
+                args:
+                    - --mode
+                    - offline
+                    - --models
+                    - qwen,Llama-3.1-8B-Instruct-Hybrid
+                    - --results-dir
+                    - tests/data
+                    - --out-dir
+                    - reports
+                    - --wandb
+                    - --project
+                    - lemonade-ryzenai-evals-demo
+                codePath: scripts\benchmarks\compare_models.py
+                codePathLocal: scripts\benchmarks\compare_models.py
+                cpu_count: 16
+                cpu_count_logical: 32
+                disk:
+                    /:
+                        total: "2045951078400"
+                        used: "1336411811840"
+                email: tom.rally@gmail.com
+                executable: c:\Users\tomwo\AppData\Local\Programs\Python\Python313\python.exe
+                git:
+                    commit: 088f45536104edc436df42525305467ab61d1103
+                    remote: https://github.com/thowolf/lemonade-private.git
+                host: hamster1
+                memory:
+                    total: "33981009920"
+                os: Windows-11-10.0.26200-SP0
+                program: c:\Users\tomwo\git\lemonade\scripts\benchmarks\compare_models.py
+                python: CPython 3.13.11
+                root: c:\Users\tomwo\git\lemonade
+                startedAt: "2025-12-24T22:08:36.082757Z"
+                writerId: krk73fb0sjvkhd7lkmiy98en32c37xqw
+        m: []
+        python_version: 3.13.11
+        t:
+            "3":
+                - 2
+                - 3
+                - 15
+            "4": 3.13.11
+            "5": 0.23.1
+            "8":
+                - 3
+            "10":
+                - 20
+            "12": 0.23.1
+            "13": windows-amd64
