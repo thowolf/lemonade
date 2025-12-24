@@ -1,0 +1,370 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://lemonade-server.ai/schemas/rocm-test/benchmark_results.json",
+  "title": "Benchmark Results Schema",
+  "description": "Schema for test results and performance metrics from ROCm LLM testing",
+  "definitions": {
+    "TestResult": {
+      "type": "object",
+      "required": ["test_id", "status", "start_time", "end_time", "duration_seconds", "performance_metrics", "responses", "validation_results"],
+      "properties": {
+        "test_id": {
+          "type": "string",
+          "description": "Unique test identifier matching TestConfiguration"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["passed", "failed", "error", "skipped"],
+          "description": "Test execution status"
+        },
+        "start_time": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO 8601 timestamp of test start"
+        },
+        "end_time": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO 8601 timestamp of test completion"
+        },
+        "duration_seconds": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Total test execution time in seconds"
+        },
+        "performance_metrics": {
+          "$ref": "#/definitions/PerformanceMetrics"
+        },
+        "responses": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ResponseRecord"
+          },
+          "description": "List of LLM responses generated"
+        },
+        "errors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ErrorRecord"
+          },
+          "description": "Errors encountered (empty if test passed)"
+        },
+        "validation_results": {
+          "$ref": "#/definitions/ValidationResults"
+        }
+      }
+    },
+    "PerformanceMetrics": {
+      "type": "object",
+      "required": ["tokens_per_second", "time_to_first_token_ms", "total_latency_ms", "vram_usage_gb", "vram_utilization_percent", "throughput_tokens_total", "error_rate_percent"],
+      "properties": {
+        "tokens_per_second": {
+          "type": "object",
+          "required": ["mean", "min", "max", "std_dev"],
+          "properties": {
+            "mean": {"type": "number", "minimum": 0},
+            "min": {"type": "number", "minimum": 0},
+            "max": {"type": "number", "minimum": 0},
+            "std_dev": {"type": "number", "minimum": 0}
+          },
+          "description": "Throughput statistics"
+        },
+        "time_to_first_token_ms": {
+          "type": "object",
+          "required": ["p50", "p95", "p99"],
+          "properties": {
+            "p50": {"type": "number", "minimum": 0},
+            "p95": {"type": "number", "minimum": 0},
+            "p99": {"type": "number", "minimum": 0}
+          },
+          "description": "Time to first token latency percentiles"
+        },
+        "total_latency_ms": {
+          "type": "object",
+          "required": ["p50", "p95", "p99"],
+          "properties": {
+            "p50": {"type": "number", "minimum": 0},
+            "p95": {"type": "number", "minimum": 0},
+            "p99": {"type": "number", "minimum": 0}
+          },
+          "description": "Total response latency percentiles"
+        },
+        "vram_usage_gb": {
+          "type": "object",
+          "required": ["peak", "average", "min"],
+          "properties": {
+            "peak": {"type": "number", "minimum": 0},
+            "average": {"type": "number", "minimum": 0},
+            "min": {"type": "number", "minimum": 0}
+          },
+          "description": "VRAM consumption in gigabytes"
+        },
+        "vram_utilization_percent": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Peak VRAM as percentage of total"
+        },
+        "gpu_temperature_celsius": {
+          "type": "object",
+          "properties": {
+            "peak": {"type": "number"},
+            "average": {"type": "number"}
+          },
+          "description": "GPU temperature (optional)"
+        },
+        "throughput_tokens_total": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Total tokens generated across all prompts"
+        },
+        "error_rate_percent": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Percentage of failed requests"
+        }
+      }
+    },
+    "ResponseRecord": {
+      "type": "object",
+      "required": ["prompt_index", "prompt_text", "response_text", "tokens_generated", "duration_ms", "tokens_per_second", "model_used"],
+      "properties": {
+        "prompt_index": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Index in test_prompts list"
+        },
+        "prompt_text": {
+          "type": "string",
+          "description": "Input prompt"
+        },
+        "response_text": {
+          "type": "string",
+          "description": "Generated output"
+        },
+        "tokens_generated": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Output token count"
+        },
+        "duration_ms": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Generation time in milliseconds"
+        },
+        "time_to_first_token_ms": {
+          "type": ["number", "null"],
+          "minimum": 0,
+          "description": "Streaming latency (null if non-streaming)"
+        },
+        "tokens_per_second": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Calculated throughput"
+        },
+        "model_used": {
+          "type": "string",
+          "description": "Model name (for multi-model tests)"
+        }
+      }
+    },
+    "ErrorRecord": {
+      "type": "object",
+      "required": ["error_type", "error_message", "timestamp"],
+      "properties": {
+        "error_type": {
+          "type": "string",
+          "enum": ["api_error", "timeout", "vram_exhaustion", "connection_error", "model_load_error", "inference_error", "validation_error"],
+          "description": "Error category"
+        },
+        "error_message": {
+          "type": "string",
+          "description": "Error description"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When error occurred"
+        },
+        "prompt_index": {
+          "type": ["integer", "null"],
+          "description": "Which prompt failed (null if setup error)"
+        },
+        "stack_trace": {
+          "type": "string",
+          "description": "Full traceback for debugging"
+        }
+      }
+    },
+    "ValidationResults": {
+      "type": "object",
+      "required": ["criteria_checks", "overall_pass", "pass_count", "fail_count", "total_checks"],
+      "properties": {
+        "criteria_checks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CriteriaCheck"
+          },
+          "description": "Individual success criteria evaluations"
+        },
+        "overall_pass": {
+          "type": "boolean",
+          "description": "True if all criteria passed"
+        },
+        "pass_count": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of passed checks"
+        },
+        "fail_count": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of failed checks"
+        },
+        "total_checks": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Total criteria evaluated"
+        }
+      }
+    },
+    "CriteriaCheck": {
+      "type": "object",
+      "required": ["criteria_id", "description", "expected", "actual", "passed"],
+      "properties": {
+        "criteria_id": {
+          "type": "string",
+          "pattern": "^SC-[0-9]{3}$",
+          "description": "Success criteria identifier",
+          "examples": ["SC-001", "SC-002"]
+        },
+        "description": {
+          "type": "string",
+          "description": "What was checked"
+        },
+        "expected": {
+          "type": "string",
+          "description": "Expected value or condition"
+        },
+        "actual": {
+          "type": "string",
+          "description": "Measured value"
+        },
+        "passed": {
+          "type": "boolean",
+          "description": "True if criteria met"
+        }
+      }
+    },
+    "BenchmarkSummary": {
+      "type": "object",
+      "required": ["summary_id", "summary_name", "test_ids", "timestamp", "aggregate_metrics", "comparison_table"],
+      "properties": {
+        "summary_id": {
+          "type": "string",
+          "description": "Unique summary identifier"
+        },
+        "summary_name": {
+          "type": "string",
+          "description": "Human-readable description"
+        },
+        "test_ids": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Included test IDs"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Summary generation time"
+        },
+        "aggregate_metrics": {
+          "$ref": "#/definitions/AggregateMetrics"
+        },
+        "comparison_table": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ComparisonRow"
+          }
+        }
+      }
+    },
+    "AggregateMetrics": {
+      "type": "object",
+      "required": ["tests_count", "avg_tokens_per_second", "avg_time_to_first_token_ms", "avg_vram_utilization_percent", "pass_rate_percent"],
+      "properties": {
+        "tests_count": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Number of tests included"
+        },
+        "avg_tokens_per_second": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Mean throughput"
+        },
+        "avg_time_to_first_token_ms": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Mean latency"
+        },
+        "avg_vram_utilization_percent": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Mean VRAM usage"
+        },
+        "pass_rate_percent": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Percentage of passing tests"
+        },
+        "fastest_backend": {
+          "type": "string",
+          "description": "Best performing backend"
+        },
+        "slowest_backend": {
+          "type": "string",
+          "description": "Worst performing backend"
+        }
+      }
+    },
+    "ComparisonRow": {
+      "type": "object",
+      "required": ["test_name", "backend", "tokens_per_second", "time_to_first_token_ms", "vram_usage_gb", "status"],
+      "properties": {
+        "test_name": {
+          "type": "string",
+          "description": "Test identifier"
+        },
+        "backend": {
+          "type": "string",
+          "enum": ["rocm", "vulkan", "cpu"],
+          "description": "Backend used"
+        },
+        "tokens_per_second": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Throughput"
+        },
+        "time_to_first_token_ms": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Latency"
+        },
+        "vram_usage_gb": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Memory consumption"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["passed", "failed"],
+          "description": "Test status"
+        }
+      }
+    }
+  }
+}

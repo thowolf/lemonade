@@ -1,0 +1,146 @@
+{
+  "models": {
+    "llama-3.2-1b-instruct-gguf": {
+      "name": "Llama-3.2-1B-Instruct-GGUF",
+      "size": "1B",
+      "quantization": "Q4_K_M",
+      "context_length": 8192,
+      "expected_vram_gb": 2.5,
+      "expected_tokens_per_sec": 40,
+      "expected_latency_ms": 500,
+      "source": "HuggingFace",
+      "description": "Small test model for basic inference validation"
+    },
+    "llama-3.2-7b-instruct-gguf": {
+      "name": "Llama-3.2-7B-Instruct-GGUF",
+      "size": "7B",
+      "quantization": "Q4_K_M",
+      "context_length": 8192,
+      "expected_vram_gb": 8.0,
+      "expected_tokens_per_sec": 20,
+      "expected_latency_ms": 1000,
+      "source": "HuggingFace",
+      "description": "Medium model for performance benchmarking"
+    },
+    "llama-3.2-13b-instruct-gguf": {
+      "name": "Llama-3.2-13B-Instruct-GGUF",
+      "size": "13B",
+      "quantization": "Q4_K_M",
+      "context_length": 8192,
+      "expected_vram_gb": 15.0,
+      "expected_tokens_per_sec": 10,
+      "expected_latency_ms": 1500,
+      "source": "HuggingFace",
+      "description": "Large model for scaling tests"
+    },
+    "llama-3.2-30b-instruct-gguf": {
+      "name": "Llama-3.2-30B-Instruct-GGUF",
+      "size": "30B",
+      "quantization": "Q4_K_M",
+      "context_length": 8192,
+      "expected_vram_gb": 25.0,
+      "expected_tokens_per_sec": 5,
+      "expected_latency_ms": 2000,
+      "source": "HuggingFace",
+      "description": "Very large model for VRAM utilization testing"
+    }
+  },
+  "backends": {
+    "rocm": {
+      "name": "ROCm",
+      "description": "AMD GPU acceleration via ROCm",
+      "supported_architectures": ["gfx1151"],
+      "requirements": ["AMD AI Max+ 395", "ROCm 7.1.1+"],
+      "flags": ["--llamacpp", "rocm"]
+    },
+    "vulkan": {
+      "name": "Vulkan",
+      "description": "Cross-platform GPU acceleration via Vulkan",
+      "supported_architectures": ["any"],
+      "requirements": ["Vulkan-compatible GPU"],
+      "flags": ["--llamacpp", "vulkan"]
+    },
+    "cpu": {
+      "name": "CPU",
+      "description": "CPU-only inference (baseline)",
+      "supported_architectures": ["any"],
+      "requirements": ["x86_64 CPU"],
+      "flags": ["--llamacpp", "cpu"]
+    }
+  },
+  "test_scenarios": {
+    "basic_inference": {
+      "models": ["llama-3.2-1b-instruct-gguf"],
+      "backends": ["rocm"],
+      "prompts": 5,
+      "iterations": 3,
+      "description": "Basic inference validation"
+    },
+    "performance_benchmark": {
+      "models": ["llama-3.2-1b-instruct-gguf", "llama-3.2-7b-instruct-gguf", "llama-3.2-13b-instruct-gguf"],
+      "backends": ["rocm", "vulkan", "cpu"],
+      "prompts": 10,
+      "iterations": 5,
+      "description": "Performance comparison across models and backends"
+    },
+    "vram_stress_test": {
+      "models": ["llama-3.2-30b-instruct-gguf"],
+      "backends": ["rocm"],
+      "prompts": 3,
+      "iterations": 1,
+      "description": "VRAM utilization and stability testing"
+    },
+    "rag_integration": {
+      "models": ["llama-3.2-7b-instruct-gguf"],
+      "backends": ["rocm"],
+      "prompts": 5,
+      "iterations": 3,
+      "context_lengths": [1024, 4096, 8192],
+      "description": "RAG pipeline testing with varying context lengths"
+    },
+    "multi_model_concurrency": {
+      "models": ["llama-3.2-1b-instruct-gguf", "llama-3.2-7b-instruct-gguf"],
+      "backends": ["rocm"],
+      "concurrent_requests": 4,
+      "iterations": 3,
+      "description": "Multi-model concurrent inference testing"
+    }
+  },
+  "performance_targets": {
+    "tokens_per_second": {
+      "1B": 40,
+      "7B": 20,
+      "13B": 10,
+      "30B": 5
+    },
+    "latency_ms": {
+      "time_to_first_token": {
+        "1B": 500,
+        "7B": 1000,
+        "13B": 1500,
+        "30B": 2000
+      },
+      "total_response": {
+        "1B": 2000,
+        "7B": 4000,
+        "13B": 6000,
+        "30B": 8000
+      }
+    },
+    "vram_efficiency": {
+      "max_utilization_percent": 80,
+      "stability_threshold_percent": 95
+    }
+  },
+  "validation_rules": {
+    "response_quality": {
+      "min_coherence_score": 0.8,
+      "min_factual_accuracy": 0.9,
+      "max_error_rate": 0.05
+    },
+    "performance_stability": {
+      "max_variance_coefficient": 0.2,
+      "min_iterations_for_stability": 3
+    }
+  }
+}

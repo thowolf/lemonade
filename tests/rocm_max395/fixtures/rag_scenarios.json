@@ -1,0 +1,130 @@
+{
+  "documents": [
+    {
+      "title": "Machine Learning Fundamentals",
+      "content": "Machine learning is a subset of artificial intelligence that enables computers to learn from data without being explicitly programmed. There are three main types: supervised learning, unsupervised learning, and reinforcement learning. Supervised learning uses labeled data to train models that can make predictions. Unsupervised learning finds patterns in unlabeled data. Reinforcement learning involves learning through trial and error with rewards and penalties. Machine learning algorithms improve their performance as they are exposed to more data.",
+      "category": "education",
+      "tags": ["machine learning", "AI", "algorithms"]
+    },
+    {
+      "title": "Neural Networks Explained",
+      "content": "Neural networks are computing systems inspired by biological neural networks. They consist of layers of interconnected nodes called neurons. Each connection has a weight that adjusts during learning. Deep learning uses neural networks with multiple hidden layers. Common architectures include convolutional neural networks (CNNs) for image processing and recurrent neural networks (RNNs) for sequence data. Neural networks excel at pattern recognition and can learn complex relationships in data. Training requires large amounts of data and significant computational resources.",
+      "category": "technical",
+      "tags": ["neural networks", "deep learning", "CNN", "RNN"]
+    },
+    {
+      "title": "GPU Computing and Acceleration",
+      "content": "GPU computing uses graphics processing units for general-purpose computing. GPUs excel at parallel processing tasks. CUDA is NVIDIA's platform for GPU computing. ROCm is AMD's open-source platform for GPU computing on Linux and Windows. GPUs accelerate machine learning training and inference through massive parallelism. They contain thousands of cores optimized for mathematical computations. Modern GPUs can perform matrix operations much faster than traditional CPUs, making them essential for deep learning workloads.",
+      "category": "hardware",
+      "tags": ["GPU", "CUDA", "ROCm", "parallel computing"]
+    },
+    {
+      "title": "Natural Language Processing",
+      "content": "Natural language processing (NLP) enables computers to understand and generate human language. Key techniques include tokenization, part-of-speech tagging, and named entity recognition. Large language models like GPT use transformer architectures for text generation. NLP applications include chatbots, translation, sentiment analysis, and text summarization. Modern NLP systems can understand context, generate coherent responses, and perform complex language tasks. The field has advanced rapidly with the advent of large-scale transformer models.",
+      "category": "technical",
+      "tags": ["NLP", "transformers", "language models", "text processing"]
+    },
+    {
+      "title": "Computer Vision Applications",
+      "content": "Computer vision enables machines to interpret visual information from the world. Convolutional neural networks are particularly effective for image recognition tasks. Applications include object detection, facial recognition, autonomous vehicles, and medical image analysis. Computer vision systems can classify images, detect objects, and understand scenes. Deep learning has revolutionized computer vision, achieving human-level performance on many visual tasks. The field combines techniques from image processing, pattern recognition, and artificial intelligence.",
+      "category": "technical",
+      "tags": ["computer vision", "CNN", "image recognition", "object detection"]
+    }
+  ],
+  "qa_pairs": [
+    {
+      "question": "What are the three main types of machine learning?",
+      "expected_context": ["Machine learning is a subset", "supervised learning, unsupervised learning, and reinforcement learning"],
+      "expected_answer_contains": ["supervised", "unsupervised", "reinforcement"],
+      "category": "basic"
+    },
+    {
+      "question": "What is ROCm and who develops it?",
+      "expected_context": ["ROCm is AMD's open-source platform"],
+      "expected_answer_contains": ["AMD", "open-source", "GPU computing"],
+      "category": "hardware"
+    },
+    {
+      "question": "How do neural networks work?",
+      "expected_context": ["layers of interconnected nodes", "connection has a weight"],
+      "expected_answer_contains": ["neurons", "weights", "layers"],
+      "category": "technical"
+    },
+    {
+      "question": "What are some applications of natural language processing?",
+      "expected_context": ["chatbots, translation, sentiment analysis"],
+      "expected_answer_contains": ["chatbots", "translation", "sentiment"],
+      "category": "applications"
+    },
+    {
+      "question": "Explain the relationship between machine learning and GPUs.",
+      "expected_context": ["GPUs accelerate machine learning", "massive parallelism", "matrix operations"],
+      "expected_answer_contains": ["accelerate", "parallel", "computation"],
+      "category": "integration"
+    },
+    {
+      "question": "What is the difference between supervised and unsupervised learning?",
+      "expected_context": ["labeled data", "unlabeled data", "patterns"],
+      "expected_answer_contains": ["labeled", "unlabeled", "patterns"],
+      "category": "comparison"
+    }
+  ],
+  "context_sizes": [1024, 2048, 4096, 8192, 16384],
+  "retrieval_scenarios": [
+    {
+      "query": "How do GPUs accelerate machine learning training?",
+      "relevant_documents": ["GPU Computing and Acceleration", "Neural Networks Explained"],
+      "expected_chunks": 3,
+      "difficulty": "medium"
+    },
+    {
+      "query": "What are the main components of a neural network?",
+      "relevant_documents": ["Neural Networks Explained"],
+      "expected_chunks": 2,
+      "difficulty": "easy"
+    },
+    {
+      "query": "Compare different types of machine learning algorithms",
+      "relevant_documents": ["Machine Learning Fundamentals", "Neural Networks Explained"],
+      "expected_chunks": 4,
+      "difficulty": "hard"
+    }
+  ],
+  "streaming_test_cases": [
+    {
+      "query": "Explain machine learning in simple terms",
+      "context_size": "small",
+      "expected_streaming_behavior": "fast_first_token"
+    },
+    {
+      "query": "Compare supervised and unsupervised learning approaches",
+      "context_size": "medium",
+      "expected_streaming_behavior": "consistent_streaming"
+    },
+    {
+      "query": "Discuss the future of AI and machine learning",
+      "context_size": "large",
+      "expected_streaming_behavior": "context_aware_responses"
+    }
+  ],
+  "error_handling_scenarios": [
+    {
+      "scenario": "empty_context",
+      "query": "What is machine learning?",
+      "context": "",
+      "expected_behavior": "graceful_degradation"
+    },
+    {
+      "scenario": "oversized_context",
+      "query": "Summarize this document",
+      "context_size": 50000,
+      "expected_behavior": "context_truncation"
+    },
+    {
+      "scenario": "irrelevant_context",
+      "query": "How does photosynthesis work?",
+      "context": "Machine learning algorithms...",
+      "expected_behavior": "context_ignorance"
+    }
+  ]
+}
