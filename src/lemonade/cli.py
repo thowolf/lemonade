@@ -61,6 +61,7 @@ from lemonade.tools.perplexity import AccuracyPerplexity
 from lemonade.tools.accuracy import LMEvalHarness
 from lemonade.tools.prompt import LLMPrompt
 from lemonade.tools.report.llm_report import LemonadeReport
+from lemonade.tools.model_evaluation import ModelEvaluation
 
 
 def main():
@@ -79,6 +80,7 @@ def main():
         OgaLoad,
         OgaBench,
         LemonadeReport,
+        ModelEvaluation,
         # Inherited from lemonade
         Cache,
         Version,

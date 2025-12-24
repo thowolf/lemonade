@@ -1,0 +1,45 @@
+{
+  "metadata": {
+    "name": "small-hellaswag-eval",
+    "version": "1.0.0",
+    "created": "2025-12-24T00:00:00Z",
+    "description": "Small benchmark iteration for quick validation",
+    "author": "automation"
+  },
+  "model": {
+    "identifier": "Llama3-8B",
+    "checkpoint": "llama/Llama3-8B:model",
+    "recipe": "oga",
+    "quantization": { "method": "fp16", "bits": 16 },
+    "size_gb": 15,
+    "context_length": 8192
+  },
+  "hardware": {
+    "backend": "ryzenai",
+    "device": "npu",
+    "platform": "AMD Ryzen AI Max+ 395",
+    "architecture": "gfx1151",
+    "vram_limit_gb": 32,
+    "system_ram_gb": 128,
+    "flags": ["directml"]
+  },
+  "benchmarks": {
+    "accuracy": {
+      "enabled": true,
+      "suites": [
+        { "name": "hellaswag", "limit": 3, "num_fewshot": 0 }
+      ]
+    },
+    "performance": {
+      "enabled": false,
+      "iterations": 1,
+      "prompts_per_iteration": 1,
+      "metrics": ["tokens_per_second"]
+    }
+  },
+  "wandb": {
+    "enabled": false,
+    "project": "lemonade-quick-test",
+    "offline": true
+  }
+}

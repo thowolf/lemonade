@@ -21,6 +21,7 @@ setup(
         "lemonade.tools.report",
         "lemonade.tools.server.utils",
         "lemonade.tools.server",
+        "lemonade.evaluation",
         "lemonade_install",
         "lemonade_server",
     ],
@@ -79,6 +80,8 @@ setup(
             # PR (https://github.com/openai/human-eval/pull/53) is merged
             "human-eval-windows==1.0.4",
             "lm-eval[api]",
+            "wandb>=0.18.0",
+            "weave>=0.51.0",
         ],
         "model-generate": [
             "model-generate==1.5.0; platform_system=='Windows' and python_version=='3.10'",

@@ -1,0 +1,504 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://lemonade-sdk.ai/schemas/evaluation-config/v1.0.0",
+  "title": "LLM Evaluation Configuration Schema",
+  "description": "Schema for defining LLM model evaluation configurations in the Lemonade SDK model comparison workflow",
+  "version": "1.0.0",
+  "type": "object",
+  "required": ["metadata", "model", "hardware", "benchmarks"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "description": "Evaluation metadata and versioning information",
+      "required": ["name", "version", "created"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Human-readable evaluation name",
+          "minLength": 1,
+          "maxLength": 255,
+          "examples": ["qwen3-4b-rocm-evaluation", "llama-int4-vs-int8"]
+        },
+        "version": {
+          "type": "string",
+          "description": "Evaluation configuration version",
+          "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$",
+          "examples": ["1.0.0", "1.2.3"]
+        },
+        "created": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO 8601 timestamp when configuration was created",
+          "examples": ["2025-12-24T10:00:00Z"]
+        },
+        "description": {
+          "type": "string",
+          "description": "Optional description of evaluation purpose",
+          "maxLength": 1000
+        },
+        "author": {
+          "type": "string",
+          "description": "Person or team who created the configuration",
+          "maxLength": 100
+        }
+      }
+    },
+    "model": {
+      "type": "object",
+      "description": "Model specification for evaluation",
+      "required": ["identifier", "checkpoint", "recipe"],
+      "properties": {
+        "identifier": {
+          "type": "string",
+          "description": "Unique model identifier",
+          "minLength": 1,
+          "maxLength": 255,
+          "examples": ["Qwen3-4B-GGUF", "Llama-3.1-8B-Instruct"]
+        },
+        "checkpoint": {
+          "type": "string",
+          "description": "HuggingFace checkpoint path (format: org/repo:file)",
+          "pattern": "^[^/]+/[^:]+:[^:]+$",
+          "examples": [
+            "unsloth/Qwen3-4B-GGUF:Q4_0",
+            "meta-llama/Llama-3.1-8B-Instruct:Q4_K_M"
+          ]
+        },
+        "recipe": {
+          "type": "string",
+          "description": "Execution backend/recipe",
+          "enum": [
+            "oga-npu",
+            "oga-hybrid",
+            "oga-cpu",
+            "oga-igpu",
+            "llamacpp-cpu",
+            "llamacpp-vulkan",
+            "llamacpp-rocm",
+            "flm"
+          ]
+        },
+        "quantization": {
+          "type": "object",
+          "description": "Quantization configuration",
+          "properties": {
+            "method": {
+              "type": "string",
+              "description": "Quantization method",
+              "enum": ["Q4_0", "Q4_K_M", "Q8_0", "INT4", "INT8", "FP16", "FP32"]
+            },
+            "bits": {
+              "type": "integer",
+              "description": "Number of bits for quantization",
+              "minimum": 2,
+              "maximum": 32
+            }
+          }
+        },
+        "moe": {
+          "type": "object",
+          "description": "Mixture of Experts configuration (if applicable)",
+          "required": ["num_experts", "experts_per_token"],
+          "properties": {
+            "num_experts": {
+              "type": "integer",
+              "description": "Total number of experts",
+              "minimum": 2
+            },
+            "experts_per_token": {
+              "type": "integer",
+              "description": "Number of active experts per token",
+              "minimum": 1
+            },
+            "expert_capacity": {
+              "type": "number",
+              "description": "Capacity factor for load balancing",
+              "minimum": 0.1,
+              "maximum": 2.0
+            }
+          }
+        },
+        "size_gb": {
+          "type": "number",
+          "description": "Model size in gigabytes",
+          "minimum": 0.1,
+          "examples": [2.38, 4.8, 16.5]
+        },
+        "context_length": {
+          "type": "integer",
+          "description": "Maximum context window size",
+          "minimum": 512,
+          "examples": [2048, 4096, 8192, 32768]
+        }
+      }
+    },
+    "hardware": {
+      "type": "object",
+      "description": "Hardware and execution configuration",
+      "required": ["backend", "device"],
+      "properties": {
+        "backend": {
+          "type": "string",
+          "description": "Hardware backend (ROCm, Vulkan, CPU)",
+          "enum": ["rocm", "vulkan", "cpu", "hybrid", "npu"]
+        },
+        "device": {
+          "type": "string",
+          "description": "Target execution device",
+          "enum": ["npu", "igpu", "cpu", "hybrid"]
+        },
+        "platform": {
+          "type": "string",
+          "description": "Hardware platform identifier",
+          "examples": ["AMD Ryzen AI Max+ 395", "AMD Radeon 8060S"]
+        },
+        "architecture": {
+          "type": "string",
+          "description": "GPU/NPU architecture code",
+          "pattern": "^gfx[0-9]+$",
+          "examples": ["gfx1151", "gfx1103"]
+        },
+        "vram_limit_gb": {
+          "type": "integer",
+          "description": "VRAM limit in gigabytes",
+          "minimum": 1,
+          "maximum": 1024
+        },
+        "system_ram_gb": {
+          "type": "integer",
+          "description": "System RAM in gigabytes",
+          "minimum": 4,
+          "examples": [32, 64, 128]
+        },
+        "flags": {
+          "type": "array",
+          "description": "Additional backend flags",
+          "items": {
+            "type": "string"
+          },
+          "examples": [["--llamacpp", "rocm"], ["--vulkan", "--gpu", "0"]]
+        }
+      }
+    },
+    "benchmarks": {
+      "type": "object",
+      "description": "Benchmark suite configurations",
+      "properties": {
+        "performance": {
+          "type": "object",
+          "description": "Performance benchmarking configuration",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Whether performance benchmarks are enabled",
+              "default": true
+            },
+            "iterations": {
+              "type": "integer",
+              "description": "Number of benchmark iterations",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 5
+            },
+            "prompts_per_iteration": {
+              "type": "integer",
+              "description": "Number of prompts per iteration",
+              "minimum": 1,
+              "maximum": 1000,
+              "default": 10
+            },
+            "metrics": {
+              "type": "array",
+              "description": "Performance metrics to collect",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "tokens_per_second",
+                  "latency_ms",
+                  "time_to_first_token_ms",
+                  "vram_usage_gb",
+                  "cpu_utilization",
+                  "gpu_utilization",
+                  "power_consumption"
+                ]
+              },
+              "minItems": 1,
+              "uniqueItems": true
+            },
+            "warmup_iterations": {
+              "type": "integer",
+              "description": "Number of warmup iterations before measurement",
+              "minimum": 0,
+              "default": 2
+            }
+          }
+        },
+        "accuracy": {
+          "type": "object",
+          "description": "Accuracy benchmarking configuration",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Whether accuracy benchmarks are enabled",
+              "default": true
+            },
+            "suites": {
+              "type": "array",
+              "description": "List of benchmark suites to run",
+              "items": {
+                "type": "object",
+                "required": ["name"],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Benchmark suite name",
+                    "enum": [
+                      "mmlu",
+                      "mmlu_abstract_algebra",
+                      "mmlu_anatomy",
+                      "hellaswag",
+                      "gsm8k",
+                      "truthfulqa",
+                      "arc_easy",
+                      "arc_challenge",
+                      "humaneval"
+                    ]
+                  },
+                  "limit": {
+                    "type": "integer",
+                    "description": "Limit number of samples (null = all)",
+                    "minimum": 1,
+                    "examples": [10, 50, 100, null]
+                  },
+                  "num_fewshot": {
+                    "type": "integer",
+                    "description": "Number of few-shot examples",
+                    "minimum": 0,
+                    "maximum": 25,
+                    "default": 0
+                  }
+                }
+              },
+              "minItems": 1
+            }
+          }
+        }
+      }
+    },
+    "targets": {
+      "type": "object",
+      "description": "Expected performance targets (for validation)",
+      "properties": {
+        "tokens_per_second": {
+          "type": "number",
+          "description": "Minimum expected tokens per second",
+          "minimum": 0
+        },
+        "time_to_first_token_ms": {
+          "type": "number",
+          "description": "Maximum acceptable TTFT in milliseconds",
+          "minimum": 0
+        },
+        "accuracy": {
+          "type": "number",
+          "description": "Minimum expected accuracy (0-1)",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "vram_efficiency_percent": {
+          "type": "number",
+          "description": "Minimum VRAM efficiency percentage",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "max_latency_p95_ms": {
+          "type": "number",
+          "description": "Maximum acceptable P95 latency",
+          "minimum": 0
+        }
+      }
+    },
+    "wandb": {
+      "type": "object",
+      "description": "Weights & Biases integration configuration",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "description": "Enable W&B logging",
+          "default": true
+        },
+        "project": {
+          "type": "string",
+          "description": "W&B project name",
+          "default": "lemonade-ryzenai-evals"
+        },
+        "entity": {
+          "type": "string",
+          "description": "W&B team/entity name (optional)"
+        },
+        "offline": {
+          "type": "boolean",
+          "description": "Run in offline mode",
+          "default": false
+        },
+        "tags": {
+          "type": "array",
+          "description": "Additional custom tags",
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 20
+        }
+      }
+    },
+    "retry": {
+      "type": "object",
+      "description": "Retry configuration for failed evaluations",
+      "properties": {
+        "max_retries": {
+          "type": "integer",
+          "description": "Maximum number of retry attempts",
+          "minimum": 0,
+          "maximum": 10,
+          "default": 3
+        },
+        "retry_delay_seconds": {
+          "type": "integer",
+          "description": "Delay between retry attempts",
+          "minimum": 1,
+          "maximum": 300,
+          "default": 30
+        },
+        "retry_on": {
+          "type": "array",
+          "description": "Error types to retry on",
+          "items": {
+            "type": "string",
+            "enum": ["timeout", "connection_error", "oom", "all"]
+          },
+          "default": ["timeout", "connection_error"]
+        }
+      }
+    }
+  },
+  "examples": [
+    {
+      "metadata": {
+        "name": "qwen3-4b-rocm-evaluation",
+        "version": "1.0.0",
+        "created": "2025-12-24T10:00:00Z",
+        "description": "ROCm evaluation of Qwen3-4B on AMD AI Max+ 395"
+      },
+      "model": {
+        "identifier": "Qwen3-4B-GGUF",
+        "checkpoint": "unsloth/Qwen3-4B-GGUF:Q4_0",
+        "recipe": "llamacpp-rocm",
+        "quantization": {
+          "method": "Q4_0",
+          "bits": 4
+        },
+        "size_gb": 2.38,
+        "context_length": 32768
+      },
+      "hardware": {
+        "backend": "rocm",
+        "device": "igpu",
+        "platform": "AMD Ryzen AI Max+ 395",
+        "architecture": "gfx1151",
+        "vram_limit_gb": 96,
+        "system_ram_gb": 128
+      },
+      "benchmarks": {
+        "performance": {
+          "enabled": true,
+          "iterations": 5,
+          "prompts_per_iteration": 10,
+          "metrics": [
+            "tokens_per_second",
+            "latency_ms",
+            "vram_usage_gb"
+          ]
+        },
+        "accuracy": {
+          "enabled": true,
+          "suites": [
+            {
+              "name": "mmlu",
+              "limit": 100,
+              "num_fewshot": 0
+            },
+            {
+              "name": "gsm8k",
+              "limit": 50,
+              "num_fewshot": 5
+            }
+          ]
+        }
+      },
+      "targets": {
+        "tokens_per_second": 20,
+        "time_to_first_token_ms": 500,
+        "accuracy": 0.7
+      }
+    },
+    {
+      "metadata": {
+        "name": "llama-int4-vs-int8-comparison",
+        "version": "1.0.0",
+        "created": "2025-12-24T12:00:00Z",
+        "description": "Compare Llama-3.1-8B with INT4 vs INT8 quantization"
+      },
+      "model": {
+        "identifier": "Llama-3.1-8B-Instruct",
+        "checkpoint": "meta-llama/Llama-3.1-8B-Instruct:Q4_K_M",
+        "recipe": "oga-hybrid",
+        "quantization": {
+          "method": "Q4_K_M",
+          "bits": 4
+        },
+        "size_gb": 4.8,
+        "context_length": 8192
+      },
+      "hardware": {
+        "backend": "hybrid",
+        "device": "hybrid",
+        "platform": "AMD Ryzen AI Max+ 395",
+        "architecture": "gfx1151",
+        "vram_limit_gb": 96
+      },
+      "benchmarks": {
+        "performance": {
+          "enabled": true,
+          "iterations": 10,
+          "prompts_per_iteration": 20,
+          "metrics": [
+            "tokens_per_second",
+            "latency_ms",
+            "time_to_first_token_ms",
+            "vram_usage_gb",
+            "gpu_utilization"
+          ]
+        },
+        "accuracy": {
+          "enabled": true,
+          "suites": [
+            {
+              "name": "mmlu",
+              "limit": null
+            },
+            {
+              "name": "hellaswag",
+              "limit": null
+            }
+          ]
+        }
+      },
+      "wandb": {
+        "enabled": true,
+        "project": "lemonade-ryzenai-evals",
+        "offline": false,
+        "tags": ["comparison", "quantization-study"]
+      }
+    }
+  ]
+}
