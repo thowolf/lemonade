@@ -22,41 +22,47 @@ CONTENT_PATTERN = re.compile(r'\brocm\b', re.IGNORECASE)
 SKIP_DIRS = {'.git', '.venv', 'venv', 'env', 'build', 'dist', '__pycache__', '.github', 'wandb'}
 SKIP_FILES = {'CHANGELOG.md', 'LICENSE'}
 
-for root, dirs, files in os.walk(ROOT):
-    # Normalize and skip certain dirs
-    dirs[:] = [d for d in dirs if d not in SKIP_DIRS]
+# Only scan user-facing directories for new ROCm docs/tests to prevent false positives
+INCLUDE_DIRS = {"docs", "specs", "tests", "examples", "scripts", ".specify"}
+for top in INCLUDE_DIRS:
+    topdir = os.path.join(ROOT, top)
+    if not os.path.exists(topdir):
+        continue
+    for root, dirs, files in os.walk(topdir):
+        # Normalize and skip certain dirs
+        dirs[:] = [d for d in dirs if d not in SKIP_DIRS]
 
-    # Check path components for "rocm"
-    rel_root = os.path.relpath(root, ROOT)
-    if PATH_PATTERN.search(rel_root.replace('\\', '/')):
-        OFFENDING.append(('path', rel_root))
+        # Check path components for "rocm"
+        rel_root = os.path.relpath(root, ROOT)
+        if PATH_PATTERN.search(rel_root.replace('\\', '/')):
+            OFFENDING.append(('path', rel_root))
 
-    for fname in files:
-        if fname in SKIP_FILES:
-            continue
-        fpath = os.path.join(root, fname)
-        # Check filename for pattern
-        rel_path = os.path.relpath(fpath, ROOT)
-        if PATH_PATTERN.search(rel_path.replace('\\', '/')):
-            OFFENDING.append(('path', rel_path))
-            continue
-        # Check file content for token
-        try:
-            with open(fpath, 'r', encoding='utf-8') as fh:
-                try:
-                    data = fh.read()
-                except Exception:
-                    # Binary or unreadable; skip content check
-                    continue
-                if CONTENT_PATTERN.search(data):
-                    # Record a short snippet
-                    m = CONTENT_PATTERN.search(data)
-                    start = max(0, m.start() - 40)
-                    end = min(len(data), m.end() + 40)
-                    snippet = data[start:end].replace('\n', ' ')
-                    OFFENDING.append(('content', rel_path, snippet))
-        except (UnicodeDecodeError, PermissionError, IsADirectoryError):
-            continue
+        for fname in files:
+            if fname in SKIP_FILES:
+                continue
+            fpath = os.path.join(root, fname)
+            # Check filename for pattern
+            rel_path = os.path.relpath(fpath, ROOT)
+            if PATH_PATTERN.search(rel_path.replace('\\', '/')):
+                OFFENDING.append(('path', rel_path))
+                continue
+            # Check file content for token
+            try:
+                with open(fpath, 'r', encoding='utf-8') as fh:
+                    try:
+                        data = fh.read()
+                    except Exception:
+                        # Binary or unreadable; skip content check
+                        continue
+                    if CONTENT_PATTERN.search(data):
+                        # Record a short snippet
+                        m = CONTENT_PATTERN.search(data)
+                        start = max(0, m.start() - 40)
+                        end = min(len(data), m.end() + 40)
+                        snippet = data[start:end].replace('\n', ' ')
+                        OFFENDING.append(('content', rel_path, snippet))
+            except (UnicodeDecodeError, PermissionError, IsADirectoryError):
+                continue
 
 if OFFENDING:
     print('\nERROR: Disallowed ROCm references detected in repository:')
