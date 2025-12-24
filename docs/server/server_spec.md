@@ -1139,8 +1139,8 @@ To install an arbitrary GGUF from Hugging Face, open the Lemonade web app by nav
 
 | Platform | GPU Acceleration | CPU Architecture |
 |----------|------------------|------------------|
-| Windows  | ✅ Vulkan, ROCm        | ✅ x64           |
-| Ubuntu   | ✅ Vulkan, ROCm        | ✅ x64           |
+| Windows  | ✅ Vulkan        | ✅ x64           |
+| Ubuntu   | ✅ Vulkan        | ✅ x64           |
 | macOS    | ✅ Metal         | ✅ Apple Silicon |
 | Other Linux | ⚠️* Vulkan    | ⚠️* x64          |
 
