@@ -25,7 +25,7 @@ This guide walks you through running your first LLM model comparison evaluation 
 ### Software Requirements
 - **Lemonade SDK**: Version 9.0.0 or later
 - **Python**: 3.10-3.13
-- **ROCm**: 7.11.0 or later (for AMD GPU acceleration)
+- **AMD GPU drivers**: appropriate vendor drivers or tooling for your platform (for AMD GPU acceleration)
 
 ### Accounts
 - **Weights & Biases**: Free account at [wandb.ai](https://wandb.ai)
@@ -415,7 +415,7 @@ wandb login --relogin
 
 **Solutions**:
 - Check backend is using GPU/NPU: `backend: "hybrid"`
-- Verify ROCm installation: `rocm-smi`
+- Verify GPU driver installation using vendor tools (e.g., `rocm-smi`, `nvidia-smi` or platform-specific tools)
 - Reduce `iterations` and `prompts_per_iteration` for testing
 
 ### Issue: "Offline sync fails"

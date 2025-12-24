@@ -181,7 +181,7 @@ All operations MUST produce clear, structured logs. Performance profiling tools 
 "C:\Users\tomwo\AppData\Local\lemonade_server\bin\lemonade-server.exe" serve
 ```
 
-**Test Hardware**: AMD AI Max+ 395 with **96GB VRAM** (gfx1151), ROCm-enabled Windows 11 system — system RAM: 128 GB
+**Test Hardware**: AMD AI Max+ 395 with **96GB VRAM** (gfx1151) — system RAM: 128 GB
 
 **Verified Software Stack**:
 - **Python**: 3.13.11 (3.10-3.13 supported)

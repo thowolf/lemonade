@@ -19,7 +19,7 @@ PATH_PATTERN = re.compile(r'\brocm\b', re.IGNORECASE)
 CONTENT_PATTERN = re.compile(r'\brocm\b', re.IGNORECASE)
 
 # Files/dirs to explicitly ignore when scanning for content (common large/binary folders)
-SKIP_DIRS = {'.git', '.venv', 'venv', 'env', 'build', 'dist', '__pycache__', '.github'}
+SKIP_DIRS = {'.git', '.venv', 'venv', 'env', 'build', 'dist', '__pycache__', '.github', 'wandb'}
 SKIP_FILES = {'CHANGELOG.md', 'LICENSE'}
 
 for root, dirs, files in os.walk(ROOT):
