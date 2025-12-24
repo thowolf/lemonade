@@ -93,7 +93,12 @@ def extract_stats(samples: list[dict]) -> dict:
     return stats
 
 
-def plot_comparison(model_stats: dict, out_dir: Path) -> tuple[str,str]:
+def plot_comparison(model_stats: dict, out_dir: Path) -> tuple[bytes, bytes]:
+    """Return raw PNG bytes for histogram and tokens/sec chart.
+
+    Returning raw bytes allows optional upload to W&B or other services without
+    needing to re-encode from base64 later.
+    """
     # model_stats: {model: {latencies:[], tps:[], stats:{}}}
     # Latency histogram overlay
     plt.figure(figsize=(8,4))
@@ -108,7 +113,7 @@ def plot_comparison(model_stats: dict, out_dir: Path) -> tuple[str,str]:
     plt.savefig(buf, format="png")
     plt.close()
     buf.seek(0)
-    hist_b64 = base64.b64encode(buf.read()).decode("ascii")
+    hist_bytes = buf.getvalue()
 
     # Tokens/sec line
     plt.figure(figsize=(8,4))
@@ -123,16 +128,19 @@ def plot_comparison(model_stats: dict, out_dir: Path) -> tuple[str,str]:
     plt.savefig(buf, format="png")
     plt.close()
     buf.seek(0)
-    tps_b64 = base64.b64encode(buf.read()).decode("ascii")
+    tps_bytes = buf.getvalue()
 
-    return hist_b64, tps_b64
+    return hist_bytes, tps_bytes
 
 
-def generate_html_report(model_stats: dict, hist_b64: str, tps_b64: str, out_path: Path) -> None:
+def generate_html_report(model_stats: dict, hist_bytes: bytes, tps_bytes: bytes, out_path: Path) -> None:
     rows = []
     for model, data in model_stats.items():
         s = data["stats"]
         rows.append(f"<tr><td>{model}</td><td>{s['samples']}</td><td>{s['mean_latency_ms']:.2f}</td><td>{s['p95_latency_ms']:.2f}</td><td>{s['mean_tps']:.2f}</td><td>{s['total_tokens']}</td></tr>")
+
+    hist_b64 = base64.b64encode(hist_bytes).decode("ascii")
+    tps_b64 = base64.b64encode(tps_bytes).decode("ascii")
 
     html = f'''<!doctype html>
 <html><head><meta charset="utf-8"><title>Model comparison</title></head><body>
@@ -156,12 +164,78 @@ def main():
     parser.add_argument("--server", default="http://localhost:8000", help="Local server URL for live mode")
     parser.add_argument("--samples", type=int, default=10, help="Number of samples per model for live mode")
     parser.add_argument("--out-dir", default="reports", help="Output directory")
+    parser.add_argument("--wandb", action="store_true", help="Upload report and charts to W&B and create a Weave view if available")
+    parser.add_argument("--project", default="lemonade-ryzenai-evals-demo", help="W&B project name")
     args = parser.parse_args()
 
     models = [m.strip() for m in args.models.split(",")]
     out_dir = Path(args.out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
 
+    def log_to_wandb(project_name: str, model_stats: dict, hist_bytes: bytes, tps_bytes: bytes, report_path: Path) -> None:
+        try:
+            import wandb
+        except Exception:
+            print("wandb not installed or available; skipping W&B upload")
+            return
+
+        try:
+            run = wandb.init(project=project_name or "lemonade-ryzenai-evals", job_type="model_comparison", reinit=True)
+        except Exception as e:
+            print(f"Warning: Failed to initialize W&B run: {e}")
+            return
+
+        # Log metrics per model
+        for model, data in model_stats.items():
+            s = data["stats"]
+            try:
+                run.log({
+                    f"{model}/mean_latency_ms": s["mean_latency_ms"],
+                    f"{model}/p95_latency_ms": s["p95_latency_ms"],
+                    f"{model}/mean_tps": s["mean_tps"],
+                    f"{model}/total_tokens": s["total_tokens"],
+                })
+            except Exception as e:
+                print(f"Warning: Failed to log metrics for {model}: {e}")
+
+        # Attach images
+        try:
+            from PIL import Image
+            import io as _io
+            img1 = Image.open(_io.BytesIO(hist_bytes))
+            img2 = Image.open(_io.BytesIO(tps_bytes))
+            run.log({
+                "charts/latency_histogram": wandb.Image(img1, caption="Latency histogram"),
+                "charts/tokens_per_sec": wandb.Image(img2, caption="Tokens/sec per sample"),
+            })
+        except Exception as e:
+            # Fallback: write files and attach
+            try:
+                tmp_hist = report_path.parent / "latency_hist.png"
+                tmp_tps = report_path.parent / "tokens_per_sec.png"
+                tmp_hist.write_bytes(hist_bytes)
+                tmp_tps.write_bytes(tps_bytes)
+                run.log({
+                    "charts/latency_histogram": wandb.Image(str(tmp_hist)),
+                    "charts/tokens_per_sec": wandb.Image(str(tmp_tps)),
+                })
+            except Exception as e2:
+                print(f"Warning: Failed to attach images to W&B run: {e2}")
+
+        try:
+            wandb.save(str(report_path))
+        except Exception as e:
+            print(f"Warning: failed to save report to wandb: {e}")
+
+        try:
+            print("W&B run URL:", run.url)
+        except Exception:
+            pass
+
+        try:
+            run.finish()
+        except Exception:
+            pass
     model_stats = {}
 
     prompts = [
@@ -180,10 +254,14 @@ def main():
         stats = extract_stats(samples)
         model_stats[model] = {"latencies": lat, "tps": tps, "stats": stats, "samples": samples}
 
-    hist_b64, tps_b64 = plot_comparison({m: {"latencies": model_stats[m]["latencies"], "tps": model_stats[m]["tps"]} for m in model_stats}, out_dir)
+    hist_bytes, tps_bytes = plot_comparison({m: {"latencies": model_stats[m]["latencies"], "tps": model_stats[m]["tps"]} for m in model_stats}, out_dir)
 
     report_path = out_dir / f"compare_{'_'.join(m.replace('/','_') for m in models)}.html"
-    generate_html_report({m: model_stats[m] for m in model_stats}, hist_b64, tps_b64, report_path)
+    generate_html_report({m: model_stats[m] for m in model_stats}, hist_bytes, tps_bytes, report_path)
+
+    # Optional: upload to W&B and create a Weave view if requested
+    if getattr(args, 'wandb', False):
+        log_to_wandb(args.project or None, {m: model_stats[m] for m in model_stats}, hist_bytes, tps_bytes, report_path)
 
     print("Report generated:", report_path)
 
