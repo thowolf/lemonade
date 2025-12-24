@@ -1,0 +1,21 @@
+# MoE Validation Test Suite Requirements
+# Feature: 002-moe-qwen3-tests
+
+# Core Lemonade SDK (should already be installed)
+# lemonade-sdk[dev,oga-ryzenai] @ https://pypi.amd.com/simple
+
+# GGUF model loading (llama.cpp Python bindings)
+llama-cpp-python>=0.2.0
+
+# LM Evaluation Harness for accuracy tests
+lm-eval>=0.4.0
+
+# Data manipulation and reporting
+pandas>=2.0.0
+
+# OpenAI API client for LLM judge
+openai>=1.0.0
+
+# Additional testing dependencies
+pytest>=7.0.0
+pytest-asyncio>=0.21.0
