@@ -1,0 +1,466 @@
+# W&B Weave Logging Schema for LLM Model Comparison
+# Feature: 003-wandb-model-comparison
+# Version: 1.0.0
+# Date: 2025-12-24
+
+# This schema defines the structure for logging evaluation data to Weights & Biases (W&B) Weave
+# References:
+# - W&B Weave Docs: https://wandb.github.io/weave/
+# - Data Model: ../data-model.md
+
+---
+schema_version: "1.0.0"
+project_name: "lemonade-ryzenai-evals"
+description: "W&B Weave logging schema for LLM model comparison on AMD Ryzen AI"
+
+# W&B Run Configuration
+# Each evaluation run maps to a W&B run with metadata, tags, and config
+run_config:
+  # Run naming convention
+  name_pattern: "{model_name}_{benchmark}_{timestamp}"
+  # Example: "Llama-3.1-8B_mmlu_20251224_120000"
+
+  # Hierarchical grouping for organization
+  group_pattern: "{model_family}/{quantization}/{benchmark_suite}"
+  # Example: "llama/int4/mmlu"
+
+  # Job type categorization
+  job_type_pattern: "{benchmark_suite}_evaluation"
+  # Example: "mmlu_evaluation"
+
+  # Tags for filtering and querying
+  tags:
+    # Prefix-based tag schema to avoid namespace collision
+    - pattern: "model:{model_family}"
+      examples: ["model:llama", "model:qwen", "model:phi"]
+
+    - pattern: "quant:{quantization}"
+      examples: ["quant:int4", "quant:int8", "quant:fp16"]
+
+    - pattern: "backend:{backend}"
+      examples: ["backend:oga-npu", "backend:llamacpp-cpu", "backend:flm"]
+
+    - pattern: "device:{device}"
+      examples: ["device:npu", "device:igpu", "device:cpu", "device:hybrid"]
+
+    - pattern: "benchmark:{benchmark_suite}"
+      examples: ["benchmark:mmlu", "benchmark:gsm8k", "benchmark:hellaswag"]
+
+    - pattern: "hardware:ryzen-ai"
+      description: "Platform identifier for AMD Ryzen AI"
+
+  # Config parameters (structured data for filtering)
+  config_fields:
+    model_name:
+      type: string
+      required: true
+      description: "Full model identifier"
+      example: "Llama-3.1-8B-Instruct"
+
+    model_family:
+      type: string
+      required: true
+      description: "Model family for grouping"
+      example: "llama"
+      enum: ["llama", "qwen", "phi", "mistral", "other"]
+
+    checkpoint:
+      type: string
+      required: true
+      description: "HuggingFace checkpoint path"
+      pattern: "^[^/]+/[^:]+:[^:]+$"
+      example: "meta-llama/Llama-3.1-8B-Instruct:Q4_0"
+
+    quantization:
+      type: string
+      required: true
+      description: "Quantization method"
+      example: "int4"
+      enum: ["int4", "int8", "fp16", "fp32", "q4_0", "q4_k_m", "q8_0"]
+
+    moe_config:
+      type: object
+      required: false
+      description: "MoE configuration if applicable"
+      schema:
+        num_experts:
+          type: integer
+          minimum: 2
+        experts_per_token:
+          type: integer
+          minimum: 1
+      example:
+        num_experts: 16
+        experts_per_token: 2
+
+    backend:
+      type: string
+      required: true
+      description: "Inference backend"
+      example: "oga-hybrid"
+      enum: ["oga-npu", "oga-hybrid", "oga-cpu", "llamacpp-cpu", "llamacpp-vulkan", "flm"]
+
+    device:
+      type: string
+      required: true
+      description: "Execution device"
+      example: "npu"
+      enum: ["npu", "igpu", "cpu", "hybrid"]
+
+    benchmark_suite:
+      type: string
+      required: true
+      description: "Benchmark suite name"
+      example: "mmlu"
+
+    hardware:
+      type: object
+      required: true
+      description: "Hardware platform details"
+      schema:
+        cpu:
+          type: string
+          example: "AMD Ryzen AI Max+ 395"
+        gpu:
+          type: string
+          example: "AMD Radeon 8060S gfx1151"
+        architecture:
+          type: string
+          example: "gfx1151"
+        vram_gb:
+          type: number
+          example: 96
+        system_ram_gb:
+          type: number
+          example: 128
+
+# Metric Logging Schema
+# Defines the structure of metrics logged via weave.log()
+metrics:
+  # Metadata metrics (logged once per run)
+  metadata:
+    namespace: "test/"
+    fields:
+      test/name:
+        type: string
+        description: "Test/benchmark name"
+        example: "mmlu_abstract_algebra"
+
+      test/iteration:
+        type: integer
+        description: "Iteration number for multi-run tests"
+        minimum: 0
+
+  # Model identification metrics
+  model_info:
+    namespace: "model/"
+    fields:
+      model/name:
+        type: string
+        description: "Model name"
+
+      model/size_gb:
+        type: number
+        description: "Model size in GB"
+        unit: "gigabytes"
+
+      model/backend:
+        type: string
+        description: "Backend used for inference"
+
+  # Accuracy metrics (from lm-eval results)
+  accuracy:
+    namespace: "accuracy/"
+    fields:
+      accuracy/task:
+        type: string
+        description: "Specific task name"
+        example: "mmlu_abstract_algebra"
+
+      accuracy/acc:
+        type: number
+        description: "Overall accuracy (0-1)"
+        minimum: 0.0
+        maximum: 1.0
+
+      accuracy/acc_stderr:
+        type: number
+        description: "Standard error of accuracy"
+
+      accuracy/exact_match:
+        type: number
+        description: "Exact match score (0-1)"
+        minimum: 0.0
+        maximum: 1.0
+
+      accuracy/f1:
+        type: number
+        description: "F1 score (0-1)"
+        minimum: 0.0
+        maximum: 1.0
+
+  # Performance metrics
+  performance:
+    namespace: "perf/"
+    fields:
+      perf/tokens_per_second:
+        type: number
+        description: "Throughput in tokens/second"
+        unit: "tokens/s"
+        minimum: 0.0
+
+      perf/latency_ms:
+        type: number
+        description: "Mean latency"
+        unit: "milliseconds"
+        minimum: 0.0
+
+      perf/latency_p50_ms:
+        type: number
+        description: "Median latency (P50)"
+        unit: "milliseconds"
+
+      perf/latency_p95_ms:
+        type: number
+        description: "95th percentile latency"
+        unit: "milliseconds"
+
+      perf/latency_p99_ms:
+        type: number
+        description: "99th percentile latency"
+        unit: "milliseconds"
+
+      perf/time_to_first_token_ms:
+        type: number
+        description: "Time to first token (TTFT)"
+        unit: "milliseconds"
+        minimum: 0.0
+
+      perf/total_tokens:
+        type: integer
+        description: "Total tokens processed"
+        minimum: 0
+
+      perf/prompt_tokens:
+        type: integer
+        description: "Input prompt tokens"
+        minimum: 0
+
+      perf/completion_tokens:
+        type: integer
+        description: "Generated completion tokens"
+        minimum: 0
+
+  # Resource utilization metrics
+  resources:
+    namespace: "resources/"
+    fields:
+      resources/peak_memory_mb:
+        type: number
+        description: "Peak memory usage"
+        unit: "megabytes"
+        minimum: 0.0
+
+      resources/avg_memory_mb:
+        type: number
+        description: "Average memory usage"
+        unit: "megabytes"
+        minimum: 0.0
+
+      resources/vram_usage_mb:
+        type: number
+        description: "GPU/NPU VRAM usage"
+        unit: "megabytes"
+        minimum: 0.0
+
+      resources/cpu_utilization_percent:
+        type: number
+        description: "CPU utilization percentage"
+        unit: "percent"
+        minimum: 0.0
+        maximum: 100.0
+
+      resources/gpu_utilization_percent:
+        type: number
+        description: "GPU/NPU utilization percentage"
+        unit: "percent"
+        minimum: 0.0
+        maximum: 100.0
+
+      resources/power_consumption_watts:
+        type: number
+        description: "Power consumption (if available)"
+        unit: "watts"
+        minimum: 0.0
+
+  # Summary statistics (aggregated across iterations)
+  summary:
+    namespace: "summary/"
+    description: "Aggregated metrics across multiple iterations"
+    aggregation_functions:
+      - mean
+      - median
+      - std
+      - min
+      - max
+      - p95
+      - p99
+    fields:
+      summary/tokens_per_second/mean:
+        type: number
+        description: "Mean TPS across iterations"
+
+      summary/tokens_per_second/std:
+        type: number
+        description: "Standard deviation of TPS"
+
+      summary/latency_ms/p95:
+        type: number
+        description: "95th percentile latency across iterations"
+
+      summary/accuracy/mean:
+        type: number
+        description: "Mean accuracy across tasks"
+
+# Dashboard Configuration
+# Recommended W&B dashboard panels and visualizations
+dashboard:
+  recommended_panels:
+    - panel_id: "comparison_table"
+      type: "table"
+      title: "Model Comparison Table"
+      columns:
+        - "model_name"
+        - "quantization"
+        - "summary/tokens_per_second/mean"
+        - "summary/latency_ms/p95"
+        - "summary/accuracy/mean"
+        - "resources/peak_memory_mb"
+      sortable: true
+      filterable: true
+
+    - panel_id: "tps_comparison"
+      type: "bar_chart"
+      title: "Tokens Per Second by Model"
+      x_axis: "model_name"
+      y_axis: "summary/tokens_per_second/mean"
+      group_by: "quantization"
+
+    - panel_id: "latency_vs_accuracy"
+      type: "scatter"
+      title: "Latency vs Accuracy Trade-off"
+      x_axis: "summary/latency_ms/p95"
+      y_axis: "summary/accuracy/mean"
+      color_by: "quantization"
+      size_by: "model/size_gb"
+
+    - panel_id: "memory_usage"
+      type: "bar_chart"
+      title: "Peak Memory Usage by Configuration"
+      x_axis: "model_name"
+      y_axis: "resources/peak_memory_mb"
+      group_by: "backend"
+
+    - panel_id: "latency_distribution"
+      type: "box_plot"
+      title: "Latency Distribution"
+      data: "perf/latency_ms"
+      group_by: "model_name"
+      show_percentiles: [50, 95, 99]
+
+# Offline Mode Configuration
+offline:
+  enabled: true
+  description: "Support for offline logging with sync-later capability"
+  environment_variable: "WANDB_MODE"
+  values:
+    online: "online"
+    offline: "offline"
+  storage:
+    default_dir: "./wandb/"
+    pattern: "offline-run-{timestamp}-{run_id}/"
+  sync_command: "wandb sync --sync-all {dir}"
+
+# Validation Rules
+validation:
+  # Cross-metric validation
+  rules:
+    - rule_id: "token_count_consistency"
+      description: "Total tokens = prompt tokens + completion tokens"
+      expression: "perf/total_tokens == perf/prompt_tokens + perf/completion_tokens"
+
+    - rule_id: "latency_percentile_order"
+      description: "Latency percentiles must be in ascending order"
+      expression: "perf/latency_p50_ms <= perf/latency_p95_ms <= perf/latency_p99_ms"
+
+    - rule_id: "utilization_range"
+      description: "Utilization percentages must be in valid range"
+      expression: "0 <= resources/cpu_utilization_percent <= 100 AND 0 <= resources/gpu_utilization_percent <= 100"
+
+    - rule_id: "accuracy_range"
+      description: "Accuracy metrics must be in [0, 1]"
+      expression: "0 <= accuracy/acc <= 1"
+
+# Migration and Versioning
+versioning:
+  schema_version: "1.0.0"
+  compatible_with:
+    weave: ">=0.51.0"
+    wandb: ">=0.18.0"
+  changelog:
+    - version: "1.0.0"
+      date: "2025-12-24"
+      changes:
+        - "Initial schema definition"
+        - "Support for MMLU and HellaSwag benchmarks"
+        - "Integrated with Lemonade SDK metrics patterns"
+
+# Example Usage
+examples:
+  - name: "Log evaluation run with W&B Weave"
+    code: |
+      import weave
+      import wandb
+
+      # Initialize Weave project
+      weave.init("lemonade-ryzenai-evals")
+
+      # Initialize W&B run with metadata
+      run = wandb.init(
+          project="lemonade-ryzenai-evals",
+          name="Llama-3.1-8B_mmlu_20251224_120000",
+          group="llama/int4/mmlu",
+          job_type="mmlu_evaluation",
+          tags=[
+              "model:llama",
+              "quant:int4",
+              "backend:oga-npu",
+              "device:npu",
+              "benchmark:mmlu",
+              "hardware:ryzen-ai"
+          ],
+          config={
+              "model_name": "Llama-3.1-8B-Instruct",
+              "model_family": "llama",
+              "checkpoint": "meta-llama/Llama-3.1-8B-Instruct:Q4_0",
+              "quantization": "int4",
+              "backend": "oga-npu",
+              "device": "npu",
+              "benchmark_suite": "mmlu",
+              "hardware": {
+                  "cpu": "AMD Ryzen AI Max+ 395",
+                  "vram_gb": 96
+              }
+          }
+      )
+
+      # Log metrics
+      weave.log({
+          "test/name": "mmlu_abstract_algebra",
+          "accuracy/acc": 0.847,
+          "perf/tokens_per_second": 125.3,
+          "perf/latency_ms": 45.2,
+          "resources/peak_memory_mb": 12300
+      })
+
+      wandb.finish()
