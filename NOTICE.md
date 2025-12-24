@@ -2,7 +2,7 @@ PORTIONS LICENSED AS FOLLOWS
 
 ## llama.cpp
 
-Binaries for llama.cpp are downloaded under the MIT license from https://github.com/ggml-org/llama.cpp, as well as https://github.com/lemonade-sdk/llamacpp-rocm (which uses https://github.com/ggml-org/llama.cpp to build them.)
+Binaries for llama.cpp are downloaded under the MIT license from https://github.com/ggml-org/llama.cpp. Custom backend builds may be provided by maintainers as separate repositories.
 
 Lemonade SDK used the [ONNX TurnkeyML](https://github.com/onnx/turnkeyml) project as a starting point under the [Apache 2.0 license](./LICENSE).
 

@@ -36,8 +36,9 @@ jobs:
         include:
           - backend: vulkan
             runner: [rai300_400, Windows]
-          - backend: rocm
-            runner: [stx-halo, Windows]
+          # Disabled ROCm matrix entry (ROCm support removed)
+          # - backend: rocm
+          #   runner: [stx-halo, Windows]
 
     runs-on: ${{ matrix.runner }}
     concurrency:
@@ -111,8 +112,9 @@ jobs:
     strategy:
       matrix:
         include:
-          - backend: rocm
-            runner: [stx-halo, Linux]
+          # Disabled ROCm matrix entry (ROCm support removed)
+          # - backend: rocm
+          #   runner: [stx-halo, Linux]
           - backend: vulkan
             runner: [rai300_400, Linux]
 

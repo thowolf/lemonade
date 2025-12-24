@@ -98,7 +98,7 @@ metadata:
 model:
   identifier: "Qwen3-4B-GGUF"
   checkpoint: "unsloth/Qwen3-4B-GGUF:Q4_0"
-  recipe: "llamacpp-rocm"
+  recipe: "llamacpp-vulkan"
   quantization:
     method: "Q4_0"
     bits: 4

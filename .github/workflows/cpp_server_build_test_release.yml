@@ -891,7 +891,8 @@ jobs:
         if: always()
         uses: ./.github/actions/cleanup-processes-windows
 
-  test-exe-llamacpp-rocm:
+# Deprecated: test-exe-llamacpp-rocm (ROCm support removed)
+#  test-exe-llamacpp-rocm:
     name: Test .exe - Llamacpp (ROCm)
     runs-on: [stx-halo, Windows]
     needs: build-lemonade-server-installer
@@ -1223,7 +1224,8 @@ jobs:
         if: always()
         uses: ./.github/actions/cleanup-processes-linux
 
-  test-deb-llamacpp-rocm:
+# Deprecated: test-deb-llamacpp-rocm (ROCm support removed)
+#  test-deb-llamacpp-rocm:
     name: Test .deb - Llamacpp (ROCm)
     runs-on: [stx-halo, Linux]
     needs: build-lemonade-server-deb

@@ -171,7 +171,7 @@ class Install:
         parser.add_argument(
             "--llamacpp",
             help="Install llama.cpp binaries with specified backend",
-            choices=["rocm", "vulkan", "cpu"],
+            choices=["vulkan", "cpu"],
         )
 
         parser.add_argument(

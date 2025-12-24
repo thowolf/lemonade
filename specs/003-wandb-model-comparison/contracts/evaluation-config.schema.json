@@ -17,7 +17,7 @@
           "description": "Human-readable evaluation name",
           "minLength": 1,
           "maxLength": 255,
-          "examples": ["qwen3-4b-rocm-evaluation", "llama-int4-vs-int8"]
+          "examples": ["qwen3-4b-vulkan-evaluation", "llama-int4-vs-int8"]
         },
         "version": {
           "type": "string",
@@ -74,7 +74,6 @@
             "oga-igpu",
             "llamacpp-cpu",
             "llamacpp-vulkan",
-            "llamacpp-rocm",
             "flm"
           ]
         },
@@ -139,8 +138,8 @@
       "properties": {
         "backend": {
           "type": "string",
-          "description": "Hardware backend (ROCm, Vulkan, CPU)",
-          "enum": ["rocm", "vulkan", "cpu", "hybrid", "npu"]
+          "description": "Hardware backend (Vulkan, CPU)",
+          "enum": ["vulkan", "cpu", "hybrid", "npu"]
         },
         "device": {
           "type": "string",
@@ -176,7 +175,7 @@
           "items": {
             "type": "string"
           },
-          "examples": [["--llamacpp", "rocm"], ["--vulkan", "--gpu", "0"]]
+          "examples": [["--llamacpp", "vulkan"], ["--vulkan", "--gpu", "0"]]
         }
       }
     },

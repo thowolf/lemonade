@@ -1218,37 +1218,9 @@ class LinuxSystemInfo(SystemInfo):
 
     def _get_amd_vram_rocm_smi_linux(self) -> float:
         """
-        Get AMD GPU VRAM using rocm-smi command on Linux.
-
-        Returns:
-            float: VRAM in GB, or 0.0 if detection fails
+        ROCm support removed — this helper previously used `rocm-smi` to obtain AMD VRAM.
+        Returns 0.0 to indicate not available when ROCm support is not compiled in.
         """
-        try:
-            output = (
-                subprocess.check_output(
-                    ["rocm-smi", "--showmeminfo", "vram", "--csv"],
-                    stderr=subprocess.DEVNULL,
-                )
-                .decode()
-                .strip()
-            )
-
-            # Parse CSV output to extract VRAM
-            lines = output.split("\n")
-            for line in lines:
-                if "Total VRAM" in line or "vram" in line.lower():
-                    # Extract numeric value (assuming it's in MB or GB)
-                    numbers = re.findall(r"\d+", line)
-                    if numbers:
-                        vram_value = int(numbers[0])
-                        # Assume MB if value is large, GB if small
-                        if vram_value > 100:  # Likely MB
-                            vram_gb = round(vram_value / 1024, 1)
-                        else:  # Likely GB
-                            vram_gb = float(vram_value)
-                        return vram_gb
-        except (subprocess.CalledProcessError, FileNotFoundError, ValueError):
-            pass
         return 0.0
 
     def _get_amd_vram_sysfs(self, pci_id: str) -> float:

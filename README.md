@@ -72,7 +72,7 @@ To check all models available, use the `list` command:
 lemonade-server list
 ```
 
-> **Tip**: You can use `--llamacpp vulkan/rocm` to select a backend when running GGUF models.
+> **Tip**: You can use `--llamacpp vulkan` to select the backend when running GGUF models.
 
 
 ## Model Library
@@ -94,11 +94,11 @@ Lemonade supports the following configurations, while also making it easy to swi
 | Hardware | Engine: OGA | Engine: llamacpp | Engine: FLM | Windows | Linux |
 |----------|-------------|------------------|------------|---------|-------|
 | **🧠 CPU** | All platforms | All platforms | - | ✅ | ✅ |
-| **🎮 GPU** | — | Vulkan: All platforms<br>ROCm: Selected AMD platforms*<br>Metal: Apple Silicon | — | ✅ | ✅ |
+| **🎮 GPU** | — | Vulkan: All platforms<br>AMD GPU: Selected AMD platforms*<br>Metal: Apple Silicon | — | ✅ | ✅ |
 | **🤖 NPU** | AMD Ryzen™ AI 300 series | — | Ryzen™ AI 300 series | ✅ | — |
 
 <details>
-<summary><small><i>* See supported AMD ROCm platforms</i></small></summary>
+<summary><small><i>* See supported AMD GPU platforms</i></small></summary>
 
 <br>
 

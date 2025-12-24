@@ -6,11 +6,9 @@ query it in openai mode, and make sure that the response is valid for GGUF/Llama
 
 Backend options:
     vulkan  - Use Vulkan backend (python server_llamacpp.py vulkan)
-    rocm    - Use ROCm backend (python server_llamacpp.py rocm)
 
 Examples:
-    python server_llamacpp.py vulkan
-    python server_llamacpp.py rocm --offline
+    python server_llamacpp.py vulkan --offline
 
 If --offline is provided, tests will run in offline mode to ensure
 the server works without network connectivity.
@@ -60,34 +58,6 @@ class LlamaCppTesting(ServerTestingBase):
         print(f"\n=== Starting new GGUF/LlamaCPP test{backend_msg} ===")
         super().setUp()
 
-    def test_000_get_hip_devices_returns_zero(self):
-        """ROCm-only: get_hip_devices should report zero devices in CI."""
-        if self.llamacpp_backend == "metal":
-            self.skipTest("Skipping in metal smoke test mode")
-        if self.llamacpp_backend != "rocm":
-            return
-
-        # Skip when testing C++ server (this is Python-specific functionality)
-        if is_cpp_server():
-            self.skipTest("Skipping Python-specific test when using C++ server")
-
-        # FIXME: Our HIP ID detection works in most machines, but seems to specifically fail on
-        # our CI Linux machines. We should investigate why this is happening.
-        # https://github.com/lemonade-sdk/lemonade/issues/272
-        if sys.platform.startswith("linux"):
-            return
-
-        from lemonade.tools.llamacpp.utils import get_hip_devices
-
-        expected_devices = (
-            [[0, "AMD Radeon(TM) 8060S Graphics"]]
-            if sys.platform.startswith("win")
-            else [[0, "AMD Radeon Graphics"]]
-        )
-        devices = get_hip_devices()
-        assert (
-            devices == expected_devices
-        ), f"Expected {expected_devices} devices, got {devices}"
 
     # Endpoint: /api/v1/chat/completions
     def test_001_test_llamacpp_chat_completion_streaming(self):
