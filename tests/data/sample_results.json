@@ -1,0 +1,8 @@
+{
+  "summary": { "model": "test-model", "samples": 3, "elapsed_seconds": 3.1, "total_tokens": 150, "mean_latency_ms": 200, "p95_latency_ms": 300, "mean_tokens_per_second": 50 },
+  "results": [
+    {"index":1, "latency_ms": 150, "total_tokens": 50, "tokens_per_second": 60},
+    {"index":2, "latency_ms": 200, "total_tokens": 50, "tokens_per_second": 50},
+    {"index":3, "latency_ms": 250, "total_tokens": 50, "tokens_per_second": 40}
+  ]
+}
