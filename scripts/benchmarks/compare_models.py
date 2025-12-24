@@ -152,6 +152,8 @@ def generate_html_report(model_stats: dict, hist_bytes: bytes, tps_bytes: bytes,
 <img src="data:image/png;base64,{hist_b64}" style="max-width:100%;height:auto"/>
 <h2>Tokens/sec per sample</h2>
 <img src="data:image/png;base64,{tps_b64}" style="max-width:100%;height:auto"/>
+<hr/>
+<p style="font-size:0.9em;color:#666">Charts generated with Weights & Biases — <a href="https://docs.wandb.ai/models/track" target="_blank" rel="noopener">W&B Model Track docs</a></p>
 </body></html>'''
     out_path.write_text(html, encoding='utf-8')
 
@@ -179,8 +181,15 @@ def main():
             print("wandb not installed or available; skipping W&B upload")
             return
 
+        # Add tags indicating this is a comparison run and which models are included
+        tags = ["compare"]
         try:
-            run = wandb.init(project=project_name or "lemonade-ryzenai-evals", job_type="model_comparison", reinit=True)
+            tags.extend([f"model:{m}" for m in model_stats.keys()])
+        except Exception:
+            pass
+
+        try:
+            run = wandb.init(project=project_name or "lemonade-ryzenai-evals", job_type="model_comparison", tags=tags, reinit=True)
         except Exception as e:
             print(f"Warning: Failed to initialize W&B run: {e}")
             return
@@ -197,7 +206,6 @@ def main():
                 })
             except Exception as e:
                 print(f"Warning: Failed to log metrics for {model}: {e}")
-
         # Attach images
         try:
             from PIL import Image
@@ -292,6 +300,9 @@ Run: [{run.name}]({run.url})
         if tps_url:
             md += f"### Tokens/sec per sample\n\n![tokens/sec]({tps_url})\n\n"
 
+        # Add reference to W&B Model Track docs
+        md += "Learn more: [W&B Model Track docs](https://docs.wandb.ai/models/track)\n"
+
         # Publish Markdown view
         weave.init(project_name=project_name or proj)
 
@@ -345,7 +356,7 @@ Run: [{run.name}]({run.url})
         log_to_wandb(args.project or None, {m: model_stats[m] for m in model_stats}, hist_bytes, tps_bytes, report_path)
         # After successful W&B upload, create an interactive Weave SavedView for quick inspection
         try:
-            create_weave_savedview_from_wandb(args.project or None)
+            create_weave_savedview_from_wandb(args.project or None, models)
         except Exception as e:
             print(f"Warning: failed to create Weave SavedView: {e}")
 

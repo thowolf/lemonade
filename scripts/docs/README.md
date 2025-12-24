@@ -52,6 +52,8 @@ To upload summary metrics and chart images to W&B and create a Weave saved view,
 python scripts/create_weave_dashboard.py --weave --project lemonade-ryzenai-evals-demo
 ```
 
+Learn more about W&B model tracking and visualization: https://docs.wandb.ai/models/track
+
 Notes
 -----
 - The script will attempt to log metrics and images to W&B and create a Weave view only if `--weave` is provided and the `wandb`/`weave` packages are available and you are authenticated.

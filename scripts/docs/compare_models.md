@@ -21,3 +21,7 @@ Output: an HTML report `reports/compare_<models>.html` with a comparison table, 
 Optional W&B upload:
 
 - Add `--wandb` to upload metrics and images to Weights & Biases and store the HTML report in the run directory. You can specify `--project` to change the W&B project name (defaults to `lemonade-ryzenai-evals-demo`).
+
+Reference:
+
+- W&B Model Track docs: https://docs.wandb.ai/models/track
