@@ -211,6 +211,8 @@ torch.backends.cudnn.enabled = False
 
 **UI Development Policy**: UI and frontend development handled exclusively by core maintainers due to complexity of AI-assisted UI review. Community can propose UI/UX ideas via Issues or Discord.
 
+**Script Organization Policy**: All executable scripts MUST be placed inside a subdirectory of the top-level `scripts/` folder (for example: `scripts/benchmarks/`, `scripts/wandb/`, `scripts/playground/`). Avoid leaving scripts directly under `scripts/`. Prefer one folder per spec/feature (exceptions allowed with justification documented in the implementation plan). Maintainers and reviewers will enforce this rule during PR review; follow-up migration steps should be included when a policy change affects existing files.
+
 **Testing Requirements**: New features MUST include tests. Tests are OPTIONAL for specs but REQUIRED before merging implementation. Contract tests for API changes, integration tests for multi-component features, unit tests for isolated logic.
 
 **Upstream File Protection**: Files from the original public repository MUST NOT be overwritten in private fork operations. This includes but is not limited to:
