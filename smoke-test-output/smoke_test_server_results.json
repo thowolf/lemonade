@@ -1,9 +1,0 @@
-{
-  "model": "Qwen3-Next-80B-A3B-Instruct-GGUF",
-  "server": "localhost:8000",
-  "passed": true,
-  "duration_seconds": 2.7767159938812256,
-  "timestamp": "2025-12-24 16:16:39",
-  "output": "OK",
-  "error": null
-}
