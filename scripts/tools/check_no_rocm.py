@@ -21,6 +21,8 @@ CONTENT_PATTERN = re.compile(r'\brocm\b', re.IGNORECASE)
 # Files/dirs to explicitly ignore when scanning for content (common large/binary folders)
 SKIP_DIRS = {'.git', '.venv', 'venv', 'env', 'build', 'dist', '__pycache__', '.github', 'wandb'}
 SKIP_FILES = {'CHANGELOG.md', 'LICENSE'}
+# Files that are allowed to mention ROCm for policy or historical reasons
+ALLOWED_CONTENT_FILES = {'.specify/memory/constitution.md', 'scripts/tools/check_no_rocm.py'}
 
 # Only scan user-facing directories for new ROCm docs/tests to prevent false positives
 INCLUDE_DIRS = {"docs", "specs", "tests", "examples", "scripts", ".specify"}
@@ -54,7 +56,7 @@ for top in INCLUDE_DIRS:
                     except Exception:
                         # Binary or unreadable; skip content check
                         continue
-                    if CONTENT_PATTERN.search(data):
+                    if CONTENT_PATTERN.search(data) and rel_path.replace('\\', '/') not in ALLOWED_CONTENT_FILES:
                         # Record a short snippet
                         m = CONTENT_PATTERN.search(data)
                         start = max(0, m.start() - 40)

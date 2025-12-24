@@ -23,7 +23,7 @@ Examples:
 lemonade-server serve --port 8080 --log-level debug --llamacpp vulkan
 
 # Run a specific model with custom server settings
-lemonade-server run llama-3.2-3b-instruct --port 8080 --log-level debug --llamacpp rocm
+lemonade-server run llama-3.2-3b-instruct --port 8080 --log-level debug --llamacpp vulkan
 ```
 
 ## Command Line Options for `serve` and `run`
