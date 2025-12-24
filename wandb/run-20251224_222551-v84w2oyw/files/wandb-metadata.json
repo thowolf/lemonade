@@ -1,0 +1,33 @@
+{
+  "os":  "Windows-11-10.0.26200-SP0",
+  "python":  "CPython 3.13.11",
+  "startedAt":  "2025-12-24T21:25:51.843651Z",
+  "args":  [
+    "--weave",
+    "--project",
+    "lemonade-ryzenai-evals-demo"
+  ],
+  "program":  "c:\\Users\\tomwo\\git\\lemonade\\scripts\\create_weave_dashboard.py",
+  "codePath":  "scripts\\create_weave_dashboard.py",
+  "codePathLocal":  "scripts\\create_weave_dashboard.py",
+  "git":  {
+    "remote":  "https://github.com/thowolf/lemonade-private.git",
+    "commit":  "0bba5a757cbfff4cc0fcf5560a1f194e841c728b"
+  },
+  "email":  "tom.rally@gmail.com",
+  "root":  "c:\\Users\\tomwo\\git\\lemonade",
+  "host":  "hamster1",
+  "executable":  "c:\\Users\\tomwo\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+  "cpu_count":  16,
+  "cpu_count_logical":  32,
+  "disk":  {
+    "/":  {
+      "total":  "2045951078400",
+      "used":  "1336347045888"
+    }
+  },
+  "memory":  {
+    "total":  "33981009920"
+  },
+  "writerId":  "f4e1gekuny81lq9sz2xx7lfo8giu44bz"
+}

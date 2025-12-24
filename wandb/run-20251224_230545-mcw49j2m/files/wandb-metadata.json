@@ -1,0 +1,41 @@
+{
+  "os":  "Windows-11-10.0.26200-SP0",
+  "python":  "CPython 3.13.11",
+  "startedAt":  "2025-12-24T22:05:45.015470Z",
+  "args":  [
+    "--mode",
+    "offline",
+    "--models",
+    "qwen,Llama-3.1-8B-Instruct-Hybrid",
+    "--results-dir",
+    "tests/data",
+    "--out-dir",
+    "reports",
+    "--wandb",
+    "--project",
+    "lemonade-ryzenai-evals-demo"
+  ],
+  "program":  "c:\\Users\\tomwo\\git\\lemonade\\scripts\\benchmarks\\compare_models.py",
+  "codePath":  "scripts\\benchmarks\\compare_models.py",
+  "codePathLocal":  "scripts\\benchmarks\\compare_models.py",
+  "git":  {
+    "remote":  "https://github.com/thowolf/lemonade-private.git",
+    "commit":  "d0d68f620c31a528d58e314598ba71f6368ebbd1"
+  },
+  "email":  "tom.rally@gmail.com",
+  "root":  "c:\\Users\\tomwo\\git\\lemonade",
+  "host":  "hamster1",
+  "executable":  "c:\\Users\\tomwo\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+  "cpu_count":  16,
+  "cpu_count_logical":  32,
+  "disk":  {
+    "/":  {
+      "total":  "2045951078400",
+      "used":  "1336397836288"
+    }
+  },
+  "memory":  {
+    "total":  "33981009920"
+  },
+  "writerId":  "iyjo7sptug8qv5y44u1vn00vpiqnns9g"
+}

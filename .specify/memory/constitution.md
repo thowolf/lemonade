@@ -206,6 +206,8 @@ All operations MUST produce clear, structured logs. Performance profiling tools 
 
 **Testing Requirements**: New features MUST include tests. Tests are OPTIONAL for specs but REQUIRED before merging implementation. Contract tests for API changes, integration tests for multi-component features, unit tests for isolated logic.
 
+- CI Enforcement: Pull requests that add ROCm-specific tests, specs, or installation guides are blocked by a dedicated CI check (see `.github/workflows/block-rocm.yml`) unless the change is approved by maintainers via an Issue and review. This prevents accidental reintroductions of platform-specific ROCm content into the main branch.
+
 **Upstream File Protection**: Files from the original public repository MUST NOT be overwritten in private fork operations. This includes but is not limited to:
 - `docs/contribute.md` (upstream contribution guidelines)
 - Core documentation from public repository
