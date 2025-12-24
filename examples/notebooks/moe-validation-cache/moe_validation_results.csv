@@ -1,2 +1,0 @@
-model,server,config,ttft_seconds,tps,memory_gb,mmlu_score,gsm8k_score,llm_judgement,llm_judgement_reason
-Qwen3-Next-80B-A3B-Instruct-GGUF,http://localhost:8000/api/v1,quick-demo,6.310808730125427,21.042743522195718,N/A (server-side),See lm_eval output above,See lm_eval output above,5,"The response accurately explains the concept of Mixture of Experts in neural networks, including its core idea, advantages, and how it works. It's clear, concise, and well-structured, with proper headings and formatting. There are no obvious errors or hallucinations."
