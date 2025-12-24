@@ -43,6 +43,12 @@ class InferenceEngineDetector:
         if llamacpp_info:
             engines["llamacpp-vulkan"] = llamacpp_info
 
+        # Detect llama.cpp rocm availability
+        llamacpp_info = self.llamacpp_detector.detect_for_device(
+            device_type, device_name, "rocm"
+        )
+        if llamacpp_info:
+            engines["llamacpp-rocm"] = llamacpp_info
 
         # Detect Transformers availability
         transformers_info = self.transformers_detector.detect_for_device(device_type)

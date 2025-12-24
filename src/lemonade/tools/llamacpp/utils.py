@@ -17,7 +17,7 @@ from lemonade.common.system_info import get_system_info
 from dotenv import set_key, load_dotenv
 
 LLAMA_VERSION_VULKAN = "b6510"
-LLAMA_VERSION_ROCM = LLAMA_VERSION_VULKAN  # ROCm support removed; mapped to Vulkan version
+LLAMA_VERSION_ROCM = "b1066"
 LLAMA_VERSION_METAL = "b6510"
 LLAMA_VERSION_CPU = "b6510"
 
@@ -126,7 +126,9 @@ def get_llama_version(backend: str) -> str:
     """
     Select the appropriate llama.cpp version based on the backend
     """
-    if backend == "vulkan":
+    if backend == "rocm":
+        return LLAMA_VERSION_ROCM
+    elif backend == "vulkan":
         return LLAMA_VERSION_VULKAN
     elif backend == "metal":
         return LLAMA_VERSION_METAL
@@ -134,7 +136,7 @@ def get_llama_version(backend: str) -> str:
         return LLAMA_VERSION_CPU
     else:
         raise ValueError(
-            f"Unsupported backend: {backend}. Supported: vulkan, metal, cpu"
+            f"Unsupported backend: {backend}. Supported: vulkan, rocm, metal, cpu"
         )
 
 
@@ -273,7 +275,7 @@ def get_binary_url_and_filename(backend: str, target_arch: str = None):
                 f"Platform {system} not supported for Metal llamacpp. Metal is only supported on macOS"
             )
     else:
-        supported_backends = ["vulkan", "metal", "cpu"]
+        supported_backends = ["vulkan", "rocm", "metal", "cpu"]
         raise NotImplementedError(
             f"Unsupported backend: {backend}. Supported backends: {supported_backends}"
         )
@@ -355,10 +357,27 @@ def install_llamacpp(backend):
         # Create the directory
         os.makedirs(llama_server_exe_dir, exist_ok=True)
 
-            # ROCm support removed: target_arch is not used for Vulkan/CPU/Metal
+        # Identify the target architecture (only needed for ROCm)
         target_arch = None
+        if backend == "rocm":
+            # Identify the target architecture
+            target_arch = identify_rocm_arch()
+            if not target_arch:
+                system = platform.system().lower()
+                if system == "linux":
+                    hint = (
+                        "Hint: If you think your device is supported, "
+                        "running `sudo update-pciids` may help identify your hardware."
+                    )
+                else:
+                    hint = ""
+                raise ValueError(
+                    "ROCm backend selected but no compatible ROCm target architecture found. "
+                    "See https://github.com/lemonade-sdk/lemonade?tab=readme-ov-file#supported-configurations "
+                    f"for supported configurations. {hint}"
+                )
 
-        # Direct download for Vulkan/CPU/Metal
+        # Direct download for Vulkan/ROCm
         llama_archive_url, filename = get_binary_url_and_filename(backend, target_arch)
         llama_archive_path = os.path.join(llama_server_exe_dir, filename)
         logging.info(f"Downloading llama.cpp server from {llama_archive_url}")
@@ -399,6 +418,15 @@ def install_llamacpp(backend):
         else:
             raise NotImplementedError(f"Unsupported archive format: {filename}")
 
+        # Identify and set HIP ID
+        if backend == "rocm":
+            try:
+                hip_id = identify_hip_id()
+            except Exception as e:  # pylint: disable=broad-exception-caught
+                hip_id = 0
+                logging.warning(f"Error identifying HIP ID: {e}. Falling back to 0.")
+            env_file_path = os.path.join(llama_server_exe_dir, ".env")
+            set_key(env_file_path, "HIP_VISIBLE_DEVICES", str(hip_id))
 
         # Make executable on Linux - need to update paths after extraction
         if platform.system().lower() == "linux":

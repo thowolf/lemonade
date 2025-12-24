@@ -39,7 +39,7 @@ class LlamaCppTesting(ServerTestingBase):
 
     # Default llamacpp backend - can be overridden by subclasses or environment variable
     llamacpp_backend = (
-        None  # Set to None by default, can be 'vulkan', 'rocm', 'cpu', etc.
+        None  # Set to None by default, can be 'vulkan', 'metal', 'cpu', etc.
     )
 
     def __init__(self, *args, **kwargs):
@@ -298,9 +298,9 @@ class LlamaCppTesting(ServerTestingBase):
         """Test generation parameters across all endpoints with llamacpp models"""
         if self.llamacpp_backend == "metal":
             self.skipTest("Skipping in metal smoke test mode")
-        if self.llamacpp_backend == "rocm" or self.llamacpp_backend == "vulkan":
+        if self.llamacpp_backend == "vulkan":
             self.skipTest(
-                "Skipping test when backend is set to rocm or vulkan because of https://github.com/lemonade-sdk/lemonade/issues/274"
+                "Skipping test when backend is set to vulkan because of https://github.com/lemonade-sdk/lemonade/issues/274"
             )
         client = OpenAI(
             base_url=self.base_url,
@@ -398,10 +398,6 @@ class LlamaCppVulkanTesting(LlamaCppTesting):
     llamacpp_backend = "vulkan"
 
 
-class LlamaCppRocmTesting(LlamaCppTesting):
-    """Testing class for GGUF/LlamaCPP models with ROCm backend."""
-
-    llamacpp_backend = "rocm"
 
 
 class LlamaCppMetalTesting(LlamaCppTesting):
@@ -494,10 +490,9 @@ if __name__ == "__main__":
     # Simple command line parsing without argparse
     if len(sys.argv) < 2:
         print("Usage: python server_llamacpp.py [backend] [--offline]")
-        print("Backend options: vulkan, rocm, metal")
+        print("Backend options: vulkan, metal")
         print("Examples:")
         print("    python server_llamacpp.py vulkan")
-        print("    python server_llamacpp.py rocm --offline")
         print("    python server_llamacpp.py metal")
         sys.exit(1)
 
@@ -508,16 +503,11 @@ if __name__ == "__main__":
     if backend == "vulkan":
         test_class = LlamaCppVulkanTesting
         description = "GGUF/LLAMACPP VULKAN SERVER TESTS"
-    elif backend == "rocm":
-        test_class = LlamaCppRocmTesting
-        description = "GGUF/LLAMACPP ROCM SERVER TESTS"
     elif backend == "metal":
         test_class = LlamaCppMetalTesting
         description = "GGUF/LLAMACPP METAL SERVER TESTS"
     else:
-        print(
-            f"Error: Unsupported backend '{backend}'. Supported backends: vulkan, rocm, metal"
-        )
+        print(f"Error: unsupported backend '{backend}'. Supported backends: vulkan, metal")
         sys.exit(1)
 
     # Pass offline flag to test class if needed

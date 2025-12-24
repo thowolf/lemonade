@@ -194,7 +194,7 @@ class LlamaServer(WrappedServer):
         # Enable context shift and avoid attention sink issues by preserving the initial tokens
         # Note: --context-shift is not supported on all backends (e.g., Metal on macOS)
         # Only add context-shift for backends that support it
-        context_shift_supported_backends = ["vulkan"]
+        context_shift_supported_backends = ["vulkan", "rocm"]
         if self.backend in context_shift_supported_backends:
             base_command.extend(["--context-shift", "--keep", "16"])
         else:

@@ -891,69 +891,7 @@ jobs:
         if: always()
         uses: ./.github/actions/cleanup-processes-windows
 
-# Deprecated: test-exe-llamacpp-rocm (ROCm support removed)
-#  test-exe-llamacpp-rocm:
-    name: Test .exe - Llamacpp (ROCm)
-    runs-on: [stx-halo, Windows]
-    needs: build-lemonade-server-installer
-    env:
-      LEMONADE_CI_MODE: "True"
-      LEMONADE_CACHE_DIR: ".\\ci-cache"
-      PYTHONIOENCODING: utf-8
-      GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Cleanup processes
-        uses: ./.github/actions/cleanup-processes-windows
-
-      - name: Set environment variables
-        shell: PowerShell
-        run: |
-          $cwd = (Get-Item .\).FullName
-          echo "HF_HOME=$cwd\hf-cache" >> $Env:GITHUB_ENV
-          Write-Host "HF_HOME set to: $cwd\hf-cache" -ForegroundColor Green
-          
-          $installPath = Join-Path $cwd "lemonade_server_install"
-          echo "LEMONADE_INSTALL_PATH=$installPath" >> $Env:GITHUB_ENV
-          Write-Host "LEMONADE_INSTALL_PATH set to: $installPath" -ForegroundColor Green
-
-      - name: Install and Verify Lemonade Server
-        uses: ./.github/actions/install-lemonade-server-msi
-        with:
-          install-path: ${{ env.LEMONADE_INSTALL_PATH }}
-
-      - name: Setup Python and virtual environment
-        uses: ./.github/actions/setup-venv
-        with:
-          venv-name: '.venv'
-          python-version: '3.10'
-          requirements-file: 'test/requirements.txt'
-
-      - name: Run Llamacpp ROCm tests with C++ server
-        shell: PowerShell
-        env:
-          HF_HOME: "${{ env.HF_HOME }}"
-        run: |
-          $ErrorActionPreference = "Stop"
-          $venvPython = ".\.venv\Scripts\python.exe"
-          
-          $serverExe = Join-Path $env:LEMONADE_INSTALL_PATH "bin\lemonade-server.exe"
-          
-          Write-Host "Running Llamacpp ROCm tests with C++ server CLI: $serverExe" -ForegroundColor Cyan
-          Write-Host "HF_HOME is set to: $env:HF_HOME" -ForegroundColor Cyan
-          
-          & $venvPython test/server_llamacpp.py rocm --server-binary $serverExe
-          if ($LASTEXITCODE -ne 0) { 
-              Write-Host "ERROR: Llamacpp ROCm tests FAILED with exit code: $LASTEXITCODE" -ForegroundColor Red
-              exit $LASTEXITCODE 
-          }
-          
-          Write-Host "Llamacpp ROCm tests PASSED!" -ForegroundColor Green
-
-      - name: Cleanup
-        if: always()
-        uses: ./.github/actions/cleanup-processes-windows
+# ROCm test job removed (ROCm support was intentionally removed from the repo)
 
   test-exe-rai-cpu:
     name: Test .exe - ryzenai-server CPU
@@ -1224,86 +1162,7 @@ jobs:
         if: always()
         uses: ./.github/actions/cleanup-processes-linux
 
-# Deprecated: test-deb-llamacpp-rocm (ROCm support removed)
-#  test-deb-llamacpp-rocm:
-    name: Test .deb - Llamacpp (ROCm)
-    runs-on: [stx-halo, Linux]
-    needs: build-lemonade-server-deb
-    env:
-      LEMONADE_CI_MODE: "True"
-      PYTHONIOENCODING: utf-8
-      GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-      LEMONADE_VERSION: ${{ needs.build-lemonade-server-deb.outputs.version }}
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Cleanup processes
-        uses: ./.github/actions/cleanup-processes-linux
-
-      - name: Set HF_HOME environment variable
-        run: |
-          echo "HF_HOME=$PWD/hf-cache" >> $GITHUB_ENV
-          echo "HF_HOME set to: $PWD/hf-cache"
-
-      - name: Download .deb package
-        uses: actions/download-artifact@v4
-        with:
-          name: lemonade-server-deb
-          path: .
-
-      - name: Extract .deb package (no sudo needed)
-        run: |
-          echo "Extracting .deb package..."
-          
-          # Use dynamic version from build job
-          DEB_FILE="lemonade-server-minimal_${LEMONADE_VERSION}_amd64.deb"
-          echo "Extracting: $DEB_FILE"
-          
-          # Extract the .deb package
-          mkdir -p ./deb-extract
-          dpkg-deb -x "$DEB_FILE" ./deb-extract
-          
-          # Copy resources to user's local share (path_utils.cpp checks here!)
-          mkdir -p ~/.local/share/lemonade-server
-          cp -r ./deb-extract/usr/local/share/lemonade-server/* ~/.local/share/lemonade-server/
-          
-          # Make llama directory writable in the extracted location
-          mkdir -p ./deb-extract/usr/local/share/lemonade-server/llama
-          chmod 777 ./deb-extract/usr/local/share/lemonade-server/llama
-          
-          # Add binaries to PATH
-          echo "$PWD/deb-extract/usr/local/bin" >> $GITHUB_PATH
-          
-          echo "Package extracted successfully!"
-
-      - name: Verify binaries work
-        run: |
-          echo "Verifying binaries..."
-          
-          # Test version
-          lemonade-router --version
-          lemonade-server --version
-          
-          echo "Binaries verified!"
-
-      - name: Setup Python and virtual environment
-        uses: ./.github/actions/setup-venv
-        with:
-          venv-name: '.venv'
-          python-version: '3.10'
-          requirements-file: 'test/requirements.txt'
-
-      - name: Run Llamacpp ROCm tests
-        env:
-          HF_HOME: ${{ env.HF_HOME }}
-        run: |
-          echo "Running Llamacpp ROCm tests with .deb installation..."
-          echo "HF_HOME: $HF_HOME"
-          
-          venvPython=".venv/bin/python"
-          $venvPython test/server_llamacpp.py rocm --server-binary lemonade-server
-          
-          echo "Llamacpp ROCm tests PASSED!"
+# ROCm .deb test job removed (ROCm support was intentionally removed from the repo)
 
       - name: Print server logs on failure
         if: failure()
@@ -1621,11 +1480,9 @@ jobs:
       - test-exe-rai-hybrid-basics
       - test-exe-flm
       - test-exe-llamacpp-vulkan
-      - test-exe-llamacpp-rocm
       - test-exe-rai-cpu
       - test-exe-whisper
       - test-deb-llamacpp-vulkan
-      - test-deb-llamacpp-rocm
       - test-deb-endpoints
     if: startsWith(github.ref, 'refs/tags/v')
     env:

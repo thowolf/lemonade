@@ -383,15 +383,15 @@
   "examples": [
     {
       "metadata": {
-        "name": "qwen3-4b-rocm-evaluation",
+        "name": "qwen3-4b-gguf-evaluation",
         "version": "1.0.0",
         "created": "2025-12-24T10:00:00Z",
-        "description": "ROCm evaluation of Qwen3-4B on AMD AI Max+ 395"
+        "description": "Evaluation of Qwen3-4B on AMD AI Max+ 395"
       },
       "model": {
         "identifier": "Qwen3-4B-GGUF",
         "checkpoint": "unsloth/Qwen3-4B-GGUF:Q4_0",
-        "recipe": "llamacpp-rocm",
+        "recipe": "llamacpp-vulkan",
         "quantization": {
           "method": "Q4_0",
           "bits": 4
@@ -400,7 +400,7 @@
         "context_length": 32768
       },
       "hardware": {
-        "backend": "rocm",
+        "backend": "vulkan",
         "device": "igpu",
         "platform": "AMD Ryzen AI Max+ 395",
         "architecture": "gfx1151",

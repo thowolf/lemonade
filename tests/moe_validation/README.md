@@ -45,7 +45,7 @@ pip install pandas
 
 ### Hardware Requirements
 - **CPU**: Any modern x86_64 processor
-- **iGPU**: AMD integrated GPU with ROCm support
+- **iGPU**: AMD integrated GPU (driver-dependent)
 - **RAM**: Minimum 16GB recommended for quick-demo, 32GB+ for full runs
 - **Storage**: ~50GB free space for model + cache
 
@@ -80,7 +80,7 @@ CONFIG = "full"  # limit=100, warmup=10, iterations=20
 ### Devices
 ```python
 DEVICE = "cpu"   # For CPU-only testing
-DEVICE = "igpu"  # For AMD iGPU with ROCm
+DEVICE = "igpu"  # For AMD iGPU (driver-dependent)
 ```
 
 ## Expected Outputs

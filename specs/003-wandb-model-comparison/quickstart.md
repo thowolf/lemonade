@@ -106,7 +106,7 @@ model:
   context_length: 32768
 
 hardware:
-  backend: "rocm"
+  backend: "amd-gpu"
   device: "igpu"
   platform: "AMD Ryzen AI Max+ 395"
   architecture: "gfx1151"
@@ -415,7 +415,7 @@ wandb login --relogin
 
 **Solutions**:
 - Check backend is using GPU/NPU: `backend: "hybrid"`
-- Verify GPU driver installation using vendor tools (e.g., `rocm-smi`, `nvidia-smi` or platform-specific tools)
+- Verify GPU driver installation using vendor-specific tools (e.g., `nvidia-smi` or other vendor utilities)
 - Reduce `iterations` and `prompts_per_iteration` for testing
 
 ### Issue: "Offline sync fails"
