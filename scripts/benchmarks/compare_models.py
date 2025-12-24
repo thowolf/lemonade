@@ -236,6 +236,87 @@ def main():
             run.finish()
         except Exception:
             pass
+
+    def create_weave_savedview_from_wandb(project_name: str | None = None, models: list[str] | None = None) -> None:
+        """Create an enhanced Weave SavedView after uploading a comparison run to W&B.
+
+        This finds the most recent W&B run in the project (preferably the comparison run),
+        and creates:
+         - a Markdown SavedView embedding the uploaded histogram/tps images and run link
+         - a runs SavedView with preconfigured charts (p95 latency, mean tokens/sec)
+        """
+        try:
+            import wandb
+            import weave
+        except Exception:
+            print("wandb or weave not available; skipping Weave SavedView creation")
+            return
+
+        api = wandb.Api()
+        proj = project_name or "tom-rally-/lemonade-ryzenai-evals-demo"
+        runs = api.runs(proj, order='-created_at')
+        if not runs:
+            print("No runs found for project; skipping Weave SavedView creation")
+            return
+        run = runs[0]
+
+        # Find image file URLs in the run
+        files = list(run.files())
+        img_files = [f for f in files if f.name and "media/images/charts" in f.name]
+        histogram_url = None
+        tps_url = None
+        for f in img_files:
+            if "latency_histogram" in f.name:
+                histogram_url = f.url
+            if "tokens_per_sec" in f.name:
+                tps_url = f.url
+
+        # Build a Markdown view embedding images and basic stats
+        summary = run.summary or {}
+        mean_latency = summary.get("summary/mean_latency_ms")
+        p95_latency = summary.get("summary/p95_latency_ms")
+        mean_tps = summary.get("summary/mean_tps")
+
+        md = f"""# Model Comparison — Quick Overview
+
+Project: [{proj}](https://wandb.ai/{proj})  
+Run: [{run.name}]({run.url})
+
+"""
+        if models:
+            md += "**Models compared:** " + ", ".join(models) + "\n\n"
+
+        md += f"- Mean latency: **{mean_latency or 'N/A'} ms**  \n- P95 latency: **{p95_latency or 'N/A'} ms**  \n- Mean tokens/sec: **{mean_tps or 'N/A'}**\n\n"
+        if histogram_url:
+            md += f"### Latency Histogram\n\n![latency histogram]({histogram_url})\n\n"
+        if tps_url:
+            md += f"### Tokens/sec per sample\n\n![tokens/sec]({tps_url})\n\n"
+
+        # Publish Markdown view
+        weave.init(project_name=project_name or proj)
+
+        @weave.op
+        def add_markdown_view():
+            weave.set_view('compare_models_overview', md, extension='md', mimetype='text/markdown', metadata={'project': project_name or proj})
+            return 'ok'
+
+        try:
+            add_markdown_view()
+            print('Created Markdown Weave view for comparison run')
+        except Exception as e:
+            print(f'Warning: failed to create markdown view: {e}')
+
+        # Create runs view with charts
+        try:
+            runs_view = weave.SavedView(view_type='runs', label='comparison_runs')
+            runs_view.base.definition.charts = [
+                { 'title': 'P95 latency (runs)', 'type': 'line', 'metric': 'summary/p95_latency_ms' },
+                { 'title': 'Mean tokens/sec', 'type': 'line', 'metric': 'summary/mean_tps' }
+            ]
+            runs_view.save()
+            print('Saved runs view with charts:', runs_view.ui_url())
+        except Exception as e:
+            print(f'Warning: failed to create runs SavedView: {e}')
     model_stats = {}
 
     prompts = [
@@ -262,6 +343,11 @@ def main():
     # Optional: upload to W&B and create a Weave view if requested
     if getattr(args, 'wandb', False):
         log_to_wandb(args.project or None, {m: model_stats[m] for m in model_stats}, hist_bytes, tps_bytes, report_path)
+        # After successful W&B upload, create an interactive Weave SavedView for quick inspection
+        try:
+            create_weave_savedview_from_wandb(args.project or None)
+        except Exception as e:
+            print(f"Warning: failed to create Weave SavedView: {e}")
 
     print("Report generated:", report_path)
 
