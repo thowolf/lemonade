@@ -27,6 +27,7 @@ from statistics import mean
 from pathlib import Path
 import threading
 import subprocess
+import tempfile
 
 try:
     import requests
@@ -106,26 +107,46 @@ class Monitor(threading.Thread):
             sample['proc_cpu_percent'] = None
             sample['proc_rss_mb'] = None
 
-        # Sample NPU usage with xrt-smi
+        # Sample NPU usage with xrt-smi using 'examine' JSON output
         try:
-            result = subprocess.run(['xrt-smi', 'npu', '--show-devices'], capture_output=True, text=True, timeout=5)
-            if result.returncode == 0:
-                # Parse output for NPU usage (simplified, extract relevant metrics)
-                lines = result.stdout.splitlines()
-                npu_info = {}
-                for line in lines:
-                    if 'utilization' in line.lower():
-                        # Extract utilization percentage
-                        parts = line.split()
-                        for part in parts:
-                            if '%' in part:
-                                try:
-                                    npu_info['npu_utilization_percent'] = float(part.strip('%'))
-                                except ValueError:
-                                    pass
-                sample['npu_info'] = npu_info
+            # write JSON output to temporary file and parse it
+            tmpf = tempfile.NamedTemporaryFile(suffix='.json', delete=False)
+            tmpf.close()
+            cmd = ['xrt-smi', 'examine', '-r', 'all', '-f', 'JSON', '-o', tmpf.name]
+            result = subprocess.run(cmd, capture_output=True, text=True, timeout=10)
+            if result.returncode == 0 and os.path.exists(tmpf.name):
+                try:
+                    with open(tmpf.name, 'r', encoding='utf-8') as jf:
+                        data = json.load(jf)
+                    # Recursively walk JSON and collect numeric metrics for common NPU keys
+                    def walk(o, acc):
+                        if isinstance(o, dict):
+                            for k, v in o.items():
+                                lk = str(k).lower()
+                                if isinstance(v, (int, float)):
+                                    if any(x in lk for x in ('gops', 'command', 'util', 'utilization', 'throughput', 'busy', 'count', 'submissions')):
+                                        acc[lk] = acc.get(lk, 0) + v
+                                else:
+                                    walk(v, acc)
+                        elif isinstance(o, list):
+                            for item in o:
+                                walk(item, acc)
+                    acc = {}
+                    walk(data, acc)
+                    npu_info = {
+                        'device_count': len(data.get('devices', [])) if isinstance(data, dict) else None,
+                        'metrics': acc,
+                    }
+                    sample['npu_info'] = npu_info
+                except Exception as e:
+                    sample['npu_info'] = {'error': f'parse_error: {e}'}
+                finally:
+                    try:
+                        os.remove(tmpf.name)
+                    except Exception:
+                        pass
             else:
-                sample['npu_info'] = {'error': result.stderr.strip()}
+                sample['npu_info'] = {'error': result.stderr.strip() if result is not None else 'xrt-smi failed'}
         except (subprocess.TimeoutExpired, FileNotFoundError, subprocess.SubprocessError) as e:
             sample['npu_info'] = {'error': str(e)}
 
