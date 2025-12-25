@@ -232,6 +232,40 @@ def run_benchmark(url: str, model: str, concurrency: int, requests_per_worker: i
     stop_event.set()
     monitor.join(timeout=5)
 
+    # Aggregate NPU metrics from samples (start/end/delta/avg_rate/max)
+    npu_metrics_agg = {}
+    device_counts = []
+    metric_series = {}
+    times = []
+    for s in monitor.samples:
+        times.append(s.get('ts'))
+        npu = s.get('npu_info') or {}
+        if isinstance(npu, dict):
+            dc = npu.get('device_count')
+            if dc is not None:
+                device_counts.append(dc)
+            m = npu.get('metrics', {}) if npu.get('metrics') else {}
+            for k, v in m.items():
+                metric_series.setdefault(k, []).append((s.get('ts'), v))
+
+    duration = (max(times) - min(times)) if times and len(times) > 1 else None
+    for k, series in metric_series.items():
+        # Convert series to numeric and compute start/end/delta/max/avg_rate
+        nums = [(t, float(v)) for (t, v) in series]
+        nums_sorted = sorted(nums, key=lambda x: x[0])
+        start_val = nums_sorted[0][1]
+        end_val = nums_sorted[-1][1]
+        delta = end_val - start_val
+        max_val = max(v for (_, v) in nums_sorted)
+        avg_rate = (delta / duration) if duration and duration > 0 else None
+        npu_metrics_agg[k] = {
+            'start': start_val,
+            'end': end_val,
+            'delta': delta,
+            'max': max_val,
+            'avg_rate_per_s': avg_rate,
+        }
+
     summary = {
         "concurrency": concurrency,
         "requests": concurrency * requests_per_worker,
@@ -242,7 +276,28 @@ def run_benchmark(url: str, model: str, concurrency: int, requests_per_worker: i
         "total_time_s": total_time,
         "throughput_req_per_s": (successes / total_time) if total_time > 0 else None,
         "samples": monitor.samples,
+        "npu_device_count_max": max(device_counts) if device_counts else None,
+        "npu_metrics_agg": npu_metrics_agg,
+        "npu_metrics_duration_s": duration,
     }
+
+    # Log aggregated NPU metrics to W&B
+    try:
+        wandb.log({
+            'npu_device_count_max': summary.get('npu_device_count_max'),
+            'npu_metrics_duration_s': summary.get('npu_metrics_duration_s'),
+        })
+        # Flatten and log key metrics (start,end,delta,avg_rate)
+        for metric, stats in (summary.get('npu_metrics_agg') or {}).items():
+            wandb.log({
+                f'npu/{metric}_start': stats.get('start'),
+                f'npu/{metric}_end': stats.get('end'),
+                f'npu/{metric}_delta': stats.get('delta'),
+                f'npu/{metric}_avg_rate_per_s': stats.get('avg_rate_per_s'),
+                f'npu/{metric}_max': stats.get('max'),
+            })
+    except Exception:
+        pass
 
     timestamp = time.strftime('%Y%m%d_%H%M%S')
     out_file = RESULTS_DIR / f"ryzen_benchmark_metrics_{timestamp}.json"
