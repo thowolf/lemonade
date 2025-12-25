@@ -26,16 +26,18 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from statistics import mean
 from pathlib import Path
 import threading
+import subprocess
 
 try:
     import requests
     import psutil
+    import wandb
 except Exception as e:
     print("Missing dependency:", e)
-    print("Install requirements: pip install requests psutil")
+    print("Install requirements: pip install requests psutil wandb")
     raise SystemExit(1)
 
-DEFAULT_URL = "http://127.0.0.1:8001/v1/completions"
+DEFAULT_URL = "http://127.0.0.1:8002/api/v1/chat/completions"
 RESULTS_DIR = Path("tests/results")
 RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -61,7 +63,7 @@ def find_process_by_port(port: int):
 
 
 def do_request(url: str, model: str, prompt: str, max_tokens: int, timeout: int = 30) -> dict:
-    payload = {"model": model, "prompt": prompt, "max_tokens": max_tokens}
+    payload = {"model": model, "messages": [{"role": "user", "content": prompt}], "max_tokens": max_tokens}
     start = time.time()
     try:
         r = requests.post(url, json=payload, timeout=timeout)
@@ -104,6 +106,29 @@ class Monitor(threading.Thread):
             sample['proc_cpu_percent'] = None
             sample['proc_rss_mb'] = None
 
+        # Sample NPU usage with xrt-smi
+        try:
+            result = subprocess.run(['xrt-smi', 'npu', '--show-devices'], capture_output=True, text=True, timeout=5)
+            if result.returncode == 0:
+                # Parse output for NPU usage (simplified, extract relevant metrics)
+                lines = result.stdout.splitlines()
+                npu_info = {}
+                for line in lines:
+                    if 'utilization' in line.lower():
+                        # Extract utilization percentage
+                        parts = line.split()
+                        for part in parts:
+                            if '%' in part:
+                                try:
+                                    npu_info['npu_utilization_percent'] = float(part.strip('%'))
+                                except ValueError:
+                                    pass
+                sample['npu_info'] = npu_info
+            else:
+                sample['npu_info'] = {'error': result.stderr.strip()}
+        except (subprocess.TimeoutExpired, FileNotFoundError, subprocess.SubprocessError) as e:
+            sample['npu_info'] = {'error': str(e)}
+
         # Read last few lines of log if present
         if self.log_path and os.path.exists(self.log_path):
             try:
@@ -139,7 +164,7 @@ def run_benchmark(url: str, model: str, concurrency: int, requests_per_worker: i
     successes = 0
 
     # Identify process to monitor (prefer process by name, fallback to port)
-    proc = find_process_by_name('ryzenai-server') or find_process_by_port(8001)
+    proc = find_process_by_name('ryzenai-server') or find_process_by_port(8002)
     log_path = None
     tmp_log = os.environ.get('TEMP') or os.environ.get('TMP')
     if tmp_log:
@@ -194,23 +219,50 @@ def run_benchmark(url: str, model: str, concurrency: int, requests_per_worker: i
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--url", default=DEFAULT_URL)
-    parser.add_argument("--model", default="Llama-3.2-3B-Instruct-Hybrid")
-    parser.add_argument("--concurrency", type=int, default=4)
-    parser.add_argument("--requests", type=int, default=5, help="requests per worker (total requests = concurrency * requests)")
+    parser.add_argument("--model", default="Qwen-2.5-1.5B-Instruct-Hybrid")
+    parser.add_argument("--concurrency", type=int, default=1, help="set to 1 for no batch/sequential")
+    parser.add_argument("--requests", type=int, default=1, help="requests per worker (total requests = concurrency * requests)")
     parser.add_argument("--prompt", type=str, default="Hello, how are you?",)
     parser.add_argument("--max-tokens", type=int, default=10)
     parser.add_argument("--interval", type=float, default=1.0, help="metrics sample interval (seconds)")
+    parser.add_argument("--wandb-project", type=str, default="lemonade-benchmark", help="W&B project name")
+    parser.add_argument("--wandb-run-name", type=str, default=None, help="W&B run name")
 
     args = parser.parse_args()
+
+    # Init W&B
+    run_name = args.wandb_run_name or f"{args.model}_{time.strftime('%Y%m%d_%H%M%S')}"
+    wandb.init(project=args.wandb_project, name=run_name, config={
+        "model": args.model,
+        "concurrency": args.concurrency,
+        "requests": args.requests,
+        "prompt": args.prompt,
+        "max_tokens": args.max_tokens,
+        "sample_interval": args.interval
+    })
 
     try:
         summary, out_file = run_benchmark(args.url, args.model, args.concurrency, args.requests, args.prompt, args.max_tokens, args.interval)
     except requests.exceptions.ConnectionError as e:
         print("Connection error: could not reach server at", args.url)
+        wandb.finish()
         raise SystemExit(1)
+
+    # Log to W&B
+    wandb.log({
+        "mean_latency_s": summary.get("mean_latency_s"),
+        "p50_latency_s": summary.get("p50_latency_s"),
+        "throughput_req_per_s": summary.get("throughput_req_per_s"),
+        "successes": summary["successes"],
+        "failures": summary["failures"],
+        "total_time_s": summary["total_time_s"],
+        "concurrency": summary["concurrency"],
+        "total_requests": summary["requests"]
+    })
 
     print(json.dumps({k: summary[k] for k in summary if k != 'samples'}, indent=2))
     print("Metrics saved to:", out_file)
+    wandb.finish()
 
 
 if __name__ == '__main__':
