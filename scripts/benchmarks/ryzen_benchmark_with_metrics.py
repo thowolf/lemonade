@@ -318,6 +318,10 @@ def main():
     parser.add_argument("--interval", type=float, default=1.0, help="metrics sample interval (seconds)")
     parser.add_argument("--wandb-project", type=str, default="lemonade-benchmark", help="W&B project name")
     parser.add_argument("--wandb-run-name", type=str, default=None, help="W&B run name")
+    parser.add_argument("--sweep", action="store_true", help="Run a sweep over models/concurrency list")
+    parser.add_argument("--models", type=str, default=None, help="Comma-separated model names for sweep")
+    parser.add_argument("--concurrency-list", type=str, default=None, help="Comma-separated concurrency values for sweep (e.g. 1,4)")
+    parser.add_argument("--requests-list", type=str, default=None, help="Comma-separated requests-per-worker values for sweep (e.g. 10,20)")
 
     args = parser.parse_args()
 
@@ -332,27 +336,60 @@ def main():
         "sample_interval": args.interval
     })
 
-    try:
-        summary, out_file = run_benchmark(args.url, args.model, args.concurrency, args.requests, args.prompt, args.max_tokens, args.interval)
-    except requests.exceptions.ConnectionError as e:
-        print("Connection error: could not reach server at", args.url)
-        wandb.finish()
-        raise SystemExit(1)
+    if args.sweep:
+        # Parse lists
+        models = args.models.split(',') if args.models else [args.model]
+        conc_list = [int(x) for x in args.concurrency_list.split(',')] if args.concurrency_list else [args.concurrency]
+        req_list = [int(x) for x in args.requests_list.split(',')] if args.requests_list else [args.requests]
+        sweep_results = []
+        for m in models:
+            for c in conc_list:
+                for r in req_list:
+                    try:
+                        print(f"Sweep run: model={m}, concurrency={c}, requests={r}")
+                        s, fpath = run_benchmark(args.url, m, c, r, args.prompt, args.max_tokens, args.interval)
+                        sweep_results.append({"model": m, "concurrency": c, "requests": r, "summary": s, "file": str(fpath)})
+                        # Log summary-level metrics to W&B for each run
+                        try:
+                            wandb.log({
+                                "model": m,
+                                "concurrency": c,
+                                "requests": r,
+                                "mean_latency_s": s.get("mean_latency_s"),
+                                "throughput_req_per_s": s.get("throughput_req_per_s"),
+                                "npu_device_count_max": s.get("npu_device_count_max"),
+                            })
+                        except Exception:
+                            pass
+                    except requests.exceptions.ConnectionError as e:
+                        print("Connection error: could not reach server at", args.url)
+        # Save sweep summary
+        sweep_out = RESULTS_DIR / f"ryzen_benchmark_sweep_{time.strftime('%Y%m%d_%H%M%S')}.json"
+        with open(sweep_out, 'w', encoding='utf-8') as f:
+            json.dump(sweep_results, f, indent=2, default=str)
+        print(f"Sweep results saved to: {sweep_out}")
+    else:
+        try:
+            summary, out_file = run_benchmark(args.url, args.model, args.concurrency, args.requests, args.prompt, args.max_tokens, args.interval)
+        except requests.exceptions.ConnectionError as e:
+            print("Connection error: could not reach server at", args.url)
+            wandb.finish()
+            raise SystemExit(1)
 
-    # Log to W&B
-    wandb.log({
-        "mean_latency_s": summary.get("mean_latency_s"),
-        "p50_latency_s": summary.get("p50_latency_s"),
-        "throughput_req_per_s": summary.get("throughput_req_per_s"),
-        "successes": summary["successes"],
-        "failures": summary["failures"],
-        "total_time_s": summary["total_time_s"],
-        "concurrency": summary["concurrency"],
-        "total_requests": summary["requests"]
-    })
+        # Log to W&B
+        wandb.log({
+            "mean_latency_s": summary.get("mean_latency_s"),
+            "p50_latency_s": summary.get("p50_latency_s"),
+            "throughput_req_per_s": summary.get("throughput_req_per_s"),
+            "successes": summary["successes"],
+            "failures": summary["failures"],
+            "total_time_s": summary["total_time_s"],
+            "concurrency": summary["concurrency"],
+            "total_requests": summary["requests"]
+        })
 
-    print(json.dumps({k: summary[k] for k in summary if k != 'samples'}, indent=2))
-    print("Metrics saved to:", out_file)
+        print(json.dumps({k: summary[k] for k in summary if k != 'samples'}, indent=2))
+        print("Metrics saved to:", out_file)
     wandb.finish()
 
 
