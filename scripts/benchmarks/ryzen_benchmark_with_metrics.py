@@ -29,6 +29,7 @@ import threading
 import subprocess
 import tempfile
 import uuid
+import re
 
 try:
     import requests
@@ -119,13 +120,27 @@ class Monitor(threading.Thread):
                     with open(tmp_name, 'r', encoding='utf-8') as jf:
                         data = json.load(jf)
                     # Recursively walk JSON and collect numeric metrics for common NPU keys
+                    def _try_number(val):
+                        # Convert numeric-looking strings to float, otherwise return None
+                        if isinstance(val, (int, float)):
+                            return float(val)
+                        if isinstance(val, str):
+                            s = re.sub(r"[^0-9eE+\-\.]", "", val)
+                            if s == "":
+                                return None
+                            try:
+                                return float(s)
+                            except Exception:
+                                return None
+                        return None
+
                     def walk(o, acc):
                         if isinstance(o, dict):
                             for k, v in o.items():
                                 lk = str(k).lower()
-                                if isinstance(v, (int, float)):
-                                    if any(x in lk for x in ('gops', 'command', 'util', 'utilization', 'throughput', 'busy', 'count', 'submissions')):
-                                        acc[lk] = acc.get(lk, 0) + v
+                                num = _try_number(v)
+                                if num is not None and any(x in lk for x in ('gops', 'command', 'util', 'utilization', 'throughput', 'busy', 'count', 'submissions', 'completions')):
+                                    acc[lk] = acc.get(lk, 0) + num
                                 else:
                                     walk(v, acc)
                         elif isinstance(o, list):
