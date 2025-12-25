@@ -28,6 +28,7 @@ from pathlib import Path
 import threading
 import subprocess
 import tempfile
+import uuid
 
 try:
     import requests
@@ -109,14 +110,13 @@ class Monitor(threading.Thread):
 
         # Sample NPU usage with xrt-smi using 'examine' JSON output
         try:
-            # write JSON output to temporary file and parse it
-            tmpf = tempfile.NamedTemporaryFile(suffix='.json', delete=False)
-            tmpf.close()
-            cmd = ['xrt-smi', 'examine', '-r', 'all', '-f', 'JSON', '-o', tmpf.name]
+            # write JSON output to a unique temporary filepath and parse it
+            tmp_name = os.path.join(tempfile.gettempdir(), f"xrt_{uuid.uuid4().hex}.json")
+            cmd = ['xrt-smi', 'examine', '-r', 'all', '-f', 'JSON', '-o', tmp_name]
             result = subprocess.run(cmd, capture_output=True, text=True, timeout=10)
-            if result.returncode == 0 and os.path.exists(tmpf.name):
+            if result.returncode == 0 and os.path.exists(tmp_name):
                 try:
-                    with open(tmpf.name, 'r', encoding='utf-8') as jf:
+                    with open(tmp_name, 'r', encoding='utf-8') as jf:
                         data = json.load(jf)
                     # Recursively walk JSON and collect numeric metrics for common NPU keys
                     def walk(o, acc):
@@ -142,7 +142,7 @@ class Monitor(threading.Thread):
                     sample['npu_info'] = {'error': f'parse_error: {e}'}
                 finally:
                     try:
-                        os.remove(tmpf.name)
+                        os.remove(tmp_name)
                     except Exception:
                         pass
             else:
