@@ -187,6 +187,7 @@ All operations MUST produce clear, structured logs. Performance profiling tools 
 - **Python**: 3.13.11 (3.10-3.13 supported)
 - **GPU Architecture**: gfx1151 (AMD Radeon 8060S / AI Max+ 395)
 - **Total VRAM**: ~110 GB available for inference
+- **Conda Environments**: base (default), ryzen-ai-1.6.1 (for Ryzen AI tests)
 
 **Performance Optimizations**:
 - Follow platform-specific best practices for GPU/NPU drivers and backend libraries (Vulkan/ONNX/FLM) as documented in the README and platform pages.
