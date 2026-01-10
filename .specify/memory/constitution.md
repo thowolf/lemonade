@@ -44,6 +44,8 @@ The system MUST support multiple inference backends (ONNX Runtime GenAI, llama.c
 - Support FLM models for AMD Ryzen AI NPU acceleration
 - Enable runtime backend selection via CLI flags
 
+- **Hinweis:** Für den normalen Einsatz bevorzugen wir `Lemonade` als C++‑Server; `ryzenai-server` ist ein optionaler Low‑Level‑Baustein und nur für spezialisierte NPU‑Microservices, Demos oder Entwicklungszwecke erforderlich.
+
 ### III. Hardware-Optimized Performance
 
 All supported configurations MUST be optimized for AMD hardware platforms, with explicit support for Ryzen AI NPUs (300 series), RDNA GPUs (gfx110X, gfx120X, gfx1151), and CPU execution.
