@@ -2,6 +2,8 @@
 
 Orchestrate multiple Lemonade Server instances running simultaneously on different ports using Docker Compose or native scripts.
 
+**Note:** In our workflow we do **not** use `ryzenai-server`. For NPU-backed models we use the C++ `Lemonade` server as the supported runtime; `ryzenai-server` is retained only for historical/reference and specialized development purposes. (Hinweis: In unserem Workflow nutzen wir `ryzenai-server` nicht; bevorzugt wird `Lemonade`.)
+
 ## Docker Compose Setup (Recommended)
 
 This approach uses Docker containers to run multiple server instances, avoiding the single-instance lock limitation by isolating each server in its own container.

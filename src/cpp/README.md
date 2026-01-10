@@ -68,9 +68,11 @@ cmake --build . --config Release -j
   - `build/lemonade-server` - Console CLI client
 - **Resources:** Automatically copied to `build/Release/resources/` (web UI files, model registry, backend version configuration)
 
-### RyzenAI Server Dependency
+### RyzenAI Server Dependency (DEPRECATED)
 
-The `lemonade-router` server has a runtime dependency on `ryzenai-server` for NPU model inference. This dependency can be fulfilled in two ways:
+**Note:** We do **not** use `ryzenai-server` in our production workflows. `Lemonade` provides the supported NPU integration and is the preferred runtime; the instructions below are retained for development or legacy use only.
+
+The `lemonade-router` server previously supported a runtime dependency on `ryzenai-server` for NPU model inference; for development or special cases you can still build or allow runtime download as described below:
 
 1. **Development builds:** Build `ryzenai-server` from source in the same repository:
    ```bash

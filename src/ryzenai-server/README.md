@@ -2,6 +2,8 @@
 
 A lightweight, OpenAI API-compatible server for running LLMs on AMD Ryzen AI NPUs using ONNX Runtime GenAI.
 
+**Note:** This `ryzenai-server` project is not used in our production workflow; we prefer the C++ `Lemonade` server for NPU-backed model serving. This folder is retained for historical reference and development purposes only. (Hinweis: In unserem Workflow wird `ryzenai-server` nicht verwendet; bevorzugt wird `Lemonade`.)
+
 ## Overview
 
 This server enables running Large Language Models on AMD Ryzen AI 300-series processors with NPU acceleration. It implements the OpenAI API specification, making it compatible with existing LLM applications and tools.
