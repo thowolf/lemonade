@@ -46,6 +46,8 @@ The system MUST support multiple inference backends (ONNX Runtime GenAI, llama.c
 
 - **Hinweis:** Für den normalen Einsatz bevorzugen wir `Lemonade` als C++‑Server; `ryzenai-server` ist ein optionaler Low‑Level‑Baustein und nur für spezialisierte NPU‑Microservices, Demos oder Entwicklungszwecke erforderlich.
 
+- **Hinweis zu OGA‑Rezepte:** Die Rezepte `oga-hybrid` und `oga-npu` sind Konfigurationen, die angeben, dass ONNX Runtime GenAI (OGA) mit den Ryzen‑AI Execution Providers verwendet wird ("hybrid" = NPU + iGPU, "npu" = NPU‑only). Wenn ein Modell mit einer dieser Konfigurationen geladen wird, startet oder steuert `Lemonade` intern den notwendigen ryzenai‑basierten Prozess, um die Inferenz auf der NPU oder im Hybrid‑Modus auszuführen; dieses Verhalten ist erwartet und unterstützt.
+
 ### III. Hardware-Optimized Performance
 
 All supported configurations MUST be optimized for AMD hardware platforms, with explicit support for Ryzen AI NPUs (300 series), RDNA GPUs (gfx110X, gfx120X, gfx1151), and CPU execution.
