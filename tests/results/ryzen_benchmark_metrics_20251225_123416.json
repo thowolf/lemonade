@@ -1,0 +1,496 @@
+{
+  "concurrency": 1,
+  "requests": 5,
+  "successes": 5,
+  "failures": 0,
+  "mean_latency_s": 4.723542022705078,
+  "p50_latency_s": 0.9733281135559082,
+  "total_time_s": 23.618247032165527,
+  "throughput_req_per_s": 0.2117007241557993,
+  "samples": [
+    {
+      "ts": 1766662433.2535453,
+      "cpu_percent": 0.0,
+      "memory_percent": 60.1,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "error": "ERROR: Unknown command: 'npu'"
+      },
+      "log_tail": [
+        "=================",
+        "[Server] POST /api/v1/chat/completions - 200",
+        "[Server PRE-ROUTE] POST /api/v1/chat/completions",
+        "[Server DEBUG] No tools in request",
+        "[Server] Auto-loading model: Llama-3.2-3B-Instruct-Hybrid",
+        "[Router] Effective settings: ctx_size=4096, backend=vulkan, args=(none)",
+        "[Router] Loading model: Llama-3.2-3B-Instruct-Hybrid (checkpoint: amd/Llama-3.2-3B-Instruct-onnx-ryzenai-hybrid, recipe: oga-hybrid, type: llm, device: gpu|npu)",
+        "[Router] Slot limit reached for type llm, evicting LRU: Qwen3-4B-Instruct-2507-GGUF",
+        "[Router] Evicting model: Qwen3-4B-Instruct-2507-GGUF",
+        "[LlamaCpp] Unloading model..."
+      ]
+    },
+    {
+      "ts": 1766662434.3789837,
+      "cpu_percent": 11.8,
+      "memory_percent": 51.3,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "error": "ERROR: Unknown command: 'npu'"
+      },
+      "log_tail": [
+        "[RyzenAI-Server] Model path: C:\\Users\\tomwo\\.cache\\huggingface\\hub/models--amd--Llama-3.2-3B-Instruct-onnx-ryzenai-hybrid\\snapshots\\d97f276c41e20fa73e4d8e0631020ae94faef23a",
+        "[RyzenAI-Server] Execution mode: hybrid",
+        "RyzenAI-Server will use port: 8001",
+        "[RyzenAI-Server] Starting ryzenai-server...",
+        "[ProcessManager] Starting process with filtered output: \"C:\\Users\\tomwo\\AppData\\Local\\lemonade_server\\bin\\ryzenai-server\\ryzenai-server.exe\" \"-m\" \"C:\\Users\\tomwo\\.cache\\huggingface\\hub/models--amd--Llama-3.2-3B-Instruct-onnx-ryzenai-hybrid\\snapshots\\d97f276c41e20fa73e4d8e0631020ae94faef23a\" \"--port\" \"8001\" \"--mode\" \"hybrid\" \"--ctx-size\" \"4096\" \"--verbose\"",
+        "[ProcessManager] Process started successfully, PID: 28328",
+        "[ProcessManager] Process started successfully, PID: 28328",
+        "Waiting for RyzenAI-Server to be ready...",
+        "Ryzen AI LLM Server starting...",
+        ""
+      ]
+    },
+    {
+      "ts": 1766662435.4735372,
+      "cpu_percent": 5.8,
+      "memory_percent": 52.2,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "error": "ERROR: Unknown command: 'npu'"
+      },
+      "log_tail": [
+        "[InferenceEngine] Ryzen AI version: 1.6.0",
+        "",
+        "[InferenceEngine] Loaded max_prompt_length from rai_config.json: 4096",
+        "",
+        "[InferenceEngine] Setting up execution provider for mode: hybrid",
+        "",
+        "[InferenceEngine] Using Hybrid (NPU + iGPU) execution provider",
+        "",
+        "[InferenceEngine] Loading ONNX model from: C:\\Users\\tomwo\\.cache\\huggingface\\hub/models--amd--Llama-3.2-3B-Instruct-onnx-ryzenai-hybrid\\snapshots\\d97f276c41e20fa73e4d8e0631020ae94faef23a",
+        ""
+      ]
+    },
+    {
+      "ts": 1766662436.5802615,
+      "cpu_percent": 8.2,
+      "memory_percent": 53.1,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "error": "ERROR: Unknown command: 'npu'"
+      },
+      "log_tail": [
+        "[InferenceEngine] Ryzen AI version: 1.6.0",
+        "",
+        "[InferenceEngine] Loaded max_prompt_length from rai_config.json: 4096",
+        "",
+        "[InferenceEngine] Setting up execution provider for mode: hybrid",
+        "",
+        "[InferenceEngine] Using Hybrid (NPU + iGPU) execution provider",
+        "",
+        "[InferenceEngine] Loading ONNX model from: C:\\Users\\tomwo\\.cache\\huggingface\\hub/models--amd--Llama-3.2-3B-Instruct-onnx-ryzenai-hybrid\\snapshots\\d97f276c41e20fa73e4d8e0631020ae94faef23a",
+        ""
+      ]
+    },
+    {
+      "ts": 1766662437.6590278,
+      "cpu_percent": 10.3,
+      "memory_percent": 55.8,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "error": "ERROR: Unknown command: 'npu'"
+      },
+      "log_tail": [
+        "[InferenceEngine] Ryzen AI version: 1.6.0",
+        "",
+        "[InferenceEngine] Loaded max_prompt_length from rai_config.json: 4096",
+        "",
+        "[InferenceEngine] Setting up execution provider for mode: hybrid",
+        "",
+        "[InferenceEngine] Using Hybrid (NPU + iGPU) execution provider",
+        "",
+        "[InferenceEngine] Loading ONNX model from: C:\\Users\\tomwo\\.cache\\huggingface\\hub/models--amd--Llama-3.2-3B-Instruct-onnx-ryzenai-hybrid\\snapshots\\d97f276c41e20fa73e4d8e0631020ae94faef23a",
+        ""
+      ]
+    },
+    {
+      "ts": 1766662438.7385995,
+      "cpu_percent": 9.0,
+      "memory_percent": 55.2,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "error": "ERROR: Unknown command: 'npu'"
+      },
+      "log_tail": [
+        "[InferenceEngine] Ryzen AI version: 1.6.0",
+        "",
+        "[InferenceEngine] Loaded max_prompt_length from rai_config.json: 4096",
+        "",
+        "[InferenceEngine] Setting up execution provider for mode: hybrid",
+        "",
+        "[InferenceEngine] Using Hybrid (NPU + iGPU) execution provider",
+        "",
+        "[InferenceEngine] Loading ONNX model from: C:\\Users\\tomwo\\.cache\\huggingface\\hub/models--amd--Llama-3.2-3B-Instruct-onnx-ryzenai-hybrid\\snapshots\\d97f276c41e20fa73e4d8e0631020ae94faef23a",
+        ""
+      ]
+    },
+    {
+      "ts": 1766662439.8187647,
+      "cpu_percent": 6.0,
+      "memory_percent": 55.9,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "error": "ERROR: Unknown command: 'npu'"
+      },
+      "log_tail": [
+        "[InferenceEngine] Ryzen AI version: 1.6.0",
+        "",
+        "[InferenceEngine] Loaded max_prompt_length from rai_config.json: 4096",
+        "",
+        "[InferenceEngine] Setting up execution provider for mode: hybrid",
+        "",
+        "[InferenceEngine] Using Hybrid (NPU + iGPU) execution provider",
+        "",
+        "[InferenceEngine] Loading ONNX model from: C:\\Users\\tomwo\\.cache\\huggingface\\hub/models--amd--Llama-3.2-3B-Instruct-onnx-ryzenai-hybrid\\snapshots\\d97f276c41e20fa73e4d8e0631020ae94faef23a",
+        ""
+      ]
+    },
+    {
+      "ts": 1766662440.8931997,
+      "cpu_percent": 7.3,
+      "memory_percent": 54.7,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "error": "ERROR: Unknown command: 'npu'"
+      },
+      "log_tail": [
+        "[InferenceEngine] Ryzen AI version: 1.6.0",
+        "",
+        "[InferenceEngine] Loaded max_prompt_length from rai_config.json: 4096",
+        "",
+        "[InferenceEngine] Setting up execution provider for mode: hybrid",
+        "",
+        "[InferenceEngine] Using Hybrid (NPU + iGPU) execution provider",
+        "",
+        "[InferenceEngine] Loading ONNX model from: C:\\Users\\tomwo\\.cache\\huggingface\\hub/models--amd--Llama-3.2-3B-Instruct-onnx-ryzenai-hybrid\\snapshots\\d97f276c41e20fa73e4d8e0631020ae94faef23a",
+        ""
+      ]
+    },
+    {
+      "ts": 1766662441.97768,
+      "cpu_percent": 7.6,
+      "memory_percent": 55.3,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "error": "ERROR: Unknown command: 'npu'"
+      },
+      "log_tail": [
+        "[InferenceEngine] Ryzen AI version: 1.6.0",
+        "",
+        "[InferenceEngine] Loaded max_prompt_length from rai_config.json: 4096",
+        "",
+        "[InferenceEngine] Setting up execution provider for mode: hybrid",
+        "",
+        "[InferenceEngine] Using Hybrid (NPU + iGPU) execution provider",
+        "",
+        "[InferenceEngine] Loading ONNX model from: C:\\Users\\tomwo\\.cache\\huggingface\\hub/models--amd--Llama-3.2-3B-Instruct-onnx-ryzenai-hybrid\\snapshots\\d97f276c41e20fa73e4d8e0631020ae94faef23a",
+        ""
+      ]
+    },
+    {
+      "ts": 1766662443.063686,
+      "cpu_percent": 7.9,
+      "memory_percent": 56.2,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "error": "ERROR: Unknown command: 'npu'"
+      },
+      "log_tail": [
+        "[InferenceEngine] Ryzen AI version: 1.6.0",
+        "",
+        "[InferenceEngine] Loaded max_prompt_length from rai_config.json: 4096",
+        "",
+        "[InferenceEngine] Setting up execution provider for mode: hybrid",
+        "",
+        "[InferenceEngine] Using Hybrid (NPU + iGPU) execution provider",
+        "",
+        "[InferenceEngine] Loading ONNX model from: C:\\Users\\tomwo\\.cache\\huggingface\\hub/models--amd--Llama-3.2-3B-Instruct-onnx-ryzenai-hybrid\\snapshots\\d97f276c41e20fa73e4d8e0631020ae94faef23a",
+        ""
+      ]
+    },
+    {
+      "ts": 1766662444.1388178,
+      "cpu_percent": 7.6,
+      "memory_percent": 56.9,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "error": "ERROR: Unknown command: 'npu'"
+      },
+      "log_tail": [
+        "[InferenceEngine] Ryzen AI version: 1.6.0",
+        "",
+        "[InferenceEngine] Loaded max_prompt_length from rai_config.json: 4096",
+        "",
+        "[InferenceEngine] Setting up execution provider for mode: hybrid",
+        "",
+        "[InferenceEngine] Using Hybrid (NPU + iGPU) execution provider",
+        "",
+        "[InferenceEngine] Loading ONNX model from: C:\\Users\\tomwo\\.cache\\huggingface\\hub/models--amd--Llama-3.2-3B-Instruct-onnx-ryzenai-hybrid\\snapshots\\d97f276c41e20fa73e4d8e0631020ae94faef23a",
+        ""
+      ]
+    },
+    {
+      "ts": 1766662445.2135935,
+      "cpu_percent": 8.4,
+      "memory_percent": 57.7,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "error": "ERROR: Unknown command: 'npu'"
+      },
+      "log_tail": [
+        "[InferenceEngine] Ryzen AI version: 1.6.0",
+        "",
+        "[InferenceEngine] Loaded max_prompt_length from rai_config.json: 4096",
+        "",
+        "[InferenceEngine] Setting up execution provider for mode: hybrid",
+        "",
+        "[InferenceEngine] Using Hybrid (NPU + iGPU) execution provider",
+        "",
+        "[InferenceEngine] Loading ONNX model from: C:\\Users\\tomwo\\.cache\\huggingface\\hub/models--amd--Llama-3.2-3B-Instruct-onnx-ryzenai-hybrid\\snapshots\\d97f276c41e20fa73e4d8e0631020ae94faef23a",
+        ""
+      ]
+    },
+    {
+      "ts": 1766662446.2875144,
+      "cpu_percent": 8.3,
+      "memory_percent": 59.4,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "error": "ERROR: Unknown command: 'npu'"
+      },
+      "log_tail": [
+        "[InferenceEngine] Ryzen AI version: 1.6.0",
+        "",
+        "[InferenceEngine] Loaded max_prompt_length from rai_config.json: 4096",
+        "",
+        "[InferenceEngine] Setting up execution provider for mode: hybrid",
+        "",
+        "[InferenceEngine] Using Hybrid (NPU + iGPU) execution provider",
+        "",
+        "[InferenceEngine] Loading ONNX model from: C:\\Users\\tomwo\\.cache\\huggingface\\hub/models--amd--Llama-3.2-3B-Instruct-onnx-ryzenai-hybrid\\snapshots\\d97f276c41e20fa73e4d8e0631020ae94faef23a",
+        ""
+      ]
+    },
+    {
+      "ts": 1766662447.3582277,
+      "cpu_percent": 8.4,
+      "memory_percent": 59.6,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "error": "ERROR: Unknown command: 'npu'"
+      },
+      "log_tail": [
+        "[InferenceEngine] Ryzen AI version: 1.6.0",
+        "",
+        "[InferenceEngine] Loaded max_prompt_length from rai_config.json: 4096",
+        "",
+        "[InferenceEngine] Setting up execution provider for mode: hybrid",
+        "",
+        "[InferenceEngine] Using Hybrid (NPU + iGPU) execution provider",
+        "",
+        "[InferenceEngine] Loading ONNX model from: C:\\Users\\tomwo\\.cache\\huggingface\\hub/models--amd--Llama-3.2-3B-Instruct-onnx-ryzenai-hybrid\\snapshots\\d97f276c41e20fa73e4d8e0631020ae94faef23a",
+        ""
+      ]
+    },
+    {
+      "ts": 1766662448.4366527,
+      "cpu_percent": 5.3,
+      "memory_percent": 59.9,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "error": "ERROR: Unknown command: 'npu'"
+      },
+      "log_tail": [
+        "",
+        "",
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=1, repetition_penalty=1.1",
+        ""
+      ]
+    },
+    {
+      "ts": 1766662449.5431697,
+      "cpu_percent": 7.6,
+      "memory_percent": 59.9,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "error": "ERROR: Unknown command: 'npu'"
+      },
+      "log_tail": [
+        "",
+        "",
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=1, repetition_penalty=1.1",
+        ""
+      ]
+    },
+    {
+      "ts": 1766662450.616582,
+      "cpu_percent": 6.5,
+      "memory_percent": 59.9,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "error": "ERROR: Unknown command: 'npu'"
+      },
+      "log_tail": [
+        "",
+        "",
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=1, repetition_penalty=1.1",
+        ""
+      ]
+    },
+    {
+      "ts": 1766662451.738261,
+      "cpu_percent": 3.6,
+      "memory_percent": 60.9,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "error": "ERROR: Unknown command: 'npu'"
+      },
+      "log_tail": [
+        "",
+        "",
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=1, repetition_penalty=1.1",
+        ""
+      ]
+    },
+    {
+      "ts": 1766662452.8144479,
+      "cpu_percent": 10.2,
+      "memory_percent": 62.6,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "error": "ERROR: Unknown command: 'npu'"
+      },
+      "log_tail": [
+        "Output tokens: 32",
+        "=================",
+        "[Server] POST /api/v1/chat/completions - 200",
+        "[Server PRE-ROUTE] POST /api/v1/chat/completions",
+        "[Server DEBUG] No tools in request",
+        "[Server] Model already loaded: Llama-3.2-3B-Instruct-Hybrid",
+        "[Server] POST /api/v1/chat/completions - [ChatCompletionRequest] Parsed max_tokens=32",
+        "",
+        "[Server] Chat completion request (stream=0)",
+        ""
+      ]
+    },
+    {
+      "ts": 1766662453.911229,
+      "cpu_percent": 12.1,
+      "memory_percent": 62.2,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "error": "ERROR: Unknown command: 'npu'"
+      },
+      "log_tail": [
+        "",
+        "",
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=1, repetition_penalty=1.1",
+        ""
+      ]
+    },
+    {
+      "ts": 1766662455.007656,
+      "cpu_percent": 7.2,
+      "memory_percent": 62.1,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "error": "ERROR: Unknown command: 'npu'"
+      },
+      "log_tail": [
+        "",
+        "",
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=1, repetition_penalty=1.1",
+        ""
+      ]
+    },
+    {
+      "ts": 1766662456.098008,
+      "cpu_percent": 13.4,
+      "memory_percent": 62.0,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "error": "ERROR: Unknown command: 'npu'"
+      },
+      "log_tail": [
+        "",
+        "",
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=1, repetition_penalty=1.1",
+        ""
+      ]
+    }
+  ]
+}

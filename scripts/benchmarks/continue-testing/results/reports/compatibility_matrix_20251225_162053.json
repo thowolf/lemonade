@@ -1,0 +1,19 @@
+{
+  "test-model": {
+    "compatible": true,
+    "max_stable_interactions": 0,
+    "freeze_rate_percent": 0.0,
+    "mean_freeze_after_interaction": null,
+    "performance_rating": "unknown",
+    "stability_rating": "mostly_stable",
+    "performance_aggs": {
+      "mean": null,
+      "p50": null,
+      "p95": null,
+      "p99": null,
+      "tps_mean": null,
+      "tps_p50": null
+    },
+    "recommended_for_production": false
+  }
+}

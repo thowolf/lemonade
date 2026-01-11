@@ -1,0 +1,7 @@
+# Yamale schema for hardware.yaml
+hardware:
+  cpu: map(required=False)
+  memory: map(required=False)
+  gpu: map(required=False)
+  npu: map(required=False)
+  software: map(required=False)

@@ -1,0 +1,17 @@
+﻿# Docker ignore patterns
+.git
+.env*
+.venv/
+venv/
+__pycache__/
+*.pyc
+node_modules/
+dist/
+build/
+*.log
+*.tmp
+scripts/benchmarks/RyzenAI-SW/
+scripts/benchmarks/tests/
+scripts/benchmarks/wandb/
+results/
+wandb/

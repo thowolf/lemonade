@@ -1,0 +1,78 @@
+wandb_version: 1
+
+_wandb:
+  desc: null
+  value:
+    python_version: 3.13.11
+    cli_version: 0.23.1
+    is_jupyter_run: false
+    is_kaggle_kernel: false
+    start_time: 1766609503
+    t:
+      3:
+      - 2
+      - 4
+      - 13
+      - 15
+      - 16
+      - 42
+      4: 3.13.11
+      5: 0.23.1
+      8:
+      - 3
+      13: windows-amd64
+    e:
+      b47ayv4aiwalc6dkkd799hwwgrhes7aw:
+        os: Windows-11-10.0.26200-SP0
+        python: CPython 3.13.11
+        started_at: '2025-12-24T20:51:42.718447Z'
+        program: C:\Users\tomwo\git\lemonade\wandb_demo.py
+        code_path: wandb_demo.py
+        code_path_local: wandb_demo.py
+        git:
+          remote_url: https://github.com/thowolf/lemonade-private.git
+          commit: 0bba5a757cbfff4cc0fcf5560a1f194e841c728b
+        root: C:\Users\tomwo\git\lemonade
+        host: hamster1
+        executable: C:\Users\tomwo\AppData\Local\Programs\Python\Python313\python.exe
+        cpu_count: 16
+        cpu_count_logical: 32
+        disk:
+          /:
+            total: '2045951078400'
+            used: '1336308793344'
+        memory:
+          total: '33981009920'
+        writer_id: b47ayv4aiwalc6dkkd799hwwgrhes7aw
+model_name:
+  desc: null
+  value: Qwen3-4B-fp16
+model_family:
+  desc: null
+  value: qwen
+checkpoint:
+  desc: null
+  value: qwen/Qwen3-4B-fp16:model
+quantization:
+  desc: null
+  value: fp16
+moe_config:
+  desc: null
+  value: null
+backend:
+  desc: null
+  value: oga
+benchmark_suite:
+  desc: null
+  value: hellaswag
+hardware:
+  desc: null
+  value:
+    cpu: AMD Ryzen AI 9 395
+    gpu: null
+    npu: AMD Ryzen AI NPU
+    architecture: Zen 4c
+    vram_gb: 32.0
+    system_ram_gb: 32.0
+    os: Windows 11
+    driver_version: ROCm 6.1

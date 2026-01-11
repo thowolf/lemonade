@@ -1,0 +1,14 @@
+# Test Scenarios for Continue Extension Model Testing
+scenarios:
+  - name: "code_completion"
+    description: "Test basic code completion functionality"
+    prompt: "Complete this Python function:\ndef fibonacci(n):\n    if n <= 1:\n        return n\n    # Complete this recursive implementation"
+    expected_contains: ["return", "fibonacci"]
+  - name: "debugging_assistance"
+    description: "Test debugging help"
+    prompt: "This Python code has a bug:\ndef find_max(arr):\n    max_val = 0\n    for num in arr:\n        if num > max_val:\n            max_val = num\n    return max_val\n\nWhat's wrong with this function?"
+    expected_contains: ["negative", "empty"]
+  - name: "refactoring_suggestion"
+    description: "Test code refactoring suggestions"
+    prompt: "Refactor this code to be more Pythonic:\nresult = []\nfor i in range(10):\n    if i % 2 == 0:\n        result.append(i * 2)\nprint(result)"
+    expected_contains: ["list comprehension", "comprehension"]

@@ -90,7 +90,7 @@ for idx, r in enumerate(results, 1):
         performance_metrics=perf,
         resource_metrics=resm,
         sample_count=1,
-        timestamp=datetime.utcnow().timestamp()
+        timestamp=datetime.datetime.now(datetime.timezone.utc).timestamp()
     )
 
     wandb_collector.log_benchmark_result(bm)

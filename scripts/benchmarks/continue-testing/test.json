@@ -1,0 +1,168 @@
+{
+    "schema_version": {
+        "schema": "JSON",
+        "creation_date": "Thu Dec 25 19:32:29 2025 GMT"
+    },
+    "system": {
+        "host": {
+            "os": {
+                "sysname": "Windows NT",
+                "release": "26200",
+                "machine": "x86_64",
+                "distribution": "Microsoft Windows 11 Pro",
+                "model": "MS-S1 MAX",
+                "hostname": "HAMSTER1",
+                "memory_bytes": "0x7e96d1000",
+                "cores": "32",
+                "bios_vendor": "American Megatrends International, LLC.",
+                "bios_version": "1.03"
+            },
+            "xrt": {
+                "version": "2.19.0",
+                "branch": "HEAD",
+                "hash": "77c7088d804602a53c3eb489b9cb37b709bcd751",
+                "build_date": "2025-10-10 17:23:25",
+                "drivers": [
+                    {
+                        "name": "NPU Driver",
+                        "version": "32.0.203.314"
+                    }
+                ]
+            },
+            "devices": [
+                {
+                    "bdf": "00f5:00:01.1",
+                    "device_class": "Ryzen",
+                    "name": "NPU Strix Halo",
+                    "id": "0x0",
+                    "firmware_version": "1.0.21.44",
+                    "instance": "mgmt(inst=1)",
+                    "is_ready": "true"
+                }
+            ]
+        }
+    },
+    "devices": [
+        {
+            "interface_type": "pcie",
+            "device_id": "00f5:00:01.1",
+            "aie_partitions": {
+                "description": "AIE Partition Information",
+                "partitions": [
+                    {
+                        "start_col": "0",
+                        "num_cols": "8",
+                        "partition_index": "0",
+                        "hw_contexts": [
+                            {
+                                "pid": "11744",
+                                "context_id": "0",
+                                "status": "Idle",
+                                "instr_bo_mem": "1344 KB",
+                                "command_submissions": "0",
+                                "command_completions": "0",
+                                "migrations": "0",
+                                "errors": "0",
+                                "gops": "62",
+                                "egops": "N\/A",
+                                "fps": "N\/A",
+                                "latency": "N\/A",
+                                "priority": "Normal"
+                            },
+                            {
+                                "pid": "14112",
+                                "context_id": "1",
+                                "status": "Idle",
+                                "instr_bo_mem": "9472 KB",
+                                "command_submissions": "4",
+                                "command_completions": "4",
+                                "migrations": "0",
+                                "errors": "0",
+                                "gops": "N\/A",
+                                "egops": "N\/A",
+                                "fps": "N\/A",
+                                "latency": "N\/A",
+                                "priority": "Low"
+                            },
+                            {
+                                "pid": "14400",
+                                "context_id": "2",
+                                "status": "Idle",
+                                "instr_bo_mem": "960 KB",
+                                "command_submissions": "181",
+                                "command_completions": "181",
+                                "migrations": "0",
+                                "errors": "0",
+                                "gops": "87",
+                                "egops": "N\/A",
+                                "fps": "N\/A",
+                                "latency": "N\/A",
+                                "priority": "Low"
+                            },
+                            {
+                                "pid": "14400",
+                                "context_id": "3",
+                                "status": "Idle",
+                                "instr_bo_mem": "9280 KB",
+                                "command_submissions": "1551",
+                                "command_completions": "1551",
+                                "migrations": "0",
+                                "errors": "0",
+                                "gops": "N\/A",
+                                "egops": "N\/A",
+                                "fps": "N\/A",
+                                "latency": "N\/A",
+                                "priority": "Low"
+                            },
+                            {
+                                "pid": "15756",
+                                "context_id": "4",
+                                "status": "Idle",
+                                "instr_bo_mem": "8800 KB",
+                                "command_submissions": "5369",
+                                "command_completions": "5369",
+                                "migrations": "0",
+                                "errors": "0",
+                                "gops": "N\/A",
+                                "egops": "N\/A",
+                                "fps": "N\/A",
+                                "latency": "N\/A",
+                                "priority": "Low"
+                            },
+                            {
+                                "pid": "25288",
+                                "context_id": "7",
+                                "status": "Idle",
+                                "instr_bo_mem": "11680 KB",
+                                "command_submissions": "580",
+                                "command_completions": "580",
+                                "migrations": "0",
+                                "errors": "0",
+                                "gops": "N\/A",
+                                "egops": "N\/A",
+                                "fps": "N\/A",
+                                "latency": "N\/A",
+                                "priority": "Low"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "platforms": [
+                {
+                    "static_region": {
+                        "name": "NPU Strix Halo",
+                        "total_columns": "8"
+                    },
+                    "status": {
+                        "power_mode": "Default"
+                    },
+                    "electrical": {
+                        "power_consumption_watts": "N\/A"
+                    }
+                }
+            ]
+        }
+    ]
+}
+

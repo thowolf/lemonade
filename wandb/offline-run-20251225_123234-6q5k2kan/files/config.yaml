@@ -1,0 +1,80 @@
+wandb_version: 1
+
+_wandb:
+  desc: null
+  value:
+    python_version: 3.12.11
+    cli_version: 0.23.1
+    is_jupyter_run: false
+    is_kaggle_kernel: false
+    start_time: 1766662356
+    t:
+      3:
+      - 2
+      - 4
+      - 13
+      - 16
+      - 42
+      4: 3.12.11
+      5: 0.23.1
+      8:
+      - 3
+      13: windows-amd64
+    e:
+      ys1liz452xormpgqet8pk6k934nd2vxt:
+        os: Windows-11-10.0.26200-SP0
+        python: CPython 3.12.11
+        started_at: '2025-12-25T11:32:34.244500Z'
+        args:
+        - --url
+        - http://127.0.0.1:8000/api/v1/chat/completions
+        - --model
+        - Phi-3-Mini-Instruct-Hybrid
+        - --concurrency
+        - '1'
+        - --requests
+        - '5'
+        - --prompt
+        - Benchmarking NPU sample run Phi-3
+        - --max-tokens
+        - '32'
+        - --interval
+        - '1'
+        - --wandb-run-name
+        - Phi3_quicktest_2
+        program: C:\Users\tomwo\git\lemonade\scripts\benchmarks\ryzen_benchmark_with_metrics.py
+        code_path: scripts\benchmarks\ryzen_benchmark_with_metrics.py
+        code_path_local: scripts\benchmarks\ryzen_benchmark_with_metrics.py
+        git:
+          remote_url: https://github.com/thowolf/lemonade-private.git
+          commit: 65f92e0b7d4beb70bdfd2955592b45ea5ee5ae2b
+        root: C:\Users\tomwo\git\lemonade
+        host: hamster1
+        executable: C:\Users\tomwo\miniconda3\envs\ryzen-ai-1.6.1\python.exe
+        cpu_count: 16
+        cpu_count_logical: 32
+        disk:
+          /:
+            total: '2045951078400'
+            used: '1359895465984'
+        memory:
+          total: '33981009920'
+        writer_id: ys1liz452xormpgqet8pk6k934nd2vxt
+model:
+  desc: null
+  value: Phi-3-Mini-Instruct-Hybrid
+concurrency:
+  desc: null
+  value: 1
+requests:
+  desc: null
+  value: 5
+prompt:
+  desc: null
+  value: Benchmarking NPU sample run Phi-3
+max_tokens:
+  desc: null
+  value: 32
+sample_interval:
+  desc: null
+  value: 1.0

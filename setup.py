@@ -86,6 +86,11 @@ setup(
         "model-generate": [
             "model-generate==1.5.0; platform_system=='Windows' and python_version=='3.10'",
         ],
+        "continue_testing": [
+            "yamale",
+            "pyadl",
+            "schedule",
+        ],
     },
     classifiers=[],
     entry_points={

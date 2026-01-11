@@ -1,0 +1,11 @@
+{
+  "run_id": "2ade2d8f-1559-4b85-828c-633a1d67b587",
+  "model_name": "qwen3:0.6b",
+  "start_time": "2025-12-25T16:24:42.717676+00:00",
+  "end_time": "2025-12-25T16:24:57.731605+00:00",
+  "status": "completed",
+  "num_interactions_planned": 0,
+  "num_interactions_completed": 0,
+  "freeze_detected": false,
+  "metrics_collected": 15
+}

@@ -1,0 +1,75 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://lemonade-server.ai/schemas/continue-testing/models.schema.json",
+  "title": "Coder Models Configuration",
+  "description": "Configuration schema for coder models to test with Continue extension",
+  "type": "object",
+  "required": ["models"],
+  "properties": {
+    "models": {
+      "type": "array",
+      "description": "List of coder models to test",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/definitions/CoderModel"
+      }
+    }
+  },
+  "definitions": {
+    "CoderModel": {
+      "type": "object",
+      "required": ["name", "display_name", "source", "quantization"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Unique model identifier",
+          "pattern": "^[a-z0-9._-]+$",
+          "examples": ["qwen2.5-coder-7b-q4", "deepseek-coder-v2-16b"]
+        },
+        "display_name": {
+          "type": "string",
+          "description": "Human-readable model name",
+          "minLength": 1,
+          "examples": ["Qwen 2.5 Coder 7B (Q4_0)", "DeepSeek Coder v2 16B"]
+        },
+        "source": {
+          "type": "string",
+          "description": "Model hosting platform",
+          "enum": ["ollama", "lmstudio", "huggingface"],
+          "examples": ["ollama"]
+        },
+        "quantization": {
+          "type": "string",
+          "description": "Quantization method applied",
+          "pattern": "^[a-z0-9._-]+$",
+          "examples": ["q4_0", "q4_k_m", "bf16", "int8"]
+        },
+        "size_gb": {
+          "type": "number",
+          "description": "Model size in gigabytes",
+          "minimum": 0.1,
+          "maximum": 1000.0
+        },
+        "expected_tokens_per_second": {
+          "type": "number",
+          "description": "Expected token generation rate",
+          "minimum": 0.1,
+          "maximum": 1000.0
+        },
+        "tolerance_percent": {
+          "type": "number",
+          "description": "Acceptable performance variance percentage",
+          "minimum": 0.0,
+          "maximum": 100.0,
+          "default": 20.0
+        },
+        "max_stable_interactions": {
+          "type": "integer",
+          "description": "Expected number of freeze-free interactions",
+          "minimum": 1,
+          "default": 20
+        }
+      }
+    }
+  }
+}

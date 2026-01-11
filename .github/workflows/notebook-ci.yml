@@ -1,0 +1,48 @@
+name: Notebook CI
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - 'scripts/benchmarks/continue-testing/examples/**'
+      - 'tests/unit/test_examples_*.py'
+      - '.github/workflows/notebook-ci.yml'
+  pull_request:
+    paths:
+      - 'scripts/benchmarks/continue-testing/examples/**'
+      - 'tests/unit/test_examples_*.py'
+      - '.github/workflows/notebook-ci.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  notebook-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: Create virtual environment and install dependencies
+        shell: bash
+        run: |
+          python -m venv .venv
+          venvPython=".venv/bin/python"
+          venvPip=".venv/bin/pip"
+          $venvPython -m pip install --upgrade pip
+          $venvPip install jupyter nbconvert
+          $venvPip install -e .[dev]
+      - name: Run unit tests for examples
+        shell: bash
+        run: |
+          venvPython=".venv/bin/python"
+          $venvPython -m pytest tests/unit/test_examples_*.py -v
+      - name: Execute example notebooks
+        shell: bash
+        run: |
+          venvPython=".venv/bin/python"
+          cd scripts/benchmarks/continue-testing/examples
+          $venvPython -m jupyter nbconvert --execute --to notebook --inplace --allow-errors wandb_dashboard_example.ipynb
+          $venvPython -m jupyter nbconvert --execute --to notebook --inplace --allow-errors wandb_dashboard_visuals.ipynb

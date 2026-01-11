@@ -1,0 +1,13 @@
+hardware:
+  cpu:
+    model: AMD64 Family 26 Model 112 Stepping 0, AuthenticAMD
+  memory:
+    total_gb: 31.6
+  gpu:
+    gpu_model: GPUtil not available
+  npu:
+    npu_available: true
+    npu_driver_version: AMD Ryzen AI
+  software:
+    os_version: Windows 11
+    python_version: 3.13.9

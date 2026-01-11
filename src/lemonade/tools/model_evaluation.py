@@ -258,7 +258,7 @@ class ModelEvaluation(FirstTool):
             "metadata": {
                 "name": f"{args.get('model_family')} {args.get('quantization')} Evaluation",
                 "version": "1.0.0",
-                "created": datetime.utcnow().isoformat(),
+                "created": datetime.datetime.now(datetime.timezone.utc).isoformat(),
                 "description": f"Evaluation of {args.get('model_name')} on {benchmark_suite}",
                 "author": "lemonade-sdk"
             },

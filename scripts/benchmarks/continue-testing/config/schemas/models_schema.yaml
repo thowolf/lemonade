@@ -1,0 +1,13 @@
+# Yamale schema for models.yaml
+models: list(include('model_def'))
+
+---
+model_def:
+  name: str()
+  id: str()
+  source: str()
+  quantization: str()
+  expected_memory_mb: int(required=False)
+  max_context: int(required=False)
+  optimal_temperature: num(required=False)
+  optimal_num_predict: int(required=False)

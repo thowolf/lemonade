@@ -1,0 +1,147 @@
+{
+  "concurrency": 1,
+  "requests": 3,
+  "successes": 3,
+  "failures": 0,
+  "mean_latency_s": 1.7931431929270427,
+  "p50_latency_s": 0.5178976058959961,
+  "total_time_s": 5.379429578781128,
+  "throughput_req_per_s": 0.5576799465566645,
+  "samples": [
+    {
+      "ts": 1766662846.4676316,
+      "cpu_percent": 0.0,
+      "memory_percent": 60.2,
+      "proc_cpu_percent": 0.0,
+      "proc_rss_mb": 2911.44921875,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 2726.0,
+          "command_completions": 2726.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "=================",
+        "[Server] POST /api/v1/chat/completions - 200",
+        "[Server PRE-ROUTE] POST /api/v1/chat/completions",
+        "[Server DEBUG] No tools in request",
+        "[Server] Auto-loading model: Qwen3-4B-Instruct-2507-GGUF",
+        "[Router] Effective settings: ctx_size=4096, backend=vulkan, args=(none)",
+        "[Router] Loading model: Qwen3-4B-Instruct-2507-GGUF (checkpoint: unsloth/Qwen3-4B-Instruct-2507-GGUF:Qwen3-4B-Instruct-2507-Q4_K_M.gguf, recipe: llamacpp, type: llm, device: gpu)",
+        "[Router] Slot limit reached for type llm, evicting LRU: Phi-3-Mini-Instruct-Hybrid",
+        "[Router] Evicting model: Phi-3-Mini-Instruct-Hybrid",
+        "[RyzenAI-Server] Unloading model..."
+      ]
+    },
+    {
+      "ts": 1766662847.6667018,
+      "cpu_percent": 15.3,
+      "memory_percent": 51.4,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 2726.0,
+          "command_completions": 2726.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "llama_model_loader: - kv  26:               qwen3.attention.value_length u32              = 128",
+        "",
+        "llama_model_loader: - kv  27:                       tokenizer.ggml.model str              = gpt2",
+        "",
+        "llama_model_loader: - kv  28:                         tokenizer.ggml.pre str              = qwen2",
+        "",
+        "llama_model_loader: - kv  29:                      tokenizer.ggml.tokens arr[str,151936]  = [\"!\", \"\\\"\", \"#\", \"$\", \"%\", \"&\", \"'\", ...",
+        "",
+        "llama_model_loader: - kv  30:                  tokenizer.ggml.token_type arr[i32,151936]  = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ...",
+        ""
+      ]
+    },
+    {
+      "ts": 1766662848.8553476,
+      "cpu_percent": 14.2,
+      "memory_percent": 54.3,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 2726.0,
+          "command_completions": 2726.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "load_tensors: offloading 36 repeating layers to GPU",
+        "",
+        "load_tensors: offloading output layer to GPU",
+        "",
+        "load_tensors: offloaded 37/37 layers to GPU",
+        "",
+        "load_tensors:   CPU_Mapped model buffer size =   304.28 MiB",
+        "",
+        "load_tensors:      Vulkan0 model buffer size =  2375.91 MiB",
+        ""
+      ]
+    },
+    {
+      "ts": 1766662850.0501113,
+      "cpu_percent": 15.6,
+      "memory_percent": 58.2,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 2726.0,
+          "command_completions": 2726.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "slot launch_slot_: id  3 | task 0 | processing task",
+        "",
+        "slot update_slots: id  3 | task 0 | new prompt, n_ctx_slot = 4096, n_keep = 16, task.n_tokens = 17",
+        "",
+        "slot update_slots: id  3 | task 0 | n_tokens = 0, memory_seq_rm [0, end)",
+        "",
+        "slot update_slots: id  3 | task 0 | prompt processing progress, n_tokens = 17, batch.n_tokens = 17, progress = 1.000000",
+        "",
+        "slot update_slots: id  3 | task 0 | prompt done, n_tokens = 17, batch.n_tokens = 17",
+        ""
+      ]
+    },
+    {
+      "ts": 1766662851.2860746,
+      "cpu_percent": 19.4,
+      "memory_percent": 59.2,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 2726.0,
+          "command_completions": 2726.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "slot update_slots: id  3 | task 66 | need to evaluate at least 1 token for each active slot (n_past = 17, task.n_tokens() = 17)",
+        "",
+        "slot update_slots: id  3 | task 66 | n_past was set to 16",
+        "",
+        "slot update_slots: id  3 | task 66 | n_tokens = 16, memory_seq_rm [16, end)",
+        "",
+        "slot update_slots: id  3 | task 66 | prompt processing progress, n_tokens = 17, batch.n_tokens = 1, progress = 1.000000",
+        "",
+        "slot update_slots: id  3 | task 66 | prompt done, n_tokens = 17, batch.n_tokens = 1",
+        ""
+      ]
+    }
+  ]
+}

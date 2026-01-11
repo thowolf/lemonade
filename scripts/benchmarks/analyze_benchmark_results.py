@@ -41,11 +41,10 @@ for p in sorted(RESULTS.glob('ryzen_benchmark_metrics_*.json')):
     })
 
 # Write markdown summary
-now = datetime.utcnow().strftime('%Y%m%d_%H%M%S')
+now = datetime.datetime.now(datetime.timezone.utc).strftime('%Y%m%d_%H%M%S')
 out_md = RESULTS / f'benchmark_summary_{now}.md'
 with open(out_md, 'w', encoding='utf-8') as f:
-    f.write('| model | concurrency | requests | mean_latency_s | throughput_req_per_s | npu_device_count_max | npu_command_avg_rate/s | npu_gops_max |
-')
+    f.write('| model | concurrency | requests | mean_latency_s | throughput_req_per_s | npu_device_count_max | npu_command_avg_rate/s | npu_gops_max |\n')
     f.write('|---|---:|---:|---:|---:|---:|---:|---:|\n')
     for r in out:
         f.write(f"| {r['model']} | {r['concurrency']} | {r['requests']} | {r['mean_latency_s'] or ''} | {r['throughput_req_per_s'] or ''} | {r['npu_device_count_max'] or ''} | {r['npu_command_avg_rate'] or ''} | {r['npu_gops_max'] or ''} |\n")

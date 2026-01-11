@@ -1,0 +1,232 @@
+{
+  "concurrency": 1,
+  "requests": 5,
+  "successes": 0,
+  "failures": 5,
+  "mean_latency_s": null,
+  "p50_latency_s": null,
+  "total_time_s": 10.152036428451538,
+  "throughput_req_per_s": 0.0,
+  "samples": [
+    {
+      "ts": 1766662253.9843662,
+      "cpu_percent": 0.0,
+      "memory_percent": 55.1,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "error": "ERROR: Unknown command: 'npu'"
+      },
+      "log_tail": [
+        "  - NPU hardware: Yes",
+        "  - FLM available: Yes",
+        "  - OGA available: Yes",
+        "  - System RAM: 128.0 GB (max model size: 102.4 GB)",
+        "[ModelManager] Cache built: 91 total, 18 downloaded",
+        "[Server] GET /api/v1/models - 200",
+        "[Server PRE-ROUTE] GET /api/v1/models",
+        "[Server] GET /api/v1/models - 200",
+        "",
+        "[Server] Shutdown signal received, exiting..."
+      ]
+    },
+    {
+      "ts": 1766662255.1472347,
+      "cpu_percent": 9.4,
+      "memory_percent": 55.1,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "error": "ERROR: Unknown command: 'npu'"
+      },
+      "log_tail": [
+        "  - NPU hardware: Yes",
+        "  - FLM available: Yes",
+        "  - OGA available: Yes",
+        "  - System RAM: 128.0 GB (max model size: 102.4 GB)",
+        "[ModelManager] Cache built: 91 total, 18 downloaded",
+        "[Server] GET /api/v1/models - 200",
+        "[Server PRE-ROUTE] GET /api/v1/models",
+        "[Server] GET /api/v1/models - 200",
+        "",
+        "[Server] Shutdown signal received, exiting..."
+      ]
+    },
+    {
+      "ts": 1766662256.2166865,
+      "cpu_percent": 8.0,
+      "memory_percent": 55.1,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "error": "ERROR: Unknown command: 'npu'"
+      },
+      "log_tail": [
+        "  - NPU hardware: Yes",
+        "  - FLM available: Yes",
+        "  - OGA available: Yes",
+        "  - System RAM: 128.0 GB (max model size: 102.4 GB)",
+        "[ModelManager] Cache built: 91 total, 18 downloaded",
+        "[Server] GET /api/v1/models - 200",
+        "[Server PRE-ROUTE] GET /api/v1/models",
+        "[Server] GET /api/v1/models - 200",
+        "",
+        "[Server] Shutdown signal received, exiting..."
+      ]
+    },
+    {
+      "ts": 1766662257.2996042,
+      "cpu_percent": 10.4,
+      "memory_percent": 55.1,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "error": "ERROR: Unknown command: 'npu'"
+      },
+      "log_tail": [
+        "  - NPU hardware: Yes",
+        "  - FLM available: Yes",
+        "  - OGA available: Yes",
+        "  - System RAM: 128.0 GB (max model size: 102.4 GB)",
+        "[ModelManager] Cache built: 91 total, 18 downloaded",
+        "[Server] GET /api/v1/models - 200",
+        "[Server PRE-ROUTE] GET /api/v1/models",
+        "[Server] GET /api/v1/models - 200",
+        "",
+        "[Server] Shutdown signal received, exiting..."
+      ]
+    },
+    {
+      "ts": 1766662258.3716362,
+      "cpu_percent": 9.2,
+      "memory_percent": 55.1,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "error": "ERROR: Unknown command: 'npu'"
+      },
+      "log_tail": [
+        "  - NPU hardware: Yes",
+        "  - FLM available: Yes",
+        "  - OGA available: Yes",
+        "  - System RAM: 128.0 GB (max model size: 102.4 GB)",
+        "[ModelManager] Cache built: 91 total, 18 downloaded",
+        "[Server] GET /api/v1/models - 200",
+        "[Server PRE-ROUTE] GET /api/v1/models",
+        "[Server] GET /api/v1/models - 200",
+        "",
+        "[Server] Shutdown signal received, exiting..."
+      ]
+    },
+    {
+      "ts": 1766662259.4412036,
+      "cpu_percent": 9.4,
+      "memory_percent": 55.1,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "error": "ERROR: Unknown command: 'npu'"
+      },
+      "log_tail": [
+        "  - NPU hardware: Yes",
+        "  - FLM available: Yes",
+        "  - OGA available: Yes",
+        "  - System RAM: 128.0 GB (max model size: 102.4 GB)",
+        "[ModelManager] Cache built: 91 total, 18 downloaded",
+        "[Server] GET /api/v1/models - 200",
+        "[Server PRE-ROUTE] GET /api/v1/models",
+        "[Server] GET /api/v1/models - 200",
+        "",
+        "[Server] Shutdown signal received, exiting..."
+      ]
+    },
+    {
+      "ts": 1766662260.5190995,
+      "cpu_percent": 8.9,
+      "memory_percent": 55.1,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "error": "ERROR: Unknown command: 'npu'"
+      },
+      "log_tail": [
+        "  - NPU hardware: Yes",
+        "  - FLM available: Yes",
+        "  - OGA available: Yes",
+        "  - System RAM: 128.0 GB (max model size: 102.4 GB)",
+        "[ModelManager] Cache built: 91 total, 18 downloaded",
+        "[Server] GET /api/v1/models - 200",
+        "[Server PRE-ROUTE] GET /api/v1/models",
+        "[Server] GET /api/v1/models - 200",
+        "",
+        "[Server] Shutdown signal received, exiting..."
+      ]
+    },
+    {
+      "ts": 1766662261.6037757,
+      "cpu_percent": 11.2,
+      "memory_percent": 52.4,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "error": "ERROR: Unknown command: 'npu'"
+      },
+      "log_tail": [
+        "  - NPU hardware: Yes",
+        "  - FLM available: Yes",
+        "  - OGA available: Yes",
+        "  - System RAM: 128.0 GB (max model size: 102.4 GB)",
+        "[ModelManager] Cache built: 91 total, 18 downloaded",
+        "[Server] GET /api/v1/models - 200",
+        "[Server PRE-ROUTE] GET /api/v1/models",
+        "[Server] GET /api/v1/models - 200",
+        "",
+        "[Server] Shutdown signal received, exiting..."
+      ]
+    },
+    {
+      "ts": 1766662262.6880763,
+      "cpu_percent": 8.4,
+      "memory_percent": 52.4,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "error": "ERROR: Unknown command: 'npu'"
+      },
+      "log_tail": [
+        "  - NPU hardware: Yes",
+        "  - FLM available: Yes",
+        "  - OGA available: Yes",
+        "  - System RAM: 128.0 GB (max model size: 102.4 GB)",
+        "[ModelManager] Cache built: 91 total, 18 downloaded",
+        "[Server] GET /api/v1/models - 200",
+        "[Server PRE-ROUTE] GET /api/v1/models",
+        "[Server] GET /api/v1/models - 200",
+        "",
+        "[Server] Shutdown signal received, exiting..."
+      ]
+    },
+    {
+      "ts": 1766662263.7555497,
+      "cpu_percent": 8.2,
+      "memory_percent": 52.4,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "error": "ERROR: Unknown command: 'npu'"
+      },
+      "log_tail": [
+        "  - NPU hardware: Yes",
+        "  - FLM available: Yes",
+        "  - OGA available: Yes",
+        "  - System RAM: 128.0 GB (max model size: 102.4 GB)",
+        "[ModelManager] Cache built: 91 total, 18 downloaded",
+        "[Server] GET /api/v1/models - 200",
+        "[Server PRE-ROUTE] GET /api/v1/models",
+        "[Server] GET /api/v1/models - 200",
+        "",
+        "[Server] Shutdown signal received, exiting..."
+      ]
+    }
+  ]
+}

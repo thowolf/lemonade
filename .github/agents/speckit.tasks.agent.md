@@ -11,6 +11,8 @@ handoffs:
     send: true
 ---
 
+> **Constitution:** Refer to `.specify/memory/constitution.md` for normative principles and mandatory project policies. If your change affects project principles, run `/speckit.constitution` and include a Sync Impact Report.
+
 ## User Input
 
 ```text

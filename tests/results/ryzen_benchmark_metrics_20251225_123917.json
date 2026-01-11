@@ -1,0 +1,188 @@
+{
+  "concurrency": 1,
+  "requests": 3,
+  "successes": 3,
+  "failures": 0,
+  "mean_latency_s": 2.876942237218221,
+  "p50_latency_s": 1.2779712677001953,
+  "total_time_s": 8.630826711654663,
+  "throughput_req_per_s": 0.3475912679313722,
+  "samples": [
+    {
+      "ts": 1766662748.441916,
+      "cpu_percent": 0.0,
+      "memory_percent": 61.9,
+      "proc_cpu_percent": 0.0,
+      "proc_rss_mb": 4073.5703125,
+      "npu_info": {
+        "error": "ERROR: The output file 'C:\\Users\\tomwo\\AppData\\Local\\Temp\\tmpij02ijeb.json' already exists. Please either remove it or execute this command again with the '--force' option to overwrite it: invalid argument"
+      },
+      "log_tail": [
+        "=================",
+        "[Server] POST /api/v1/chat/completions - 200",
+        "[Server PRE-ROUTE] POST /api/v1/chat/completions",
+        "[Server DEBUG] No tools in request",
+        "[Server] Auto-loading model: Phi-3-Mini-Instruct-Hybrid",
+        "[Router] Effective settings: ctx_size=4096, backend=vulkan, args=(none)",
+        "[Router] Loading model: Phi-3-Mini-Instruct-Hybrid (checkpoint: amd/Phi-3-mini-4k-instruct-onnx-ryzenai-hybrid, recipe: oga-hybrid, type: llm, device: gpu|npu)",
+        "[Router] NPU is occupied by: Llama-3.2-3B-Instruct-Hybrid, evicting...",
+        "[Router] Evicting model: Llama-3.2-3B-Instruct-Hybrid",
+        "[RyzenAI-Server] Unloading model..."
+      ]
+    },
+    {
+      "ts": 1766662749.5796015,
+      "cpu_percent": 11.6,
+      "memory_percent": 49.4,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "error": "ERROR: The output file 'C:\\Users\\tomwo\\AppData\\Local\\Temp\\tmpo4ib4x3t.json' already exists. Please either remove it or execute this command again with the '--force' option to overwrite it: invalid argument"
+      },
+      "log_tail": [
+        "[RyzenAI-Server] Model path: C:\\Users\\tomwo\\.cache\\huggingface\\hub/models--amd--Phi-3-mini-4k-instruct-onnx-ryzenai-hybrid\\snapshots\\680e20faa8e8d869c84de7f1d0dcb561eea385f3",
+        "[RyzenAI-Server] Execution mode: hybrid",
+        "RyzenAI-Server will use port: 8001",
+        "[RyzenAI-Server] Starting ryzenai-server...",
+        "[ProcessManager] Starting process with filtered output: \"C:\\Users\\tomwo\\AppData\\Local\\lemonade_server\\bin\\ryzenai-server\\ryzenai-server.exe\" \"-m\" \"C:\\Users\\tomwo\\.cache\\huggingface\\hub/models--amd--Phi-3-mini-4k-instruct-onnx-ryzenai-hybrid\\snapshots\\680e20faa8e8d869c84de7f1d0dcb561eea385f3\" \"--port\" \"8001\" \"--mode\" \"hybrid\" \"--ctx-size\" \"4096\" \"--verbose\"",
+        "[ProcessManager] Process started successfully, PID: 29172",
+        "[ProcessManager] Process started successfully, PID: 29172",
+        "Waiting for RyzenAI-Server to be ready...",
+        "Ryzen AI LLM Server starting...",
+        ""
+      ]
+    },
+    {
+      "ts": 1766662750.678823,
+      "cpu_percent": 8.6,
+      "memory_percent": 50.0,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "error": "ERROR: The output file 'C:\\Users\\tomwo\\AppData\\Local\\Temp\\tmpzfgehnlc.json' already exists. Please either remove it or execute this command again with the '--force' option to overwrite it: invalid argument"
+      },
+      "log_tail": [
+        "[InferenceEngine] Ryzen AI version: 1.6.0",
+        "",
+        "[InferenceEngine] Loaded max_prompt_length from rai_config.json: 4096",
+        "",
+        "[InferenceEngine] Setting up execution provider for mode: hybrid",
+        "",
+        "[InferenceEngine] Using Hybrid (NPU + iGPU) execution provider",
+        "",
+        "[InferenceEngine] Loading ONNX model from: C:\\Users\\tomwo\\.cache\\huggingface\\hub/models--amd--Phi-3-mini-4k-instruct-onnx-ryzenai-hybrid\\snapshots\\680e20faa8e8d869c84de7f1d0dcb561eea385f3",
+        ""
+      ]
+    },
+    {
+      "ts": 1766662751.773613,
+      "cpu_percent": 9.0,
+      "memory_percent": 53.3,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "error": "ERROR: The output file 'C:\\Users\\tomwo\\AppData\\Local\\Temp\\tmpfc91uq8l.json' already exists. Please either remove it or execute this command again with the '--force' option to overwrite it: invalid argument"
+      },
+      "log_tail": [
+        "[InferenceEngine] Ryzen AI version: 1.6.0",
+        "",
+        "[InferenceEngine] Loaded max_prompt_length from rai_config.json: 4096",
+        "",
+        "[InferenceEngine] Setting up execution provider for mode: hybrid",
+        "",
+        "[InferenceEngine] Using Hybrid (NPU + iGPU) execution provider",
+        "",
+        "[InferenceEngine] Loading ONNX model from: C:\\Users\\tomwo\\.cache\\huggingface\\hub/models--amd--Phi-3-mini-4k-instruct-onnx-ryzenai-hybrid\\snapshots\\680e20faa8e8d869c84de7f1d0dcb561eea385f3",
+        ""
+      ]
+    },
+    {
+      "ts": 1766662752.8528392,
+      "cpu_percent": 11.8,
+      "memory_percent": 56.0,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "error": "ERROR: The output file 'C:\\Users\\tomwo\\AppData\\Local\\Temp\\tmp7d608lcy.json' already exists. Please either remove it or execute this command again with the '--force' option to overwrite it: invalid argument"
+      },
+      "log_tail": [
+        "[InferenceEngine] Ryzen AI version: 1.6.0",
+        "",
+        "[InferenceEngine] Loaded max_prompt_length from rai_config.json: 4096",
+        "",
+        "[InferenceEngine] Setting up execution provider for mode: hybrid",
+        "",
+        "[InferenceEngine] Using Hybrid (NPU + iGPU) execution provider",
+        "",
+        "[InferenceEngine] Loading ONNX model from: C:\\Users\\tomwo\\.cache\\huggingface\\hub/models--amd--Phi-3-mini-4k-instruct-onnx-ryzenai-hybrid\\snapshots\\680e20faa8e8d869c84de7f1d0dcb561eea385f3",
+        ""
+      ]
+    },
+    {
+      "ts": 1766662753.9379854,
+      "cpu_percent": 15.0,
+      "memory_percent": 58.0,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "error": "ERROR: The output file 'C:\\Users\\tomwo\\AppData\\Local\\Temp\\tmp68era6kq.json' already exists. Please either remove it or execute this command again with the '--force' option to overwrite it: invalid argument"
+      },
+      "log_tail": [
+        "<|assistant|>",
+        "",
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        ""
+      ]
+    },
+    {
+      "ts": 1766662755.0563595,
+      "cpu_percent": 15.3,
+      "memory_percent": 58.4,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "error": "ERROR: The output file 'C:\\Users\\tomwo\\AppData\\Local\\Temp\\tmpva3dddww.json' already exists. Please either remove it or execute this command again with the '--force' option to overwrite it: invalid argument"
+      },
+      "log_tail": [
+        "<|assistant|>",
+        "",
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        ""
+      ]
+    },
+    {
+      "ts": 1766662756.1658404,
+      "cpu_percent": 12.6,
+      "memory_percent": 58.5,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "error": "ERROR: The output file 'C:\\Users\\tomwo\\AppData\\Local\\Temp\\tmpm_5zjb4k.json' already exists. Please either remove it or execute this command again with the '--force' option to overwrite it: invalid argument"
+      },
+      "log_tail": [
+        "<|assistant|>",
+        "",
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        ""
+      ]
+    }
+  ]
+}

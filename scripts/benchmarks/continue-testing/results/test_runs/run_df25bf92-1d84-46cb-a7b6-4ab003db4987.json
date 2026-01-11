@@ -1,0 +1,11 @@
+{
+  "run_id": "df25bf92-1d84-46cb-a7b6-4ab003db4987",
+  "model_name": "qwen3-coder:30b",
+  "start_time": "2025-12-25T16:32:51.542471+00:00",
+  "end_time": "2025-12-25T16:33:06.557641+00:00",
+  "status": "completed",
+  "num_interactions_planned": 0,
+  "num_interactions_completed": 0,
+  "freeze_detected": false,
+  "metrics_collected": 15
+}

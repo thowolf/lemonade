@@ -72,6 +72,8 @@ To check all models available, use the `list` command:
 lemonade-server list
 ```
 
+> 💡 Tip: The `scripts/benchmarks/continue-testing/test_runner.py` supports `--wandb` to optionally log runs to Weights & Biases. The runner is designed to be robust: it will only call W&B methods that exist on the provided logger (e.g., `start_run`, `log_metrics`, `log_test_run`, `finish_run`), which makes it friendly to lightweight test fakes and partial W&B integrations.
+
 > **Tip**: You can use `--llamacpp vulkan` to select the backend when running GGUF models.
 
 

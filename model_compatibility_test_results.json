@@ -1,0 +1,101 @@
+{
+  "timestamp": 1766679878.9530158,
+  "test_results": [
+    {
+      "model": "qwen3-coder:30b",
+      "total_interactions": 3,
+      "successful_interactions": 0,
+      "freeze_detected": true,
+      "freeze_at_interaction": 1,
+      "average_response_time_ms": 0,
+      "results": []
+    },
+    {
+      "model": "qwen3-coder:30b-a3b-q4_K_M",
+      "total_interactions": 3,
+      "successful_interactions": 0,
+      "freeze_detected": true,
+      "freeze_at_interaction": 1,
+      "average_response_time_ms": 0,
+      "results": []
+    },
+    {
+      "model": "qwen3:0.6b",
+      "total_interactions": 3,
+      "successful_interactions": 3,
+      "freeze_detected": false,
+      "freeze_at_interaction": null,
+      "average_response_time_ms": 1397.8149890899658,
+      "results": [
+        {
+          "success": true,
+          "model": "qwen3:0.6b",
+          "response_length": 0,
+          "eval_count": 50,
+          "eval_duration_ms": 221.6863,
+          "total_time_ms": 3307.3480129241943,
+          "error": null
+        },
+        {
+          "success": true,
+          "model": "qwen3:0.6b",
+          "response_length": 0,
+          "eval_count": 50,
+          "eval_duration_ms": 225.732,
+          "total_time_ms": 525.7635116577148,
+          "error": null
+        },
+        {
+          "success": true,
+          "model": "qwen3:0.6b",
+          "response_length": 0,
+          "eval_count": 50,
+          "eval_duration_ms": 223.1874,
+          "total_time_ms": 360.3334426879883,
+          "error": null
+        }
+      ]
+    },
+    {
+      "model": "hf.co/ai21labs/AI21-Jamba-Reasoning-3B-GGUF:F16",
+      "total_interactions": 3,
+      "successful_interactions": 3,
+      "freeze_detected": false,
+      "freeze_at_interaction": null,
+      "average_response_time_ms": 4445.514281590779,
+      "results": [
+        {
+          "success": true,
+          "model": "hf.co/ai21labs/AI21-Jamba-Reasoning-3B-GGUF:F16",
+          "response_length": 209,
+          "eval_count": 50,
+          "eval_duration_ms": 1249.4865,
+          "total_time_ms": 9929.563760757446,
+          "error": null
+        },
+        {
+          "success": true,
+          "model": "hf.co/ai21labs/AI21-Jamba-Reasoning-3B-GGUF:F16",
+          "response_length": 228,
+          "eval_count": 50,
+          "eval_duration_ms": 1381.3172,
+          "total_time_ms": 1689.5272731781006,
+          "error": null
+        },
+        {
+          "success": true,
+          "model": "hf.co/ai21labs/AI21-Jamba-Reasoning-3B-GGUF:F16",
+          "response_length": 204,
+          "eval_count": 50,
+          "eval_duration_ms": 1395.0121,
+          "total_time_ms": 1717.451810836792,
+          "error": null
+        }
+      ]
+    }
+  ],
+  "compatible_models": [
+    "qwen3:0.6b",
+    "hf.co/ai21labs/AI21-Jamba-Reasoning-3B-GGUF:F16"
+  ]
+}

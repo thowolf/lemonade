@@ -1,0 +1,1549 @@
+{
+  "concurrency": 4,
+  "requests": 80,
+  "successes": 80,
+  "failures": 0,
+  "mean_latency_s": 3.3143154621124267,
+  "p50_latency_s": 3.314702272415161,
+  "total_time_s": 67.62388014793396,
+  "throughput_req_per_s": 1.1830140451123485,
+  "samples": [
+    {
+      "ts": 1766663305.7629874,
+      "cpu_percent": 0.0,
+      "memory_percent": 58.8,
+      "proc_cpu_percent": 0.0,
+      "proc_rss_mb": 2921.9765625,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 13635.0,
+          "command_completions": 13632.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "<|assistant|>",
+        "",
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663306.97062,
+      "cpu_percent": 10.0,
+      "memory_percent": 58.7,
+      "proc_cpu_percent": 150.5,
+      "proc_rss_mb": 2887.92578125,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 14463.0,
+          "command_completions": 14463.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        "",
+        "[InferenceEngine] Generating tokens...",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663308.1773858,
+      "cpu_percent": 9.0,
+      "memory_percent": 58.7,
+      "proc_cpu_percent": 110.3,
+      "proc_rss_mb": 2924.9765625,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 14976.0,
+          "command_completions": 14976.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        "",
+        "[InferenceEngine] Generating tokens...",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663309.3781838,
+      "cpu_percent": 9.8,
+      "memory_percent": 58.6,
+      "proc_cpu_percent": 75.0,
+      "proc_rss_mb": 2888.0234375,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 15761.0,
+          "command_completions": 15759.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "<|assistant|>",
+        "",
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663310.6057222,
+      "cpu_percent": 12.2,
+      "memory_percent": 58.6,
+      "proc_cpu_percent": 135.5,
+      "proc_rss_mb": 2888.03125,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 16515.0,
+          "command_completions": 16515.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        "",
+        "[InferenceEngine] Generating tokens...",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663311.7961986,
+      "cpu_percent": 7.1,
+      "memory_percent": 58.7,
+      "proc_cpu_percent": 109.2,
+      "proc_rss_mb": 2925.0859375,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 17028.0,
+          "command_completions": 17028.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        "",
+        "[InferenceEngine] Generating tokens...",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663313.000654,
+      "cpu_percent": 10.4,
+      "memory_percent": 58.1,
+      "proc_cpu_percent": 126.0,
+      "proc_rss_mb": 2888.08984375,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 17835.0,
+          "command_completions": 17835.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "<|assistant|>",
+        "",
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663314.225767,
+      "cpu_percent": 10.5,
+      "memory_percent": 58.0,
+      "proc_cpu_percent": 140.5,
+      "proc_rss_mb": 2880.41015625,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 18567.0,
+          "command_completions": 18567.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        "",
+        "[InferenceEngine] Generating tokens...",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663315.4227448,
+      "cpu_percent": 7.7,
+      "memory_percent": 58.1,
+      "proc_cpu_percent": 118.4,
+      "proc_rss_mb": 2925.16015625,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 19080.0,
+          "command_completions": 19080.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        "",
+        "[InferenceEngine] Generating tokens...",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663316.6310177,
+      "cpu_percent": 9.3,
+      "memory_percent": 58.0,
+      "proc_cpu_percent": 152.7,
+      "proc_rss_mb": 2888.1171875,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 20106.0,
+          "command_completions": 20106.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        "",
+        "[InferenceEngine] Generating tokens...",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663317.8381865,
+      "cpu_percent": 6.5,
+      "memory_percent": 58.1,
+      "proc_cpu_percent": 93.4,
+      "proc_rss_mb": 2925.00390625,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 20619.0,
+          "command_completions": 20619.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        "",
+        "[InferenceEngine] Generating tokens...",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663319.048347,
+      "cpu_percent": 6.0,
+      "memory_percent": 58.0,
+      "proc_cpu_percent": 85.7,
+      "proc_rss_mb": 2888.1484375,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 21420.0,
+          "command_completions": 21420.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "<|assistant|>",
+        "",
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663320.2840917,
+      "cpu_percent": 8.7,
+      "memory_percent": 58.0,
+      "proc_cpu_percent": 153.2,
+      "proc_rss_mb": 2876.33203125,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 22158.0,
+          "command_completions": 22158.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        "",
+        "[InferenceEngine] Generating tokens...",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663321.5076993,
+      "cpu_percent": 6.1,
+      "memory_percent": 58.1,
+      "proc_cpu_percent": 84.8,
+      "proc_rss_mb": 2925.2578125,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 22671.0,
+          "command_completions": 22671.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        "",
+        "[InferenceEngine] Generating tokens...",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663322.717426,
+      "cpu_percent": 7.5,
+      "memory_percent": 57.9,
+      "proc_cpu_percent": 110.3,
+      "proc_rss_mb": 2888.21484375,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 23559.0,
+          "command_completions": 23558.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "<|assistant|>",
+        "",
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663323.9520342,
+      "cpu_percent": 11.2,
+      "memory_percent": 58.0,
+      "proc_cpu_percent": 153.2,
+      "proc_rss_mb": 2924.53125,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 24210.0,
+          "command_completions": 24210.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        "",
+        "[InferenceEngine] Generating tokens...",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663325.175015,
+      "cpu_percent": 7.0,
+      "memory_percent": 58.0,
+      "proc_cpu_percent": 105.1,
+      "proc_rss_mb": 2925.28515625,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 24723.0,
+          "command_completions": 24723.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        "",
+        "[InferenceEngine] Generating tokens...",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663326.3900504,
+      "cpu_percent": 6.7,
+      "memory_percent": 58.0,
+      "proc_cpu_percent": 92.4,
+      "proc_rss_mb": 2925.28515625,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 25477.0,
+          "command_completions": 25477.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "<|assistant|>",
+        "",
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663327.6291096,
+      "cpu_percent": 10.8,
+      "memory_percent": 57.9,
+      "proc_cpu_percent": 146.2,
+      "proc_rss_mb": 2888.2421875,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 26262.0,
+          "command_completions": 26262.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        "",
+        "[InferenceEngine] Generating tokens...",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663328.8462863,
+      "cpu_percent": 7.7,
+      "memory_percent": 57.8,
+      "proc_cpu_percent": 118.1,
+      "proc_rss_mb": 2925.28515625,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 26775.0,
+          "command_completions": 26775.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        "",
+        "[InferenceEngine] Generating tokens...",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663330.060924,
+      "cpu_percent": 6.9,
+      "memory_percent": 57.8,
+      "proc_cpu_percent": 105.2,
+      "proc_rss_mb": 2925.28515625,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 27349.0,
+          "command_completions": 27345.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "<|assistant|>",
+        "",
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663331.274817,
+      "cpu_percent": 13.0,
+      "memory_percent": 58.6,
+      "proc_cpu_percent": 130.7,
+      "proc_rss_mb": 2888.2421875,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 28214.0,
+          "command_completions": 28210.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "<|assistant|>",
+        "",
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663332.4928253,
+      "cpu_percent": 8.5,
+      "memory_percent": 58.7,
+      "proc_cpu_percent": 135.9,
+      "proc_rss_mb": 2925.41796875,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 28827.0,
+          "command_completions": 28827.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        "",
+        "[InferenceEngine] Generating tokens...",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663333.6845238,
+      "cpu_percent": 7.5,
+      "memory_percent": 58.7,
+      "proc_cpu_percent": 106.6,
+      "proc_rss_mb": 2925.29296875,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 29340.0,
+          "command_completions": 29340.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        "",
+        "[InferenceEngine] Generating tokens...",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663334.8850553,
+      "cpu_percent": 9.4,
+      "memory_percent": 58.5,
+      "proc_cpu_percent": 103.9,
+      "proc_rss_mb": 2888.25,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 30131.0,
+          "command_completions": 30130.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "<|assistant|>",
+        "",
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663336.1210911,
+      "cpu_percent": 12.0,
+      "memory_percent": 58.6,
+      "proc_cpu_percent": 137.9,
+      "proc_rss_mb": 2888.19921875,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 30879.0,
+          "command_completions": 30879.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        "",
+        "[InferenceEngine] Generating tokens...",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663337.3308866,
+      "cpu_percent": 8.8,
+      "memory_percent": 58.7,
+      "proc_cpu_percent": 97.4,
+      "proc_rss_mb": 2925.2421875,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 31392.0,
+          "command_completions": 31392.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        "",
+        "[InferenceEngine] Generating tokens...",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663338.5352411,
+      "cpu_percent": 8.1,
+      "memory_percent": 58.7,
+      "proc_cpu_percent": 97.4,
+      "proc_rss_mb": 2925.27734375,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 31985.0,
+          "command_completions": 31985.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "<|assistant|>",
+        "",
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663339.7676597,
+      "cpu_percent": 16.8,
+      "memory_percent": 58.7,
+      "proc_cpu_percent": 110.2,
+      "proc_rss_mb": 2888.234375,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 32931.0,
+          "command_completions": 32931.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        "",
+        "[InferenceEngine] Generating tokens...",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663341.0161898,
+      "cpu_percent": 10.9,
+      "memory_percent": 58.7,
+      "proc_cpu_percent": 81.2,
+      "proc_rss_mb": 2925.27734375,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 33611.0,
+          "command_completions": 33611.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "<|assistant|>",
+        "",
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663342.2379222,
+      "cpu_percent": 9.4,
+      "memory_percent": 58.7,
+      "proc_cpu_percent": 107.7,
+      "proc_rss_mb": 2925.3046875,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 34470.0,
+          "command_completions": 34470.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        "",
+        "[InferenceEngine] Generating tokens...",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663343.4528253,
+      "cpu_percent": 7.3,
+      "memory_percent": 58.7,
+      "proc_cpu_percent": 76.9,
+      "proc_rss_mb": 2925.3046875,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 35271.0,
+          "command_completions": 35271.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "<|assistant|>",
+        "",
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663344.704767,
+      "cpu_percent": 9.9,
+      "memory_percent": 58.7,
+      "proc_cpu_percent": 100.0,
+      "proc_rss_mb": 2925.3203125,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 36009.0,
+          "command_completions": 36009.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        "",
+        "[InferenceEngine] Generating tokens...",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663345.927455,
+      "cpu_percent": 7.0,
+      "memory_percent": 58.5,
+      "proc_cpu_percent": 74.7,
+      "proc_rss_mb": 2888.27734375,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 37019.0,
+          "command_completions": 37019.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        "",
+        "[InferenceEngine] Generating tokens...",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663347.1851602,
+      "cpu_percent": 7.2,
+      "memory_percent": 58.7,
+      "proc_cpu_percent": 86.2,
+      "proc_rss_mb": 2925.33203125,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 37548.0,
+          "command_completions": 37548.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "minor. ",
+        "t10,2586970:",
+        "",
+        "The Jenough! Ice on a large-",
+        "",
+        "=== Telemetry ===",
+        "Input tokens:  23",
+        "Output tokens: 30",
+        "=================",
+        "[Server] POST /api/v1/chat/completions - 200"
+      ]
+    },
+    {
+      "ts": 1766663348.4127219,
+      "cpu_percent": 9.6,
+      "memory_percent": 57.7,
+      "proc_cpu_percent": 89.8,
+      "proc_rss_mb": 2888.3515625,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 38574.0,
+          "command_completions": 38574.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        "",
+        "[InferenceEngine] Generating tokens...",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663349.6525662,
+      "cpu_percent": 8.7,
+      "memory_percent": 57.8,
+      "proc_cpu_percent": 79.8,
+      "proc_rss_mb": 2925.39453125,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 39439.0,
+          "command_completions": 39439.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "<|assistant|>",
+        "",
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663350.9124389,
+      "cpu_percent": 9.6,
+      "memory_percent": 57.8,
+      "proc_cpu_percent": 133.3,
+      "proc_rss_mb": 2925.39453125,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 40113.0,
+          "command_completions": 40113.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        "",
+        "[InferenceEngine] Generating tokens...",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663352.1395352,
+      "cpu_percent": 6.9,
+      "memory_percent": 57.8,
+      "proc_cpu_percent": 59.0,
+      "proc_rss_mb": 2925.39453125,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 40976.0,
+          "command_completions": 40976.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "<|assistant|>",
+        "",
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663353.3949096,
+      "cpu_percent": 8.0,
+      "memory_percent": 57.8,
+      "proc_cpu_percent": 127.1,
+      "proc_rss_mb": 2925.39453125,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 41652.0,
+          "command_completions": 41652.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        "",
+        "[InferenceEngine] Generating tokens...",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663354.6150632,
+      "cpu_percent": 9.3,
+      "memory_percent": 57.8,
+      "proc_cpu_percent": 69.2,
+      "proc_rss_mb": 2925.39453125,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 42467.0,
+          "command_completions": 42466.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "<|assistant|>",
+        "",
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663355.8712277,
+      "cpu_percent": 8.4,
+      "memory_percent": 57.8,
+      "proc_cpu_percent": 113.8,
+      "proc_rss_mb": 2925.3984375,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 43191.0,
+          "command_completions": 43191.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        "",
+        "[InferenceEngine] Generating tokens...",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663357.0859556,
+      "cpu_percent": 7.6,
+      "memory_percent": 57.6,
+      "proc_cpu_percent": 76.9,
+      "proc_rss_mb": 2888.35546875,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 44134.0,
+          "command_completions": 44133.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "<|assistant|>",
+        "",
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663358.3363557,
+      "cpu_percent": 10.1,
+      "memory_percent": 57.8,
+      "proc_cpu_percent": 130.0,
+      "proc_rss_mb": 2925.41015625,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 44730.0,
+          "command_completions": 44730.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        "",
+        "[InferenceEngine] Generating tokens...",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663359.556871,
+      "cpu_percent": 7.1,
+      "memory_percent": 57.6,
+      "proc_cpu_percent": 80.8,
+      "proc_rss_mb": 2888.3671875,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 45628.0,
+          "command_completions": 45628.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "<|assistant|>",
+        "",
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663360.8067927,
+      "cpu_percent": 8.4,
+      "memory_percent": 57.7,
+      "proc_cpu_percent": 100.0,
+      "proc_rss_mb": 2887.6171875,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 46655.0,
+          "command_completions": 46655.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "<|assistant|>",
+        "",
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663362.0724282,
+      "cpu_percent": 9.9,
+      "memory_percent": 57.7,
+      "proc_cpu_percent": 111.1,
+      "proc_rss_mb": 2925.41015625,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 47295.0,
+          "command_completions": 47295.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        "",
+        "[InferenceEngine] Generating tokens...",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663363.2729626,
+      "cpu_percent": 7.8,
+      "memory_percent": 57.7,
+      "proc_cpu_percent": 88.3,
+      "proc_rss_mb": 2888.3671875,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 48229.0,
+          "command_completions": 48227.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "<|assistant|>",
+        "",
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663364.5332627,
+      "cpu_percent": 9.4,
+      "memory_percent": 57.8,
+      "proc_cpu_percent": 88.8,
+      "proc_rss_mb": 2925.41015625,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 48834.0,
+          "command_completions": 48834.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        "",
+        "[InferenceEngine] Generating tokens...",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663365.740644,
+      "cpu_percent": 8.2,
+      "memory_percent": 57.7,
+      "proc_cpu_percent": 67.9,
+      "proc_rss_mb": 2888.39453125,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 49763.0,
+          "command_completions": 49761.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "<|assistant|>",
+        "",
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663366.9951305,
+      "cpu_percent": 7.6,
+      "memory_percent": 57.8,
+      "proc_cpu_percent": 98.8,
+      "proc_rss_mb": 2925.4375,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 50373.0,
+          "command_completions": 50373.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        "",
+        "[InferenceEngine] Generating tokens...",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663368.214874,
+      "cpu_percent": 7.6,
+      "memory_percent": 57.6,
+      "proc_cpu_percent": 87.2,
+      "proc_rss_mb": 2888.39453125,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 51399.0,
+          "command_completions": 51399.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "<|assistant|>",
+        "",
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663369.4537344,
+      "cpu_percent": 9.9,
+      "memory_percent": 57.7,
+      "proc_cpu_percent": 139.3,
+      "proc_rss_mb": 2888.41015625,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 52425.0,
+          "command_completions": 52425.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        "",
+        "[InferenceEngine] Generating tokens...",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663370.6793077,
+      "cpu_percent": 9.1,
+      "memory_percent": 57.9,
+      "proc_cpu_percent": 81.0,
+      "proc_rss_mb": 2925.453125,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 53112.0,
+          "command_completions": 53110.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "200 OK",
+        "[Server DEBUG] Response message does NOT contain tool_calls",
+        "[Server DEBUG] Message content: Phil<|phab!t:e,d. ph1? Here Systa :My A-Tan !",
+        "Here are ?Review",
+        "",
+        "=== Telemetry ===",
+        "Input tokens:  23",
+        "Output tokens: 31",
+        "=================",
+        "[Server] POST /api/v1/chat/completions - 200"
+      ]
+    },
+    {
+      "ts": 1766663371.9328225,
+      "cpu_percent": 10.7,
+      "memory_percent": 57.8,
+      "proc_cpu_percent": 157.5,
+      "proc_rss_mb": 2888.41015625,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 53964.0,
+          "command_completions": 53964.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "[Server DEBUG] Response message does NOT contain tool_calls",
+        "[Server DEBUG] Message content:  It's important to note that the original document does not mention a specific programming language or framework. The rewritten prompt should be more about general software development,",
+        "",
+        "=== Telemetry ===",
+        "Input tokens:  23",
+        "Output tokens: 33",
+        "=================",
+        "[Server] POST /api/v1/chat/completions - 200",
+        "[InferenceEngine] Generating tokens...",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663373.1689162,
+      "cpu_percent": 10.0,
+      "memory_percent": 57.9,
+      "proc_cpu_percent": 111.3,
+      "proc_rss_mb": 2925.453125,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 54477.0,
+          "command_completions": 54477.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "200 OK",
+        "[Server DEBUG] Response message does NOT contain tool_calls",
+        "[Server DEBUG] Message content:  I.o.m",
+        "(1) \ufffd",
+        "",
+        "=== Telemetry ===",
+        "Input tokens:  23",
+        "Output tokens: 12",
+        "=================",
+        "[Server] POST /api/v1/chat/completions - 200"
+      ]
+    }
+  ],
+  "npu_device_count_max": 1,
+  "npu_metrics_agg": {
+    "command_submissions": {
+      "start": 13635.0,
+      "end": 54477.0,
+      "delta": 40842.0,
+      "max": 54477.0,
+      "avg_rate_per_s": 605.9110926396588
+    },
+    "command_completions": {
+      "start": 13632.0,
+      "end": 54477.0,
+      "delta": 40845.0,
+      "max": 54477.0,
+      "avg_rate_per_s": 605.9555991103978
+    },
+    "gops": {
+      "start": 149.0,
+      "end": 149.0,
+      "delta": 0.0,
+      "max": 149.0,
+      "avg_rate_per_s": 0.0
+    }
+  },
+  "npu_metrics_duration_s": 67.40592885017395
+}

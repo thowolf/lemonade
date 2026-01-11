@@ -1,0 +1,31 @@
+# Notification configuration for automated testing framework
+# Copy this file to config/notifications.yaml and customize as needed
+
+# Email notifications
+email_enabled: false
+email_smtp_server: "smtp.gmail.com"
+email_smtp_port: 587
+email_username: "your-email@gmail.com"
+email_password: "your-app-password"
+email_from: "your-email@gmail.com"
+email_to:
+  - "admin@example.com"
+  - "team@example.com"
+
+# Slack notifications
+slack_enabled: false
+slack_webhook_url: "https://hooks.slack.com/services/YOUR/SLACK/WEBHOOK"
+slack_channel: "#model-testing-alerts"
+
+# Webhook notifications
+webhook_enabled: false
+webhook_url: "https://your-webhook-endpoint.com/notify"
+webhook_headers:
+  Authorization: "Bearer your-token"
+  Content-Type: "application/json"
+
+# Notification triggers
+notify_on_degradation: true      # Alert when performance degrades
+notify_on_improvement: true      # Alert when performance improves
+notify_on_freeze: true          # Alert when freezes are detected
+notify_on_completion: false      # Alert when test cycles complete

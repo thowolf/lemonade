@@ -1,0 +1,11 @@
+{
+  "run_id": "4a6dd12c-9d45-457b-b097-ee7f430a9e77",
+  "model_name": "system_monitor_only",
+  "start_time": "2026-01-02T17:45:02.474186+00:00",
+  "end_time": "2026-01-02T17:45:32.532629+00:00",
+  "status": "completed",
+  "num_interactions_planned": 0,
+  "num_interactions_completed": 0,
+  "freeze_detected": false,
+  "metrics_collected": 30
+}

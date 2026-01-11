@@ -1,0 +1,5 @@
+Model,Avg Response Time (ms),Tokens/sec,NPU Util %,Freeze Rate %,Recommendations
+hf.co/ai21labs/AI21-Jamba-Reasoning-3B-GGUF:F16,,,,0.0,NPU monitoring not available - check driver installation
+qwen3-coder:30b,,,,0.0,NPU monitoring not available - check driver installation
+qwen3:0.6b,,,,0.0,NPU monitoring not available - check driver installation
+test-model,,,,0.0,NPU monitoring not available - check driver installation

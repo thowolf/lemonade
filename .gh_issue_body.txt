@@ -1,0 +1,9 @@
+﻿I removed local benchmark output directories (scripts/benchmarks/tests and scripts/benchmarks/wandb) and added entries to .gitignore (scripts/benchmarks/RyzenAI-SW/, scripts/benchmarks/tests/, scripts/benchmarks/wandb/). This prevents accidental commits from the AMD 'RyzenAI-SW' clone and local run artifacts. If you need the RyzenAI-SW updates filed to upstream, fork amd/RyzenAI-SW and open a PR there.
+
+Local commit(s):
+- chore: ignore third-party RyzenAI-SW clone; add bench README note
+- chore: ignore local benchmark outputs and W&B artifacts
+
+Files touched: .gitignore, scripts/benchmarks/README.md
+
+If you want me to attach more context (e.g. the commit SHAs or a short summary of why we keep the AMD clone untracked), I can update this issue.

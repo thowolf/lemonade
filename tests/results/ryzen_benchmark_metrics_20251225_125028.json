@@ -1,0 +1,577 @@
+{
+  "concurrency": 4,
+  "requests": 80,
+  "successes": 80,
+  "failures": 0,
+  "mean_latency_s": 1.2142076998949052,
+  "p50_latency_s": 1.247976541519165,
+  "total_time_s": 24.361217498779297,
+  "throughput_req_per_s": 3.28390812175166,
+  "samples": [
+    {
+      "ts": 1766663403.7834618,
+      "cpu_percent": 0.0,
+      "memory_percent": 59.7,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 3177.0,
+          "command_completions": 3177.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "slot update_slots: id  2 | task 661 | prompt done, n_tokens = 30, batch.n_tokens = 90",
+        "",
+        "slot update_slots: id  3 | task 660 | new prompt, n_ctx_slot = 4096, n_keep = 16, task.n_tokens = 30",
+        "",
+        "slot update_slots: id  3 | task 660 | n_tokens = 24, memory_seq_rm [24, end)",
+        "",
+        "slot update_slots: id  3 | task 660 | prompt processing progress, n_tokens = 30, batch.n_tokens = 96, progress = 1.000000",
+        "",
+        "slot update_slots: id  3 | task 660 | prompt done, n_tokens = 30, batch.n_tokens = 96",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663405.0114167,
+      "cpu_percent": 6.0,
+      "memory_percent": 59.5,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 3177.0,
+          "command_completions": 3177.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "slot launch_slot_: id  2 | task -1 | sampler chain: logits -> penalties -> dry -> top-n-sigma -> top-k -> typical -> top-p -> min-p -> xtc -> temp-ext -> dist ",
+        "",
+        "slot launch_slot_: id  2 | task 698 | processing task",
+        "",
+        "slot get_availabl: id  3 | task -1 | selected slot by LCP similarity, sim_best = 1.000 (> 0.100 thold), f_keep = 0.492",
+        "",
+        "srv  get_availabl: updating prompt cache",
+        "",
+        "srv   prompt_save:  - saving prompt with length 61, total state size = 8.580 MiB",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663406.2314916,
+      "cpu_percent": 5.2,
+      "memory_percent": 59.6,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 3177.0,
+          "command_completions": 3177.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "slot launch_slot_: id  1 | task -1 | sampler chain: logits -> penalties -> dry -> top-n-sigma -> top-k -> typical -> top-p -> min-p -> xtc -> temp-ext -> dist ",
+        "",
+        "slot launch_slot_: id  1 | task 732 | processing task",
+        "",
+        "slot get_availabl: id  2 | task -1 | selected slot by LCP similarity, sim_best = 1.000 (> 0.100 thold), f_keep = 0.492",
+        "",
+        "srv  get_availabl: updating prompt cache",
+        "",
+        "srv   prompt_save:  - saving prompt with length 61, total state size = 8.580 MiB",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663407.4646423,
+      "cpu_percent": 6.2,
+      "memory_percent": 59.7,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 3177.0,
+          "command_completions": 3177.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "slot launch_slot_: id  1 | task -1 | sampler chain: logits -> penalties -> dry -> top-n-sigma -> top-k -> typical -> top-p -> min-p -> xtc -> temp-ext -> dist ",
+        "",
+        "slot launch_slot_: id  1 | task 769 | processing task",
+        "",
+        "slot get_availabl: id  2 | task -1 | selected slot by LCP similarity, sim_best = 1.000 (> 0.100 thold), f_keep = 0.492",
+        "",
+        "srv  get_availabl: updating prompt cache",
+        "",
+        "srv   prompt_save:  - saving prompt with length 61, total state size = 8.580 MiB",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663408.6663444,
+      "cpu_percent": 5.4,
+      "memory_percent": 59.7,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 3177.0,
+          "command_completions": 3177.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "slot launch_slot_: id  0 | task -1 | sampler chain: logits -> penalties -> dry -> top-n-sigma -> top-k -> typical -> top-p -> min-p -> xtc -> temp-ext -> dist ",
+        "",
+        "slot launch_slot_: id  0 | task 804 | processing task",
+        "",
+        "slot get_availabl: id  1 | task -1 | selected slot by LCP similarity, sim_best = 1.000 (> 0.100 thold), f_keep = 0.492",
+        "",
+        "srv  get_availabl: updating prompt cache",
+        "",
+        "srv   prompt_save:  - saving prompt with length 61, total state size = 8.580 MiB",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663409.8666065,
+      "cpu_percent": 4.4,
+      "memory_percent": 59.8,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 3177.0,
+          "command_completions": 3177.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "srv  get_availabl: updating prompt cache",
+        "",
+        "srv   prompt_save:  - saving prompt with length 61, total state size = 8.580 MiB",
+        "",
+        "srv  params_from_: Chat format: Hermes 2 Pro",
+        "",
+        "srv  params_from_: Chat format: Hermes 2 Pro",
+        "",
+        "srv  params_from_: Chat format: Hermes 2 Pro",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663411.0843546,
+      "cpu_percent": 4.7,
+      "memory_percent": 59.9,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 3177.0,
+          "command_completions": 3177.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "slot update_slots: id  2 | task 878 | need to evaluate at least 1 token for each active slot (n_past = 30, task.n_tokens() = 30)",
+        "",
+        "slot update_slots: id  2 | task 878 | n_past was set to 29",
+        "",
+        "slot update_slots: id  2 | task 878 | n_tokens = 29, memory_seq_rm [29, end)",
+        "",
+        "slot update_slots: id  2 | task 878 | prompt processing progress, n_tokens = 30, batch.n_tokens = 3, progress = 1.000000",
+        "",
+        "slot update_slots: id  2 | task 878 | prompt done, n_tokens = 30, batch.n_tokens = 3",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663412.3013535,
+      "cpu_percent": 5.5,
+      "memory_percent": 59.9,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 3177.0,
+          "command_completions": 3177.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "slot launch_slot_: id  0 | task -1 | sampler chain: logits -> penalties -> dry -> top-n-sigma -> top-k -> typical -> top-p -> min-p -> xtc -> temp-ext -> dist ",
+        "",
+        "slot launch_slot_: id  0 | task 914 | processing task",
+        "",
+        "slot get_availabl: id  1 | task -1 | selected slot by LCP similarity, sim_best = 1.000 (> 0.100 thold), f_keep = 0.492",
+        "",
+        "srv  get_availabl: updating prompt cache",
+        "",
+        "srv   prompt_save:  - saving prompt with length 61, total state size = 8.580 MiB",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663413.5202866,
+      "cpu_percent": 5.9,
+      "memory_percent": 60.0,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 3177.0,
+          "command_completions": 3177.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "",
+        "=== Telemetry ===",
+        "Input tokens:  1",
+        "Output tokens: 32",
+        "TTFT (s):      0.00",
+        "[Server] POSTTPS:            /api/v1/chat/completions32.51",
+        "=================",
+        " - 200",
+        "[Server] POST /api/v1/chat/completions - 200",
+        "[Server] POST /api/v1/chat/completions - 200"
+      ]
+    },
+    {
+      "ts": 1766663414.7047997,
+      "cpu_percent": 6.9,
+      "memory_percent": 60.1,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 3177.0,
+          "command_completions": 3177.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "",
+        "srv  get_availabl: updating prompt cache",
+        "",
+        "srv   prompt_save:  - saving prompt with length 61, total state size = 8.580 MiB",
+        "",
+        "[Server PRE-ROUTE] POST /api/v1/chat/completions",
+        "[Server DEBUG] No tools in request",
+        "[Server] Model already loaded: Qwen3-4B-Instruct-2507-GGUF",
+        "[Server] POST /api/v1/chat/completions - srv  params_from_: Chat format: Hermes 2 Pro",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663415.9057949,
+      "cpu_percent": 6.3,
+      "memory_percent": 60.1,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 3177.0,
+          "command_completions": 3177.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "slot launch_slot_: id  0 | task -1 | sampler chain: logits -> penalties -> dry -> top-n-sigma -> top-k -> typical -> top-p -> min-p -> xtc -> temp-ext -> dist ",
+        "",
+        "slot launch_slot_: id  0 | task 1024 | processing task",
+        "",
+        "slot get_availabl: id  1 | task -1 | selected slot by LCP similarity, sim_best = 1.000 (> 0.100 thold), f_keep = 0.492",
+        "",
+        "srv  get_availabl: updating prompt cache",
+        "",
+        "srv   prompt_save:  - saving prompt with length 61, total state size = 8.580 MiB",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663417.1410947,
+      "cpu_percent": 5.5,
+      "memory_percent": 60.1,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 3177.0,
+          "command_completions": 3177.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "srv  params_from_: Chat format: Hermes 2 Pro",
+        "",
+        "srv  params_from_: Chat format: Hermes 2 Pro",
+        "",
+        "slot get_availabl: id  0 | task -1 | selected slot by LCP similarity, sim_best = 1.000 (> 0.100 thold), f_keep = 0.492",
+        "",
+        "srv  get_availabl: updating prompt cache",
+        "",
+        "srv   prompt_save:  - saving prompt with length 61, total state size = 8.580 MiB",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663418.3412519,
+      "cpu_percent": 5.3,
+      "memory_percent": 60.2,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 3177.0,
+          "command_completions": 3177.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "slot update_slots: id  3 | task 1066 | need to evaluate at least 1 token for each active slot (n_past = 30, task.n_tokens() = 30)",
+        "",
+        "slot update_slots: id  3 | task 1066 | n_past was set to 29",
+        "",
+        "slot update_slots: id  3 | task 1066 | n_tokens = 29, memory_seq_rm [29, end)",
+        "",
+        "slot update_slots: id  3 | task 1066 | prompt processing progress, n_tokens = 30, batch.n_tokens = 4, progress = 1.000000",
+        "",
+        "slot update_slots: id  3 | task 1066 | prompt done, n_tokens = 30, batch.n_tokens = 4",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663419.541526,
+      "cpu_percent": 6.1,
+      "memory_percent": 60.3,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 3177.0,
+          "command_completions": 3177.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "slot update_slots: id  3 | task 1103 | need to evaluate at least 1 token for each active slot (n_past = 30, task.n_tokens() = 30)",
+        "",
+        "slot update_slots: id  3 | task 1103 | n_past was set to 29",
+        "",
+        "slot update_slots: id  3 | task 1103 | n_tokens = 29, memory_seq_rm [29, end)",
+        "",
+        "slot update_slots: id  3 | task 1103 | prompt processing progress, n_tokens = 30, batch.n_tokens = 4, progress = 1.000000",
+        "",
+        "slot update_slots: id  3 | task 1103 | prompt done, n_tokens = 30, batch.n_tokens = 4",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663420.7264457,
+      "cpu_percent": 6.6,
+      "memory_percent": 60.4,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 3177.0,
+          "command_completions": 3177.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "slot update_slots: id  3 | task 1140 | need to evaluate at least 1 token for each active slot (n_past = 30, task.n_tokens() = 30)",
+        "",
+        "slot update_slots: id  3 | task 1140 | n_past was set to 29",
+        "",
+        "slot update_slots: id  3 | task 1140 | n_tokens = 29, memory_seq_rm [29, end)",
+        "",
+        "slot update_slots: id  3 | task 1140 | prompt processing progress, n_tokens = 30, batch.n_tokens = 4, progress = 1.000000",
+        "",
+        "slot update_slots: id  3 | task 1140 | prompt done, n_tokens = 30, batch.n_tokens = 4",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663421.9279258,
+      "cpu_percent": 5.3,
+      "memory_percent": 60.4,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 3177.0,
+          "command_completions": 3177.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "slot launch_slot_: id  0 | task -1 | sampler chain: logits -> penalties -> dry -> top-n-sigma -> top-k -> typical -> top-p -> min-p -> xtc -> temp-ext -> dist ",
+        "",
+        "slot launch_slot_: id  0 | task 1210 | processing task",
+        "",
+        "slot get_availabl: id  1 | task -1 | selected slot by LCP similarity, sim_best = 1.000 (> 0.100 thold), f_keep = 0.492",
+        "",
+        "srv  get_availabl: updating prompt cache",
+        "",
+        "srv   prompt_save:  - saving prompt with length 61, total state size = 8.580 MiB",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663423.1620188,
+      "cpu_percent": 6.4,
+      "memory_percent": 60.4,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 3177.0,
+          "command_completions": 3177.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "srv  params_from_: Chat format: Hermes 2 Pro",
+        "",
+        "srv  params_from_: Chat format: Hermes 2 Pro",
+        "",
+        "slot get_availabl: id  0 | task -1 | selected slot by LCP similarity, sim_best = 1.000 (> 0.100 thold), f_keep = 0.492",
+        "",
+        "srv  get_availabl: updating prompt cache",
+        "",
+        "srv   prompt_save:  - saving prompt with length 61, total state size = 8.580 MiB",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663424.4284964,
+      "cpu_percent": 6.7,
+      "memory_percent": 60.5,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 3177.0,
+          "command_completions": 3177.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "slot update_slots: id  3 | task 1253 | need to evaluate at least 1 token for each active slot (n_past = 30, task.n_tokens() = 30)",
+        "",
+        "slot update_slots: id  3 | task 1253 | n_past was set to 29",
+        "",
+        "slot update_slots: id  3 | task 1253 | n_tokens = 29, memory_seq_rm [29, end)",
+        "",
+        "slot update_slots: id  3 | task 1253 | prompt processing progress, n_tokens = 30, batch.n_tokens = 4, progress = 1.000000",
+        "",
+        "slot update_slots: id  3 | task 1253 | prompt done, n_tokens = 30, batch.n_tokens = 4",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663425.6302044,
+      "cpu_percent": 6.7,
+      "memory_percent": 60.5,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 3177.0,
+          "command_completions": 3177.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "slot launch_slot_: id  1 | task -1 | sampler chain: logits -> penalties -> dry -> top-n-sigma -> top-k -> typical -> top-p -> min-p -> xtc -> temp-ext -> dist ",
+        "",
+        "slot launch_slot_: id  1 | task 1320 | processing task",
+        "",
+        "slot get_availabl: id  2 | task -1 | selected slot by LCP similarity, sim_best = 1.000 (> 0.100 thold), f_keep = 0.492",
+        "",
+        "srv  get_availabl: updating prompt cache",
+        "",
+        "srv   prompt_save:  - saving prompt with length 61, total state size = 8.580 MiB",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663426.8822281,
+      "cpu_percent": 4.6,
+      "memory_percent": 60.5,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 3177.0,
+          "command_completions": 3177.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "[Server DEBUG] No tools in request",
+        "[Server] Model already loaded: Qwen3-4B-Instruct-2507-GGUF",
+        "[Server] POST /api/v1/chat/completions - srv  params_from_: Chat format: Hermes 2 Pro",
+        "",
+        "slot get_availabl: id  3 | task -1 | selected slot by LCP similarity, sim_best = 1.000 (> 0.100 thold), f_keep = 0.492",
+        "",
+        "srv  get_availabl: updating prompt cache",
+        "",
+        "srv   prompt_save:  - saving prompt with length 61, total state size = 8.580 MiB",
+        ""
+      ]
+    }
+  ],
+  "npu_device_count_max": 1,
+  "npu_metrics_agg": {
+    "command_submissions": {
+      "start": 3177.0,
+      "end": 3177.0,
+      "delta": 0.0,
+      "max": 3177.0,
+      "avg_rate_per_s": 0.0
+    },
+    "command_completions": {
+      "start": 3177.0,
+      "end": 3177.0,
+      "delta": 0.0,
+      "max": 3177.0,
+      "avg_rate_per_s": 0.0
+    },
+    "gops": {
+      "start": 149.0,
+      "end": 149.0,
+      "delta": 0.0,
+      "max": 149.0,
+      "avg_rate_per_s": 0.0
+    }
+  },
+  "npu_metrics_duration_s": 23.098766326904297
+}

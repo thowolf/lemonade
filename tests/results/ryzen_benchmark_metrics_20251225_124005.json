@@ -1,0 +1,81 @@
+{
+  "concurrency": 1,
+  "requests": 3,
+  "successes": 3,
+  "failures": 0,
+  "mean_latency_s": 0.9681490262349447,
+  "p50_latency_s": 0.919363260269165,
+  "total_time_s": 2.904447078704834,
+  "throughput_req_per_s": 1.0328988336526261,
+  "samples": [
+    {
+      "ts": 1766662802.1811836,
+      "cpu_percent": 0.0,
+      "memory_percent": 58.4,
+      "proc_cpu_percent": 0.0,
+      "proc_rss_mb": 2909.16796875,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {}
+      },
+      "log_tail": [
+        "<|assistant|>",
+        "",
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        ""
+      ]
+    },
+    {
+      "ts": 1766662803.3913221,
+      "cpu_percent": 14.4,
+      "memory_percent": 58.5,
+      "proc_cpu_percent": 144.2,
+      "proc_rss_mb": 2950.69921875,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {}
+      },
+      "log_tail": [
+        "<|assistant|>",
+        "",
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        ""
+      ]
+    },
+    {
+      "ts": 1766662804.6091328,
+      "cpu_percent": 13.9,
+      "memory_percent": 58.5,
+      "proc_cpu_percent": 143.6,
+      "proc_rss_mb": 2950.73828125,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {}
+      },
+      "log_tail": [
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        "",
+        "[InferenceEngine] Generating tokens...",
+        ""
+      ]
+    }
+  ]
+}

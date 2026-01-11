@@ -1,0 +1,361 @@
+{
+  "concurrency": 1,
+  "requests": 20,
+  "successes": 20,
+  "failures": 0,
+  "mean_latency_s": 0.6847143530845642,
+  "p50_latency_s": 0.5108616352081299,
+  "total_time_s": 13.70076036453247,
+  "throughput_req_per_s": 1.4597729956488066,
+  "samples": [
+    {
+      "ts": 1766663103.3253856,
+      "cpu_percent": 0.0,
+      "memory_percent": 60.2,
+      "proc_cpu_percent": 0.0,
+      "proc_rss_mb": 2940.8125,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 3175.0,
+          "command_completions": 3175.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "=================",
+        "[Server] POST /api/v1/chat/completions - 200",
+        "[Server PRE-ROUTE] POST /api/v1/chat/completions",
+        "[Server DEBUG] No tools in request",
+        "[Server] Auto-loading model: Qwen3-4B-Instruct-2507-GGUF",
+        "[Router] Effective settings: ctx_size=4096, backend=vulkan, args=(none)",
+        "[Router] Loading model: Qwen3-4B-Instruct-2507-GGUF (checkpoint: unsloth/Qwen3-4B-Instruct-2507-GGUF:Qwen3-4B-Instruct-2507-Q4_K_M.gguf, recipe: llamacpp, type: llm, device: gpu)",
+        "[Router] Slot limit reached for type llm, evicting LRU: Phi-3-Mini-Instruct-Hybrid",
+        "[Router] Evicting model: Phi-3-Mini-Instruct-Hybrid",
+        "[RyzenAI-Server] Unloading model..."
+      ]
+    },
+    {
+      "ts": 1766663104.4987786,
+      "cpu_percent": 12.9,
+      "memory_percent": 51.3,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 3177.0,
+          "command_completions": 3177.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "llama_model_loader: - type q4_K:  216 tensors",
+        "",
+        "llama_model_loader: - type q6_K:   37 tensors",
+        "",
+        "print_info: file format = GGUF V3 (latest)",
+        "",
+        "print_info: file type   = Q4_K - Medium",
+        "",
+        "print_info: file size   = 2.32 GiB (4.95 BPW) ",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663105.6924374,
+      "cpu_percent": 10.7,
+      "memory_percent": 54.7,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 3177.0,
+          "command_completions": 3177.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "load_tensors: offloading 36 repeating layers to GPU",
+        "",
+        "load_tensors: offloading output layer to GPU",
+        "",
+        "load_tensors: offloaded 37/37 layers to GPU",
+        "",
+        "load_tensors:   CPU_Mapped model buffer size =   304.28 MiB",
+        "",
+        "load_tensors:      Vulkan0 model buffer size =  2375.91 MiB",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663106.8827884,
+      "cpu_percent": 10.7,
+      "memory_percent": 59.8,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 3177.0,
+          "command_completions": 3177.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "slot launch_slot_: id  3 | task 0 | processing task",
+        "",
+        "slot update_slots: id  3 | task 0 | new prompt, n_ctx_slot = 4096, n_keep = 16, task.n_tokens = 30",
+        "",
+        "slot update_slots: id  3 | task 0 | n_tokens = 0, memory_seq_rm [0, end)",
+        "",
+        "slot update_slots: id  3 | task 0 | prompt processing progress, n_tokens = 30, batch.n_tokens = 30, progress = 1.000000",
+        "",
+        "slot update_slots: id  3 | task 0 | prompt done, n_tokens = 30, batch.n_tokens = 30",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663108.1160498,
+      "cpu_percent": 11.6,
+      "memory_percent": 59.9,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 3177.0,
+          "command_completions": 3177.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "slot update_slots: id  3 | task 58 | need to evaluate at least 1 token for each active slot (n_past = 30, task.n_tokens() = 30)",
+        "",
+        "slot update_slots: id  3 | task 58 | n_past was set to 29",
+        "",
+        "slot update_slots: id  3 | task 58 | n_tokens = 29, memory_seq_rm [29, end)",
+        "",
+        "slot update_slots: id  3 | task 58 | prompt processing progress, n_tokens = 30, batch.n_tokens = 1, progress = 1.000000",
+        "",
+        "slot update_slots: id  3 | task 58 | prompt done, n_tokens = 30, batch.n_tokens = 1",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663109.3326435,
+      "cpu_percent": 11.4,
+      "memory_percent": 59.9,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 3177.0,
+          "command_completions": 3177.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "slot update_slots: id  3 | task 157 | need to evaluate at least 1 token for each active slot (n_past = 30, task.n_tokens() = 30)",
+        "",
+        "slot update_slots: id  3 | task 157 | n_past was set to 29",
+        "",
+        "slot update_slots: id  3 | task 157 | n_tokens = 29, memory_seq_rm [29, end)",
+        "",
+        "slot update_slots: id  3 | task 157 | prompt processing progress, n_tokens = 30, batch.n_tokens = 1, progress = 1.000000",
+        "",
+        "slot update_slots: id  3 | task 157 | prompt done, n_tokens = 30, batch.n_tokens = 1",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663110.5324414,
+      "cpu_percent": 7.3,
+      "memory_percent": 58.7,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 3177.0,
+          "command_completions": 3177.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "slot update_slots: id  3 | task 223 | need to evaluate at least 1 token for each active slot (n_past = 30, task.n_tokens() = 30)",
+        "",
+        "slot update_slots: id  3 | task 223 | n_past was set to 29",
+        "",
+        "slot update_slots: id  3 | task 223 | n_tokens = 29, memory_seq_rm [29, end)",
+        "",
+        "slot update_slots: id  3 | task 223 | prompt processing progress, n_tokens = 30, batch.n_tokens = 1, progress = 1.000000",
+        "",
+        "slot update_slots: id  3 | task 223 | prompt done, n_tokens = 30, batch.n_tokens = 1",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663111.7345831,
+      "cpu_percent": 5.7,
+      "memory_percent": 58.7,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 3177.0,
+          "command_completions": 3177.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "slot update_slots: id  3 | task 289 | need to evaluate at least 1 token for each active slot (n_past = 30, task.n_tokens() = 30)",
+        "",
+        "slot update_slots: id  3 | task 289 | n_past was set to 29",
+        "",
+        "slot update_slots: id  3 | task 289 | n_tokens = 29, memory_seq_rm [29, end)",
+        "",
+        "slot update_slots: id  3 | task 289 | prompt processing progress, n_tokens = 30, batch.n_tokens = 1, progress = 1.000000",
+        "",
+        "slot update_slots: id  3 | task 289 | prompt done, n_tokens = 30, batch.n_tokens = 1",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663112.9604092,
+      "cpu_percent": 5.5,
+      "memory_percent": 58.7,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 3177.0,
+          "command_completions": 3177.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "slot update_slots: id  3 | task 388 | need to evaluate at least 1 token for each active slot (n_past = 30, task.n_tokens() = 30)",
+        "",
+        "slot update_slots: id  3 | task 388 | n_past was set to 29",
+        "",
+        "slot update_slots: id  3 | task 388 | n_tokens = 29, memory_seq_rm [29, end)",
+        "",
+        "slot update_slots: id  3 | task 388 | prompt processing progress, n_tokens = 30, batch.n_tokens = 1, progress = 1.000000",
+        "",
+        "slot update_slots: id  3 | task 388 | prompt done, n_tokens = 30, batch.n_tokens = 1",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663114.185925,
+      "cpu_percent": 4.6,
+      "memory_percent": 58.8,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 3177.0,
+          "command_completions": 3177.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "slot update_slots: id  3 | task 454 | need to evaluate at least 1 token for each active slot (n_past = 30, task.n_tokens() = 30)",
+        "",
+        "slot update_slots: id  3 | task 454 | n_past was set to 29",
+        "",
+        "slot update_slots: id  3 | task 454 | n_tokens = 29, memory_seq_rm [29, end)",
+        "",
+        "slot update_slots: id  3 | task 454 | prompt processing progress, n_tokens = 30, batch.n_tokens = 1, progress = 1.000000",
+        "",
+        "slot update_slots: id  3 | task 454 | prompt done, n_tokens = 30, batch.n_tokens = 1",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663115.4165428,
+      "cpu_percent": 4.7,
+      "memory_percent": 58.7,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 3177.0,
+          "command_completions": 3177.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "slot update_slots: id  3 | task 553 | need to evaluate at least 1 token for each active slot (n_past = 30, task.n_tokens() = 30)",
+        "",
+        "slot update_slots: id  3 | task 553 | n_past was set to 29",
+        "",
+        "slot update_slots: id  3 | task 553 | n_tokens = 29, memory_seq_rm [29, end)",
+        "",
+        "slot update_slots: id  3 | task 553 | prompt processing progress, n_tokens = 30, batch.n_tokens = 1, progress = 1.000000",
+        "",
+        "slot update_slots: id  3 | task 553 | prompt done, n_tokens = 30, batch.n_tokens = 1",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663116.6738694,
+      "cpu_percent": 6.2,
+      "memory_percent": 58.8,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 3177.0,
+          "command_completions": 3177.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "slot update_slots: id  3 | task 619 | need to evaluate at least 1 token for each active slot (n_past = 30, task.n_tokens() = 30)",
+        "",
+        "slot update_slots: id  3 | task 619 | n_past was set to 29",
+        "",
+        "slot update_slots: id  3 | task 619 | n_tokens = 29, memory_seq_rm [29, end)",
+        "",
+        "slot update_slots: id  3 | task 619 | prompt processing progress, n_tokens = 30, batch.n_tokens = 1, progress = 1.000000",
+        "",
+        "slot update_slots: id  3 | task 619 | prompt done, n_tokens = 30, batch.n_tokens = 1",
+        ""
+      ]
+    }
+  ],
+  "npu_device_count_max": 1,
+  "npu_metrics_agg": {
+    "command_submissions": {
+      "start": 3175.0,
+      "end": 3177.0,
+      "delta": 2.0,
+      "max": 3177.0,
+      "avg_rate_per_s": 0.14982975069175586
+    },
+    "command_completions": {
+      "start": 3175.0,
+      "end": 3177.0,
+      "delta": 2.0,
+      "max": 3177.0,
+      "avg_rate_per_s": 0.14982975069175586
+    },
+    "gops": {
+      "start": 149.0,
+      "end": 149.0,
+      "delta": 0.0,
+      "max": 149.0,
+      "avg_rate_per_s": 0.0
+    }
+  },
+  "npu_metrics_duration_s": 13.348483800888062
+}

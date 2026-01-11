@@ -1,0 +1,25 @@
+{
+    "generated_at":  {
+                         "value":  "\/Date(1766682575189)\/",
+                         "DisplayHint":  2,
+                         "DateTime":  "Thursday, December 25, 2025 6:09:35 PM"
+                     },
+    "summary":  {
+                    "compatible_models":  0,
+                    "incompatible_models":  9,
+                    "total_models_tested":  1
+                },
+    "models":  [
+                   {
+                       "total_interactions_attempted":  1,
+                       "freeze_at":  1,
+                       "id":  "Qwen3-30B-A3B-GGUF",
+                       "compatible":  false,
+                       "max_stable_interactions":  0,
+                       "success_rate":  0,
+                       "name":  "Qwen3-30B-A3B-GGUF",
+                       "freeze_detected":  true,
+                       "average_response_time_ms":  null
+                   }
+               ]
+}

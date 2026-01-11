@@ -1,0 +1,123 @@
+{
+  "analysis": {
+    "total_runs": 3,
+    "models_analyzed": 1,
+    "performance_by_model": {
+      "system_monitor_only": {
+        "response_time_ms": {
+          "count": 0,
+          "mean": null,
+          "median": null,
+          "min": null,
+          "max": null
+        },
+        "tokens_per_second": {
+          "count": 0,
+          "mean": null,
+          "median": null,
+          "min": null,
+          "max": null
+        },
+        "npu_utilization_percent": {
+          "count": 0,
+          "mean": null,
+          "median": null,
+          "min": null,
+          "max": null
+        },
+        "freeze_rate_percent": 0.0,
+        "freeze_count": 0
+      }
+    },
+    "overall_stats": {
+      "response_time_ms": {
+        "count": 0,
+        "mean": null,
+        "median": null,
+        "min": null,
+        "max": null
+      },
+      "tokens_per_second": {
+        "count": 0,
+        "mean": null,
+        "median": null,
+        "min": null,
+        "max": null
+      },
+      "npu_utilization_percent": {
+        "count": 0,
+        "mean": null,
+        "median": null,
+        "min": null,
+        "max": null
+      },
+      "total_freezes": 0
+    }
+  },
+  "compatibility_matrix": {
+    "system_monitor_only": {
+      "compatible": true,
+      "max_stable_interactions": 0,
+      "freeze_rate_percent": 0.0,
+      "mean_freeze_after_interaction": null,
+      "performance_rating": "unknown",
+      "stability_rating": "mostly_stable",
+      "performance_aggs": {
+        "mean": null,
+        "p50": null,
+        "p95": null,
+        "p99": null,
+        "tps_mean": null,
+        "tps_p50": null
+      },
+      "npu_aggs": {
+        "mean": null,
+        "max": null,
+        "min": null
+      },
+      "recommended_for_production": false
+    }
+  },
+  "benchmark_results": [
+    {
+      "run": {
+        "run_id": "50bbd9e2-51d4-4e78-a47d-dea00219fb6a",
+        "model_name": "system_monitor_only",
+        "start_time": "2026-01-02T17:43:51.297187+00:00",
+        "end_time": "2026-01-02T17:44:21.345513+00:00",
+        "status": "completed",
+        "num_interactions_planned": 0,
+        "num_interactions_completed": 0,
+        "freeze_detected": false,
+        "metrics_collected": 30
+      }
+    },
+    {
+      "run": {
+        "run_id": "0cd640cc-4600-4413-8edb-80ace2e998c8",
+        "model_name": "system_monitor_only",
+        "start_time": "2026-01-02T17:44:26.976312+00:00",
+        "end_time": "2026-01-02T17:44:57.032702+00:00",
+        "status": "completed",
+        "num_interactions_planned": 0,
+        "num_interactions_completed": 0,
+        "freeze_detected": false,
+        "metrics_collected": 30
+      }
+    },
+    {
+      "run": {
+        "run_id": "4a6dd12c-9d45-457b-b097-ee7f430a9e77",
+        "model_name": "system_monitor_only",
+        "start_time": "2026-01-02T17:45:02.474186+00:00",
+        "end_time": "2026-01-02T17:45:32.532629+00:00",
+        "status": "completed",
+        "num_interactions_planned": 0,
+        "num_interactions_completed": 0,
+        "freeze_detected": false,
+        "metrics_collected": 30
+      }
+    }
+  ],
+  "timestamp": "2026-01-02T17:45:32.581923+00:00"
+}

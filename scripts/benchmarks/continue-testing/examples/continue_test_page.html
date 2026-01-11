@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Continue E2E Test Page</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body { font-family: sans-serif; padding: 1rem; }
+    textarea { width: 100%; height: 120px; }
+    #response { border: 1px solid #ddd; padding: 1rem; margin-top: 1rem; white-space: pre-wrap; }
+  </style>
+</head>
+<body>
+  <h1>Continue E2E Test Page</h1>
+  <p>Query parameter <code>base</code> sets the Lemonade base URL (e.g. <code>?base=http://127.0.0.1:8000</code>).</p>
+  <label for="prompt">Prompt</label>
+  <textarea id="prompt">Write a Python function to compute fibonacci numbers.</textarea>
+  <div style="margin-top:0.5rem;"><button id="send">Send</button></div>
+
+  <div id="response">No response yet.</div>
+
+  <script>
+    function getBaseUrl() {
+      const params = new URLSearchParams(window.location.search);
+      return params.get('base') || 'http://127.0.0.1:8000';
+    }
+
+    async function send() {
+      const base = getBaseUrl();
+      const endpoint = base.replace(/\/$/, '') + '/api/v1/chat/completions';
+      const prompt = document.getElementById('prompt').value;
+      document.getElementById('response').textContent = 'Waiting for response...';
+
+      try {
+        const payload = {
+          model: (new URLSearchParams(window.location.search)).get('model') || 'Qwen3-Coder-30B-A3B-Instruct-GGUF',
+          messages: [{ role: 'user', content: prompt }],
+          max_tokens: 200,
+          temperature: 0.3,
+          top_p: 0.9,
+          n: 1,
+          stream: false
+        };
+
+        const resp = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        const j = await resp.json();
+        if (!resp.ok) {
+          document.getElementById('response').textContent = 'HTTP ' + resp.status + ' - ' + JSON.stringify(j);
+          return;
+        }
+
+        const choices = j.choices || [];
+        const text = choices.length ? (choices[0].message?.content || choices[0].text || '') : '';
+
+        document.getElementById('response').textContent = text || JSON.stringify(j);
+      } catch (err) {
+        document.getElementById('response').textContent = 'Error: ' + String(err);
+      }
+    }
+
+    document.getElementById('send').addEventListener('click', send);
+  </script>
+</body>
+</html>

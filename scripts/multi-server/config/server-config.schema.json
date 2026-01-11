@@ -1,0 +1,89 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Lemonade Multi-Server Configuration",
+  "description": "Configuration schema for running multiple Lemonade Server instances",
+  "type": "object",
+  "required": ["servers"],
+  "properties": {
+    "servers": {
+      "type": "array",
+      "description": "List of server instances to start",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["name", "port", "model"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Unique identifier for this server instance",
+            "pattern": "^[a-zA-Z0-9_-]+$",
+            "minLength": 1,
+            "maxLength": 50
+          },
+          "port": {
+            "type": "integer",
+            "description": "Port number for the server to listen on",
+            "minimum": 1024,
+            "maximum": 65535
+          },
+          "model": {
+            "type": "string",
+            "description": "Model name to load (must be installed via 'lemonade-server pull')",
+            "minLength": 1
+          },
+          "llamacpp_backend": {
+            "type": "string",
+            "description": "LlamaCpp backend to use",
+            "enum": ["vulkan", "rocm", "cpu"],
+            "default": "vulkan"
+          },
+          "ctx_size": {
+            "type": "integer",
+            "description": "Context size for the model",
+            "minimum": 512,
+            "maximum": 32768,
+            "default": 4096
+          },
+          "log_level": {
+            "type": "string",
+            "description": "Logging level",
+            "enum": ["debug", "info", "warning", "error"],
+            "default": "info"
+          },
+          "host": {
+            "type": "string",
+            "description": "Host address to bind to",
+            "default": "localhost"
+          },
+          "max_loaded_models": {
+            "type": "string",
+            "description": "Max loaded models per type (LLM EMBEDDING RERANKING AUDIO)",
+            "pattern": "^\\d+(\\s+\\d+){0,3}$",
+            "default": "1 1 1 1"
+          },
+          "extra_args": {
+            "type": "string",
+            "description": "Additional command-line arguments to pass to lemonade-server",
+            "default": ""
+          }
+        }
+      }
+    },
+    "global": {
+      "type": "object",
+      "description": "Global settings applied to all servers",
+      "properties": {
+        "auto_start_on_boot": {
+          "type": "boolean",
+          "description": "Whether to automatically start servers on system boot (future feature)",
+          "default": false
+        },
+        "restart_on_failure": {
+          "type": "boolean",
+          "description": "Whether to automatically restart servers if they crash (future feature)",
+          "default": false
+        }
+      }
+    }
+  }
+}

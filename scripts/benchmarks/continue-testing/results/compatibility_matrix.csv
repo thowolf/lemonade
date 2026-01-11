@@ -1,0 +1,5 @@
+model,compatible,max_stable_interactions,freeze_rate_percent,performance_rating,stability_rating,npu_util_mean_percent,recommended_for_production
+hf.co/ai21labs/AI21-Jamba-Reasoning-3B-GGUF:F16,True,0,0.0,unknown,mostly_stable,N/A,False
+qwen3-coder:30b,True,0,0.0,unknown,mostly_stable,N/A,False
+qwen3:0.6b,True,0,0.0,unknown,mostly_stable,N/A,False
+test-model,True,0,0.0,unknown,mostly_stable,N/A,False

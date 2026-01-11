@@ -1,0 +1,8 @@
+# Yamale schema for test_scenarios.yaml
+scenario:
+  name: str()
+  description: str(required=False)
+  prompt: str()
+  expected_contains: list(str())
+
+scenarios: list(scenario)

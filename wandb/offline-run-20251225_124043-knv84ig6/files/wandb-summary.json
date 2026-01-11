@@ -1,0 +1,1 @@
+{"_runtime": 5, "p50_latency_s": 0.5178976058959961, "throughput_req_per_s": 0.5576799465566645, "successes": 3, "_timestamp": 1766662851.8470612, "_step": 0, "mean_latency_s": 1.7931431929270427, "failures": 0, "total_time_s": 5.379429578781128, "concurrency": 1, "total_requests": 3}

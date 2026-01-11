@@ -155,7 +155,7 @@ def demonstrate_wandb_logging(evaluations):
 
             # Complete the run
             from datetime import datetime
-            evaluation_run.completed_at = datetime.utcnow()
+            evaluation_run.completed_at = datetime.datetime.now(datetime.timezone.utc)
             wandb_collector.update_run_status(RunStatus.COMPLETED, "Demo evaluation completed")
             wandb_collector.finish_evaluation_run()
 

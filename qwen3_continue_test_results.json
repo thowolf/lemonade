@@ -1,0 +1,69 @@
+{
+  "model": "qwen3-coder:30b",
+  "total_tests": 5,
+  "successful_tests": 5,
+  "success_rate_percent": 100.0,
+  "average_response_time": 7.041634893417358,
+  "total_time": 35.20817446708679,
+  "compatible_with_continue": true,
+  "parameters_used": {
+    "num_predict": 200,
+    "temperature": 0.3,
+    "num_ctx": 2048,
+    "num_batch": 1,
+    "top_p": 0.9,
+    "top_k": 40
+  },
+  "test_results": [
+    {
+      "test_number": 1,
+      "prompt": "Write a Python function to implement binary search.",
+      "success": true,
+      "response_length": 854,
+      "tokens_generated": 200,
+      "response_time": 19.557604789733887,
+      "model_time": 19.5200312,
+      "error": null
+    },
+    {
+      "test_number": 2,
+      "prompt": "Explain how to optimize this code for better performance:\n\ndef factorial(n):\n    if n <= 1:\n        ",
+      "success": true,
+      "response_length": 771,
+      "tokens_generated": 200,
+      "response_time": 3.7847838401794434,
+      "model_time": 3.7805433,
+      "error": null
+    },
+    {
+      "test_number": 3,
+      "prompt": "Create a React component for a todo list with add/remove functionality.",
+      "success": true,
+      "response_length": 729,
+      "tokens_generated": 200,
+      "response_time": 3.8431828022003174,
+      "model_time": 3.814598,
+      "error": null
+    },
+    {
+      "test_number": 4,
+      "prompt": "Debug this JavaScript code:\n\nfunction fetchData() {\n    return fetch('/api/data')\n        .then(resp",
+      "success": true,
+      "response_length": 959,
+      "tokens_generated": 200,
+      "response_time": 4.1459715366363525,
+      "model_time": 4.1406151,
+      "error": null
+    },
+    {
+      "test_number": 5,
+      "prompt": "Write a SQL query to find users who haven't logged in for 30 days.",
+      "success": true,
+      "response_length": 742,
+      "tokens_generated": 200,
+      "response_time": 3.876631498336792,
+      "model_time": 3.8722298,
+      "error": null
+    }
+  ]
+}

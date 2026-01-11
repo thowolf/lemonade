@@ -1,0 +1,577 @@
+{
+  "concurrency": 1,
+  "requests": 20,
+  "successes": 20,
+  "failures": 0,
+  "mean_latency_s": 1.1673595190048218,
+  "p50_latency_s": 0.926347017288208,
+  "total_time_s": 23.349195957183838,
+  "throughput_req_per_s": 0.856560544383397,
+  "samples": [
+    {
+      "ts": 1766663274.1649432,
+      "cpu_percent": 0.0,
+      "memory_percent": 63.4,
+      "proc_cpu_percent": 0.0,
+      "proc_rss_mb": 4082.02734375,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 3177.0,
+          "command_completions": 3177.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "=================",
+        "[Server] POST /api/v1/chat/completions - 200",
+        "[Server PRE-ROUTE] POST /api/v1/chat/completions",
+        "[Server DEBUG] No tools in request",
+        "[Server] Auto-loading model: Phi-3-Mini-Instruct-Hybrid",
+        "[Router] Effective settings: ctx_size=4096, backend=vulkan, args=(none)",
+        "[Router] Loading model: Phi-3-Mini-Instruct-Hybrid (checkpoint: amd/Phi-3-mini-4k-instruct-onnx-ryzenai-hybrid, recipe: oga-hybrid, type: llm, device: gpu|npu)",
+        "[Router] NPU is occupied by: Llama-3.2-3B-Instruct-Hybrid, evicting...",
+        "[Router] Evicting model: Llama-3.2-3B-Instruct-Hybrid",
+        "[RyzenAI-Server] Unloading model..."
+      ]
+    },
+    {
+      "ts": 1766663275.5066764,
+      "cpu_percent": 7.9,
+      "memory_percent": 50.9,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 3177.0,
+          "command_completions": 3177.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "[RyzenAI-Server] Model path: C:\\Users\\tomwo\\.cache\\huggingface\\hub/models--amd--Phi-3-mini-4k-instruct-onnx-ryzenai-hybrid\\snapshots\\680e20faa8e8d869c84de7f1d0dcb561eea385f3",
+        "[RyzenAI-Server] Execution mode: hybrid",
+        "RyzenAI-Server will use port: 8001",
+        "[RyzenAI-Server] Starting ryzenai-server...",
+        "[ProcessManager] Starting process with filtered output: \"C:\\Users\\tomwo\\AppData\\Local\\lemonade_server\\bin\\ryzenai-server\\ryzenai-server.exe\" \"-m\" \"C:\\Users\\tomwo\\.cache\\huggingface\\hub/models--amd--Phi-3-mini-4k-instruct-onnx-ryzenai-hybrid\\snapshots\\680e20faa8e8d869c84de7f1d0dcb561eea385f3\" \"--port\" \"8001\" \"--mode\" \"hybrid\" \"--ctx-size\" \"4096\" \"--verbose\"",
+        "[ProcessManager] Process started successfully, PID: 28944",
+        "[ProcessManager] Process started successfully, PID: 28944",
+        "Waiting for RyzenAI-Server to be ready...",
+        "Ryzen AI LLM Server starting...",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663276.7129004,
+      "cpu_percent": 6.7,
+      "memory_percent": 53.1,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 3177.0,
+          "command_completions": 3177.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "[InferenceEngine] Ryzen AI version: 1.6.0",
+        "",
+        "[InferenceEngine] Loaded max_prompt_length from rai_config.json: 4096",
+        "",
+        "[InferenceEngine] Setting up execution provider for mode: hybrid",
+        "",
+        "[InferenceEngine] Using Hybrid (NPU + iGPU) execution provider",
+        "",
+        "[InferenceEngine] Loading ONNX model from: C:\\Users\\tomwo\\.cache\\huggingface\\hub/models--amd--Phi-3-mini-4k-instruct-onnx-ryzenai-hybrid\\snapshots\\680e20faa8e8d869c84de7f1d0dcb561eea385f3",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663277.89564,
+      "cpu_percent": 6.2,
+      "memory_percent": 57.0,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 3177.0,
+          "command_completions": 3177.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "[InferenceEngine] Ryzen AI version: 1.6.0",
+        "",
+        "[InferenceEngine] Loaded max_prompt_length from rai_config.json: 4096",
+        "",
+        "[InferenceEngine] Setting up execution provider for mode: hybrid",
+        "",
+        "[InferenceEngine] Using Hybrid (NPU + iGPU) execution provider",
+        "",
+        "[InferenceEngine] Loading ONNX model from: C:\\Users\\tomwo\\.cache\\huggingface\\hub/models--amd--Phi-3-mini-4k-instruct-onnx-ryzenai-hybrid\\snapshots\\680e20faa8e8d869c84de7f1d0dcb561eea385f3",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663279.0682874,
+      "cpu_percent": 11.7,
+      "memory_percent": 59.4,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 3689.0,
+          "command_completions": 3689.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        "",
+        "[InferenceEngine] Generating tokens...",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663280.3369656,
+      "cpu_percent": 14.5,
+      "memory_percent": 59.9,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 4203.0,
+          "command_completions": 4203.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        "",
+        "[InferenceEngine] Generating tokens...",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663281.54296,
+      "cpu_percent": 7.3,
+      "memory_percent": 59.9,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 4716.0,
+          "command_completions": 4716.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "<|assistant|>",
+        "",
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663282.769012,
+      "cpu_percent": 9.5,
+      "memory_percent": 59.8,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 5722.0,
+          "command_completions": 5718.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        "",
+        "[InferenceEngine] Generating tokens...",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663284.0388691,
+      "cpu_percent": 13.4,
+      "memory_percent": 59.9,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 6255.0,
+          "command_completions": 6255.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        "",
+        "[InferenceEngine] Generating tokens...",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663285.229715,
+      "cpu_percent": 6.9,
+      "memory_percent": 59.9,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 6769.0,
+          "command_completions": 6769.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "<|assistant|>",
+        "",
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663286.4500623,
+      "cpu_percent": 7.5,
+      "memory_percent": 59.8,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 7682.0,
+          "command_completions": 7682.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "<|assistant|>",
+        "",
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663287.68875,
+      "cpu_percent": 10.9,
+      "memory_percent": 58.2,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 8307.0,
+          "command_completions": 8307.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        "",
+        "[InferenceEngine] Generating tokens...",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663288.8842635,
+      "cpu_percent": 8.3,
+      "memory_percent": 58.2,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 8820.0,
+          "command_completions": 8820.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        "",
+        "[InferenceEngine] Generating tokens...",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663290.090739,
+      "cpu_percent": 7.1,
+      "memory_percent": 58.1,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 9445.0,
+          "command_completions": 9445.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "<|assistant|>",
+        "",
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663291.3117437,
+      "cpu_percent": 9.0,
+      "memory_percent": 58.0,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 10343.0,
+          "command_completions": 10343.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        "",
+        "[InferenceEngine] Generating tokens...",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663292.540034,
+      "cpu_percent": 8.0,
+      "memory_percent": 58.1,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 10872.0,
+          "command_completions": 10872.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        "",
+        "[InferenceEngine] Generating tokens...",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663293.7644627,
+      "cpu_percent": 6.7,
+      "memory_percent": 58.1,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 11456.0,
+          "command_completions": 11456.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "<|assistant|>",
+        "",
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663294.9808257,
+      "cpu_percent": 10.4,
+      "memory_percent": 58.0,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 12376.0,
+          "command_completions": 12376.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "<|assistant|>",
+        "",
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663296.2090828,
+      "cpu_percent": 9.7,
+      "memory_percent": 57.9,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 12924.0,
+          "command_completions": 12924.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        "",
+        "[InferenceEngine] Generating tokens...",
+        ""
+      ]
+    },
+    {
+      "ts": 1766663297.4188056,
+      "cpu_percent": 7.7,
+      "memory_percent": 57.9,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "device_count": 1,
+        "metrics": {
+          "command_submissions": 13437.0,
+          "command_completions": 13437.0,
+          "gops": 149.0
+        }
+      },
+      "log_tail": [
+        "",
+        "200 OK",
+        "[Server DEBUG] Response message does NOT contain tool_calls",
+        "[Server DEBUG] Message content:  To enhance the AI model, you would need to consider a more sophcci\u00f3n. This could mean that your goal is not only making it possible for",
+        "",
+        "=== Telemetry ===",
+        "Input tokens:  23",
+        "Output tokens: 33",
+        "=================",
+        "[Server] POST /api/v1/chat/completions - 200"
+      ]
+    }
+  ],
+  "npu_device_count_max": 1,
+  "npu_metrics_agg": {
+    "command_submissions": {
+      "start": 3177.0,
+      "end": 13437.0,
+      "delta": 10260.0,
+      "max": 13437.0,
+      "avg_rate_per_s": 441.21702588174384
+    },
+    "command_completions": {
+      "start": 3177.0,
+      "end": 13437.0,
+      "delta": 10260.0,
+      "max": 13437.0,
+      "avg_rate_per_s": 441.21702588174384
+    },
+    "gops": {
+      "start": 149.0,
+      "end": 149.0,
+      "delta": 0.0,
+      "max": 149.0,
+      "avg_rate_per_s": 0.0
+    }
+  },
+  "npu_metrics_duration_s": 23.253862380981445
+}

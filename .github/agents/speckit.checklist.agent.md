@@ -2,6 +2,8 @@
 description: Generate a custom checklist for the current feature based on user requirements.
 ---
 
+> **Constitution:** Refer to `.specify/memory/constitution.md` for normative principles and mandatory project policies. If your change affects project principles, run `/speckit.constitution` and include a Sync Impact Report.
+
 ## Checklist Purpose: "Unit Tests for English"
 
 **CRITICAL CONCEPT**: Checklists are **UNIT TESTS FOR REQUIREMENTS WRITING** - they validate the quality, clarity, and completeness of requirements in a given domain.

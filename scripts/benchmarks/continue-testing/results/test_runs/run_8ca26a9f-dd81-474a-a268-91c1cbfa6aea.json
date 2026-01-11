@@ -1,0 +1,11 @@
+{
+  "run_id": "8ca26a9f-dd81-474a-a268-91c1cbfa6aea",
+  "model_name": "Qwen 2.5 Coder 7B",
+  "start_time": "2025-12-26T00:06:07.542444+00:00",
+  "end_time": "2025-12-26T00:06:17.553764+00:00",
+  "status": "completed",
+  "num_interactions_planned": 0,
+  "num_interactions_completed": 0,
+  "freeze_detected": false,
+  "metrics_collected": 10
+}

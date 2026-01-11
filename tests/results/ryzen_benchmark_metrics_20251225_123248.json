@@ -1,0 +1,254 @@
+{
+  "concurrency": 1,
+  "requests": 5,
+  "successes": 5,
+  "failures": 0,
+  "mean_latency_s": 2.365266799926758,
+  "p50_latency_s": 0.784233570098877,
+  "total_time_s": 11.82684874534607,
+  "throughput_req_per_s": 0.4227668847094648,
+  "samples": [
+    {
+      "ts": 1766662356.941535,
+      "cpu_percent": 0.0,
+      "memory_percent": 52.1,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "error": "ERROR: Unknown command: 'npu'"
+      },
+      "log_tail": [
+        "[Router] Using model path: C:\\Users\\tomwo\\.cache\\huggingface\\hub/models--amd--Phi-3-mini-4k-instruct-onnx-ryzenai-hybrid\\snapshots\\680e20faa8e8d869c84de7f1d0dcb561eea385f3",
+        "[Router] Starting backend (this may take a moment)...",
+        "[RyzenAI-Server] Loading model: Phi-3-Mini-Instruct-Hybrid",
+        "[RyzenAI-Server] Found existing installation at: C:\\Users\\tomwo\\AppData\\Local\\lemonade_server\\bin\\ryzenai-server\\ryzenai-server.exe",
+        "[RyzenAI-Server] Found ryzenai-server at: C:\\Users\\tomwo\\AppData\\Local\\lemonade_server\\bin\\ryzenai-server\\ryzenai-server.exe",
+        "[RyzenAI-Server] Model path: C:\\Users\\tomwo\\.cache\\huggingface\\hub/models--amd--Phi-3-mini-4k-instruct-onnx-ryzenai-hybrid\\snapshots\\680e20faa8e8d869c84de7f1d0dcb561eea385f3",
+        "[RyzenAI-Server] Execution mode: hybrid",
+        "RyzenAI-Server will use port: 8001",
+        "[RyzenAI-Server] Starting ryzenai-server...",
+        "[ProcessManager] Starting process with filtered output: \"C:\\Users\\tomwo\\AppData\\Local\\lemonade_server\\bin\\ryzenai-server\\ryzenai-server.exe\" \"-m\" \"C:\\Users\\tomwo\\.cache\\huggingface\\hub/models--amd--Phi-3-mini-4k-instruct-onnx-ryzenai-hybrid\\snapshots\\680e20faa8e8d869c84de7f1d0dcb561eea385f3\" \"--port\" \"8001\" \"--mode\" \"hybrid\" \"--ctx-size\" \"4096\" \"--verbose\""
+      ]
+    },
+    {
+      "ts": 1766662358.0887542,
+      "cpu_percent": 14.6,
+      "memory_percent": 52.2,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "error": "ERROR: Unknown command: 'npu'"
+      },
+      "log_tail": [
+        "[RyzenAI-Server] Model path: C:\\Users\\tomwo\\.cache\\huggingface\\hub/models--amd--Phi-3-mini-4k-instruct-onnx-ryzenai-hybrid\\snapshots\\680e20faa8e8d869c84de7f1d0dcb561eea385f3",
+        "[RyzenAI-Server] Execution mode: hybrid",
+        "RyzenAI-Server will use port: 8001",
+        "[RyzenAI-Server] Starting ryzenai-server...",
+        "[ProcessManager] Starting process with filtered output: \"C:\\Users\\tomwo\\AppData\\Local\\lemonade_server\\bin\\ryzenai-server\\ryzenai-server.exe\" \"-m\" \"C:\\Users\\tomwo\\.cache\\huggingface\\hub/models--amd--Phi-3-mini-4k-instruct-onnx-ryzenai-hybrid\\snapshots\\680e20faa8e8d869c84de7f1d0dcb561eea385f3\" \"--port\" \"8001\" \"--mode\" \"hybrid\" \"--ctx-size\" \"4096\" \"--verbose\"",
+        "[ProcessManager] Process started successfully, PID: 24268",
+        "[ProcessManager] Process started successfully, PID: 24268",
+        "Waiting for RyzenAI-Server to be ready...",
+        "Ryzen AI LLM Server starting...",
+        ""
+      ]
+    },
+    {
+      "ts": 1766662359.2061522,
+      "cpu_percent": 13.8,
+      "memory_percent": 52.2,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "error": "ERROR: Unknown command: 'npu'"
+      },
+      "log_tail": [
+        "[InferenceEngine] Ryzen AI version: 1.6.0",
+        "",
+        "[InferenceEngine] Loaded max_prompt_length from rai_config.json: 4096",
+        "",
+        "[InferenceEngine] Setting up execution provider for mode: hybrid",
+        "",
+        "[InferenceEngine] Using Hybrid (NPU + iGPU) execution provider",
+        "",
+        "[InferenceEngine] Loading ONNX model from: C:\\Users\\tomwo\\.cache\\huggingface\\hub/models--amd--Phi-3-mini-4k-instruct-onnx-ryzenai-hybrid\\snapshots\\680e20faa8e8d869c84de7f1d0dcb561eea385f3",
+        ""
+      ]
+    },
+    {
+      "ts": 1766662360.3241453,
+      "cpu_percent": 12.8,
+      "memory_percent": 53.7,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "error": "ERROR: Unknown command: 'npu'"
+      },
+      "log_tail": [
+        "[InferenceEngine] Ryzen AI version: 1.6.0",
+        "",
+        "[InferenceEngine] Loaded max_prompt_length from rai_config.json: 4096",
+        "",
+        "[InferenceEngine] Setting up execution provider for mode: hybrid",
+        "",
+        "[InferenceEngine] Using Hybrid (NPU + iGPU) execution provider",
+        "",
+        "[InferenceEngine] Loading ONNX model from: C:\\Users\\tomwo\\.cache\\huggingface\\hub/models--amd--Phi-3-mini-4k-instruct-onnx-ryzenai-hybrid\\snapshots\\680e20faa8e8d869c84de7f1d0dcb561eea385f3",
+        ""
+      ]
+    },
+    {
+      "ts": 1766662361.4246948,
+      "cpu_percent": 11.9,
+      "memory_percent": 55.7,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "error": "ERROR: Unknown command: 'npu'"
+      },
+      "log_tail": [
+        "[InferenceEngine] Ryzen AI version: 1.6.0",
+        "",
+        "[InferenceEngine] Loaded max_prompt_length from rai_config.json: 4096",
+        "",
+        "[InferenceEngine] Setting up execution provider for mode: hybrid",
+        "",
+        "[InferenceEngine] Using Hybrid (NPU + iGPU) execution provider",
+        "",
+        "[InferenceEngine] Loading ONNX model from: C:\\Users\\tomwo\\.cache\\huggingface\\hub/models--amd--Phi-3-mini-4k-instruct-onnx-ryzenai-hybrid\\snapshots\\680e20faa8e8d869c84de7f1d0dcb561eea385f3",
+        ""
+      ]
+    },
+    {
+      "ts": 1766662362.525971,
+      "cpu_percent": 12.6,
+      "memory_percent": 57.9,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "error": "ERROR: Unknown command: 'npu'"
+      },
+      "log_tail": [
+        "[InferenceEngine] Ryzen AI version: 1.6.0",
+        "",
+        "[InferenceEngine] Loaded max_prompt_length from rai_config.json: 4096",
+        "",
+        "[InferenceEngine] Setting up execution provider for mode: hybrid",
+        "",
+        "[InferenceEngine] Using Hybrid (NPU + iGPU) execution provider",
+        "",
+        "[InferenceEngine] Loading ONNX model from: C:\\Users\\tomwo\\.cache\\huggingface\\hub/models--amd--Phi-3-mini-4k-instruct-onnx-ryzenai-hybrid\\snapshots\\680e20faa8e8d869c84de7f1d0dcb561eea385f3",
+        ""
+      ]
+    },
+    {
+      "ts": 1766662363.6267042,
+      "cpu_percent": 9.0,
+      "memory_percent": 60.2,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "error": "ERROR: Unknown command: 'npu'"
+      },
+      "log_tail": [
+        "",
+        "",
+        "Press Ctrl+C to stop the server",
+        "",
+        "===============================================================",
+        "",
+        "",
+        "",
+        "[Server] Creating thread pool with 8 threads",
+        ""
+      ]
+    },
+    {
+      "ts": 1766662364.7445176,
+      "cpu_percent": 9.8,
+      "memory_percent": 60.7,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "error": "ERROR: Unknown command: 'npu'"
+      },
+      "log_tail": [
+        "<|assistant|>",
+        "",
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        ""
+      ]
+    },
+    {
+      "ts": 1766662365.8789968,
+      "cpu_percent": 11.2,
+      "memory_percent": 61.0,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "error": "ERROR: Unknown command: 'npu'"
+      },
+      "log_tail": [
+        "<|assistant|>",
+        "",
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        ""
+      ]
+    },
+    {
+      "ts": 1766662367.0128927,
+      "cpu_percent": 15.2,
+      "memory_percent": 59.2,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "error": "ERROR: Unknown command: 'npu'"
+      },
+      "log_tail": [
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        "",
+        "[InferenceEngine] Generating tokens...",
+        ""
+      ]
+    },
+    {
+      "ts": 1766662368.130567,
+      "cpu_percent": 10.7,
+      "memory_percent": 59.1,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "error": "ERROR: Unknown command: 'npu'"
+      },
+      "log_tail": [
+        "<|assistant|>",
+        "",
+        "",
+        "",
+        "[createGenerationParams] Input max_tokens=32",
+        "",
+        "[createGenerationParams] Default params.max_length=2048",
+        "",
+        "[createGenerationParams] Final params: max_length=32, temperature=0.7, top_p=0.9, top_k=40, do_sample=0, repetition_penalty=1.1",
+        ""
+      ]
+    }
+  ]
+}

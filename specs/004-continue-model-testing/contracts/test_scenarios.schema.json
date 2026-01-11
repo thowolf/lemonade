@@ -1,0 +1,88 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://lemonade-server.ai/schemas/continue-testing/test_scenarios.schema.json",
+  "title": "Test Scenarios Configuration",
+  "description": "Configuration schema for Continue extension test scenarios",
+  "type": "object",
+  "required": ["scenarios"],
+  "properties": {
+    "scenarios": {
+      "type": "array",
+      "description": "List of test scenarios",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/definitions/TestScenario"
+      }
+    }
+  },
+  "definitions": {
+    "TestScenario": {
+      "type": "object",
+      "required": ["name", "priority", "description", "interactions"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Unique scenario identifier",
+          "pattern": "^[a-z0-9_-]+$",
+          "examples": ["code_explanation", "code_modification", "debugging_assistance"]
+        },
+        "priority": {
+          "type": "string",
+          "description": "Test priority level",
+          "enum": ["P1", "P2", "P3"],
+          "examples": ["P1"]
+        },
+        "description": {
+          "type": "string",
+          "description": "Human-readable scenario description",
+          "minLength": 10,
+          "examples": ["Request code explanations - common use case"]
+        },
+        "interactions": {
+          "type": "array",
+          "description": "Sequence of test interactions",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/definitions/TestInteractionTemplate"
+          }
+        }
+      }
+    },
+    "TestInteractionTemplate": {
+      "type": "object",
+      "required": ["prompt", "context_required"],
+      "properties": {
+        "prompt": {
+          "type": "string",
+          "description": "Prompt template to send to Continue",
+          "minLength": 5,
+          "examples": ["Explain what this function does", "Add error handling to this function"]
+        },
+        "context_required": {
+          "type": "boolean",
+          "description": "Whether user must select code before sending prompt",
+          "examples": [true, false]
+        },
+        "expected_response_tokens_min": {
+          "type": "integer",
+          "description": "Minimum expected response tokens",
+          "minimum": 1,
+          "default": 50
+        },
+        "expected_response_tokens_max": {
+          "type": "integer",
+          "description": "Maximum expected response tokens",
+          "minimum": 1,
+          "default": 500
+        },
+        "timeout_seconds": {
+          "type": "integer",
+          "description": "Timeout for this interaction",
+          "minimum": 5,
+          "maximum": 300,
+          "default": 60
+        }
+      }
+    }
+  }
+}

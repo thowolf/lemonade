@@ -1,0 +1,188 @@
+{
+  "concurrency": 1,
+  "requests": 5,
+  "successes": 5,
+  "failures": 0,
+  "mean_latency_s": 2.19048810005188,
+  "p50_latency_s": 0.5183005332946777,
+  "total_time_s": 10.953974723815918,
+  "throughput_req_per_s": 0.4564553165463398,
+  "samples": [
+    {
+      "ts": 1766662411.88874,
+      "cpu_percent": 0.0,
+      "memory_percent": 60.8,
+      "proc_cpu_percent": 0.0,
+      "proc_rss_mb": 2909.87109375,
+      "npu_info": {
+        "error": "ERROR: Unknown command: 'npu'"
+      },
+      "log_tail": [
+        "=================",
+        "[Server] POST /api/v1/chat/completions - 200",
+        "[Server PRE-ROUTE] POST /api/v1/chat/completions",
+        "[Server DEBUG] No tools in request",
+        "[Server] Auto-loading model: Qwen3-4B-Instruct-2507-GGUF",
+        "[Router] Effective settings: ctx_size=4096, backend=vulkan, args=(none)",
+        "[Router] Loading model: Qwen3-4B-Instruct-2507-GGUF (checkpoint: unsloth/Qwen3-4B-Instruct-2507-GGUF:Qwen3-4B-Instruct-2507-Q4_K_M.gguf, recipe: llamacpp, type: llm, device: gpu)",
+        "[Router] Slot limit reached for type llm, evicting LRU: Phi-3-Mini-Instruct-Hybrid",
+        "[Router] Evicting model: Phi-3-Mini-Instruct-Hybrid",
+        "[RyzenAI-Server] Unloading model..."
+      ]
+    },
+    {
+      "ts": 1766662412.9872046,
+      "cpu_percent": 11.7,
+      "memory_percent": 51.9,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "error": "ERROR: Unknown command: 'npu'"
+      },
+      "log_tail": [
+        "[ProcessManager] Process started successfully, PID: 29272",
+        "Waiting for llama-server to be ready...",
+        "load_backend: loaded RPC backend from C:\\Users\\tomwo\\AppData\\Local\\lemonade_server\\bin\\llama\\vulkan\\ggml-rpc.dll",
+        "",
+        "ggml_vulkan: Found 1 Vulkan devices:",
+        "",
+        "ggml_vulkan: 0 = AMD Radeon(TM) 8060S Graphics (AMD proprietary driver) | uma: 1 | fp16: 1 | bf16: 1 | warp size: 64 | shared memory: 32768 | int dot: 1 | matrix cores: KHR_coopmat",
+        "",
+        "load_backend: loaded Vulkan backend from C:\\Users\\tomwo\\AppData\\Local\\lemonade_server\\bin\\llama\\vulkan\\ggml-vulkan.dll",
+        ""
+      ]
+    },
+    {
+      "ts": 1766662414.072077,
+      "cpu_percent": 10.5,
+      "memory_percent": 53.9,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "error": "ERROR: Unknown command: 'npu'"
+      },
+      "log_tail": [
+        "print_info: EOG token        = 151662 '<|fim_pad|>'",
+        "",
+        "print_info: EOG token        = 151663 '<|repo_name|>'",
+        "",
+        "print_info: EOG token        = 151664 '<|file_sep|>'",
+        "",
+        "print_info: max token length = 256",
+        "",
+        "load_tensors: loading model tensors, this can take a while... (mmap = true)",
+        ""
+      ]
+    },
+    {
+      "ts": 1766662415.1720266,
+      "cpu_percent": 5.8,
+      "memory_percent": 58.4,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "error": "ERROR: Unknown command: 'npu'"
+      },
+      "log_tail": [
+        "print_info: EOG token        = 151662 '<|fim_pad|>'",
+        "",
+        "print_info: EOG token        = 151663 '<|repo_name|>'",
+        "",
+        "print_info: EOG token        = 151664 '<|file_sep|>'",
+        "",
+        "print_info: max token length = 256",
+        "",
+        "load_tensors: loading model tensors, this can take a while... (mmap = true)",
+        ""
+      ]
+    },
+    {
+      "ts": 1766662419.3757236,
+      "cpu_percent": 6.3,
+      "memory_percent": 55.9,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "error": "ERROR: Unknown command: 'npu'"
+      },
+      "log_tail": [
+        "load_tensors: offloading 36 repeating layers to GPU",
+        "",
+        "load_tensors: offloading output layer to GPU",
+        "",
+        "load_tensors: offloaded 37/37 layers to GPU",
+        "",
+        "load_tensors:   CPU_Mapped model buffer size =   304.28 MiB",
+        "",
+        "load_tensors:      Vulkan0 model buffer size =  2375.91 MiB",
+        ""
+      ]
+    },
+    {
+      "ts": 1766662420.4768093,
+      "cpu_percent": 9.9,
+      "memory_percent": 58.8,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "error": "ERROR: Unknown command: 'npu'"
+      },
+      "log_tail": [
+        "slot launch_slot_: id  3 | task 0 | processing task",
+        "",
+        "slot update_slots: id  3 | task 0 | new prompt, n_ctx_slot = 4096, n_keep = 16, task.n_tokens = 17",
+        "",
+        "slot update_slots: id  3 | task 0 | n_tokens = 0, memory_seq_rm [0, end)",
+        "",
+        "slot update_slots: id  3 | task 0 | prompt processing progress, n_tokens = 17, batch.n_tokens = 17, progress = 1.000000",
+        "",
+        "slot update_slots: id  3 | task 0 | prompt done, n_tokens = 17, batch.n_tokens = 17",
+        ""
+      ]
+    },
+    {
+      "ts": 1766662421.5946503,
+      "cpu_percent": 8.6,
+      "memory_percent": 58.8,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "error": "ERROR: Unknown command: 'npu'"
+      },
+      "log_tail": [
+        "slot update_slots: id  3 | task 66 | need to evaluate at least 1 token for each active slot (n_past = 17, task.n_tokens() = 17)",
+        "",
+        "slot update_slots: id  3 | task 66 | n_past was set to 16",
+        "",
+        "slot update_slots: id  3 | task 66 | n_tokens = 16, memory_seq_rm [16, end)",
+        "",
+        "slot update_slots: id  3 | task 66 | prompt processing progress, n_tokens = 17, batch.n_tokens = 1, progress = 1.000000",
+        "",
+        "slot update_slots: id  3 | task 66 | prompt done, n_tokens = 17, batch.n_tokens = 1",
+        ""
+      ]
+    },
+    {
+      "ts": 1766662422.6951532,
+      "cpu_percent": 8.3,
+      "memory_percent": 58.8,
+      "proc_cpu_percent": null,
+      "proc_rss_mb": null,
+      "npu_info": {
+        "error": "ERROR: Unknown command: 'npu'"
+      },
+      "log_tail": [
+        "slot update_slots: id  3 | task 132 | need to evaluate at least 1 token for each active slot (n_past = 17, task.n_tokens() = 17)",
+        "",
+        "slot update_slots: id  3 | task 132 | n_past was set to 16",
+        "",
+        "slot update_slots: id  3 | task 132 | n_tokens = 16, memory_seq_rm [16, end)",
+        "",
+        "slot update_slots: id  3 | task 132 | prompt processing progress, n_tokens = 17, batch.n_tokens = 1, progress = 1.000000",
+        "",
+        "slot update_slots: id  3 | task 132 | prompt done, n_tokens = 17, batch.n_tokens = 1",
+        ""
+      ]
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "timestamp": 1766680233.624134,
+  "model": "qwen3-coder:30b",
+  "test_results": [
+    {
+      "success": true,
+      "test_name": "Small context (1K)",
+      "model": "qwen3-coder:30b",
+      "params": {
+        "num_predict": 50,
+        "temperature": 0.7,
+        "num_ctx": 1024
+      },
+      "response_length": 239,
+      "eval_count": 50,
+      "eval_duration_ms": 770.8912,
+      "total_duration_ms": 20396.3014,
+      "total_time_ms": 20422.791957855225,
+      "response_preview": "Here are a few different approaches to calculate Fibonacci numbers up to n:\n\n## Approach 1: Generate Fibonacci numbers up to n (most common interpretation)\n\n```python\ndef fibonacci_up_to_n(n):\n    \"\"\"...",
+      "error": null
+    },
+    {
+      "success": true,
+      "test_name": "Medium context (2K)",
+      "model": "qwen3-coder:30b",
+      "params": {
+        "num_predict": 50,
+        "temperature": 0.7,
+        "num_ctx": 2048
+      },
+      "response_length": 229,
+      "eval_count": 50,
+      "eval_duration_ms": 754.013,
+      "total_duration_ms": 18569.7749,
+      "total_time_ms": 18597.261667251587,
+      "response_preview": "Here are a few different approaches to calculate Fibonacci numbers up to n:\n\n## Approach 1: Generate all Fibonacci numbers up to n\n\n```python\ndef fibonacci_up_to_n(n):\n    \"\"\"\n    Generate all Fibonac...",
+      "error": null
+    },
+    {
+      "success": true,
+      "test_name": "Very small output",
+      "model": "qwen3-coder:30b",
+      "params": {
+        "num_predict": 25,
+        "temperature": 0.7,
+        "num_ctx": 1024
+      },
+      "response_length": 123,
+      "eval_count": 25,
+      "eval_duration_ms": 358.6304,
+      "total_duration_ms": 17102.605,
+      "total_time_ms": 17120.218992233276,
+      "response_preview": "Here are a few different approaches to calculate Fibonacci numbers up to n:\n\n## Method 1: Generate all Fibonacci numbers up",
+      "error": null
+    }
+  ],
+  "successful_configs": 3,
+  "failed_configs": 0
+}

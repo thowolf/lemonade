@@ -95,5 +95,33 @@
     "chat.tools.terminal.autoApprove": {
         ".specify/scripts/bash/": true,
         ".specify/scripts/powershell/": true
-    }
+    },
+  "workbench.colorTheme": "Solarized Dark",
+  "workbench.colorCustomizations": {
+    // Hintergrund deiner Nachrichten
+    "chat.requestBubbleBackground": "#14374b",
+    // Rahmen deiner Nachrichten
+    "chat.requestCodeBorder": "#1d6de6",
+    // Hintergrund der Antworten
+    "chat.responseBubbleBackground": "#111827",
+    // Optional generelle Chat-Farbe
+    "chat.background": "#0f172a",
+    // Titelleisten-Farben
+    "titleBar.activeBackground": "#fff44f",
+    "titleBar.inactiveBackground": "#fff44fcc",
+    "titleBar.activeForeground": "#000000",
+    "titleBar.inactiveForeground": "#000000cc",
+    "statusBar.background": "#fff44f",
+    "statusBar.foreground": "#000000",
+    
+    "statusBar.border": "#fff44f",
+    "statusBar.noFolderBackground": "#fff44f",
+    "statusBar.noFolderForeground": "#000000",
+    "statusBar.noFolderBorder": "#fff44f",
+    "statusBar.debuggingBackground": "#fff44f",
+    "statusBar.debuggingForeground": "#000000",
+    "statusBar.debuggingBorder": "#fff44f",
+     "editorCursor.foreground": "#fff44f",
+  },
+  "window.titleBarStyle": "custom"
 }

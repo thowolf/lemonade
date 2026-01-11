@@ -1,0 +1,147 @@
+{
+  "generated_at": "2025-12-25T20:23:46.307748+00:00",
+  "model_metrics": {
+    "total_runs": 4,
+    "models_analyzed": 4,
+    "performance_by_model": {
+      "qwen3:0.6b": {
+        "response_time_ms": {
+          "count": 0,
+          "mean": null,
+          "median": null,
+          "min": null,
+          "max": null
+        },
+        "tokens_per_second": {
+          "count": 0,
+          "mean": null,
+          "median": null,
+          "min": null,
+          "max": null
+        },
+        "npu_utilization_percent": {
+          "count": 0,
+          "mean": null,
+          "median": null,
+          "min": null,
+          "max": null
+        },
+        "freeze_rate_percent": 0.0,
+        "freeze_count": 0
+      },
+      "hf.co/ai21labs/AI21-Jamba-Reasoning-3B-GGUF:F16": {
+        "response_time_ms": {
+          "count": 0,
+          "mean": null,
+          "median": null,
+          "min": null,
+          "max": null
+        },
+        "tokens_per_second": {
+          "count": 0,
+          "mean": null,
+          "median": null,
+          "min": null,
+          "max": null
+        },
+        "npu_utilization_percent": {
+          "count": 0,
+          "mean": null,
+          "median": null,
+          "min": null,
+          "max": null
+        },
+        "freeze_rate_percent": 0.0,
+        "freeze_count": 0
+      },
+      "test-model": {
+        "response_time_ms": {
+          "count": 0,
+          "mean": null,
+          "median": null,
+          "min": null,
+          "max": null
+        },
+        "tokens_per_second": {
+          "count": 0,
+          "mean": null,
+          "median": null,
+          "min": null,
+          "max": null
+        },
+        "npu_utilization_percent": {
+          "count": 0,
+          "mean": null,
+          "median": null,
+          "min": null,
+          "max": null
+        },
+        "freeze_rate_percent": 0.0,
+        "freeze_count": 0
+      },
+      "qwen3-coder:30b": {
+        "response_time_ms": {
+          "count": 0,
+          "mean": null,
+          "median": null,
+          "min": null,
+          "max": null
+        },
+        "tokens_per_second": {
+          "count": 0,
+          "mean": null,
+          "median": null,
+          "min": null,
+          "max": null
+        },
+        "npu_utilization_percent": {
+          "count": 0,
+          "mean": null,
+          "median": null,
+          "min": null,
+          "max": null
+        },
+        "freeze_rate_percent": 0.0,
+        "freeze_count": 0
+      }
+    },
+    "overall_stats": {
+      "response_time_ms": {
+        "count": 0,
+        "mean": null,
+        "median": null,
+        "min": null,
+        "max": null
+      },
+      "tokens_per_second": {
+        "count": 0,
+        "mean": null,
+        "median": null,
+        "min": null,
+        "max": null
+      },
+      "npu_utilization_percent": {
+        "count": 0,
+        "mean": null,
+        "median": null,
+        "min": null,
+        "max": null
+      },
+      "total_freezes": 0
+    }
+  },
+  "recommendations": {
+    "qwen3:0.6b": [
+      "NPU monitoring not available - check driver installation"
+    ],
+    "hf.co/ai21labs/AI21-Jamba-Reasoning-3B-GGUF:F16": [
+      "NPU monitoring not available - check driver installation"
+    ],
+    "test-model": [
+      "NPU monitoring not available - check driver installation"
+    ],
+    "qwen3-coder:30b": [
+      "NPU monitoring not available - check driver installation"
+    ]
+  }
+}
