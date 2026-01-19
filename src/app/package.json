@@ -77,7 +77,7 @@
     "extraResources": [],
     "asarUnpack": [],
     "win": {
-      "icon": "../../docs/assets/favicon.ico",
+      "icon": "src/app/assets/icon_256.png",
       "target": [
         {
           "target": "nsis",
@@ -89,12 +89,14 @@
     },
     "electronLanguages": ["en-US"],
     "mac": {
+      "icon": "src/app/assets/icon_512.png",
       "target": [
         "dmg"
       ],
       "category": "public.app-category.business"
     },
     "linux": {
+      "icon": "src/app/assets/icon_512.png",
       "target": [
         "dir"
       ],
