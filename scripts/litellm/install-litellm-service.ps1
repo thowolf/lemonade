@@ -191,10 +191,13 @@ function Setup-Service {
     return $masterKey
 }
 
-function Start-Service {
+function Start-LiteLLMService {
     Write-Status "Starting LiteLLM service..."
     try {
-        Start-Service -Name $serviceName -ErrorAction Stop
+        $svc = Get-Service -Name $serviceName -ErrorAction Stop
+        if ($svc.Status -ne "Running") {
+            $svc.Start()
+        }
         Start-Sleep -Seconds 2
         
         $service = Get-Service -Name $serviceName
@@ -286,7 +289,7 @@ try {
             Install-Nssm
             Install-LiteLLM
             $key = Setup-Service
-            Start-Service
+            Start-LiteLLMService
             Check-ServiceHealth
             Write-Status "`nLiteLLM Production Service installed and running" "SUCCESS"
             Write-Status "API available at: http://localhost:$Port" "INFO"
@@ -302,7 +305,7 @@ try {
             Show-Status
         }
         "start" {
-            Start-Service
+            Start-LiteLLMService
             Check-ServiceHealth
         }
         "stop" {
@@ -311,9 +314,9 @@ try {
         }
         "restart" {
             Write-Status "Restarting service..."
-            Restart-Service -Name $serviceName
-            Start-Sleep -Seconds 2
-            Check-ServiceHealth
+            Stop-Service -Name $serviceName -Force -ErrorAction SilentlyContinue
+            Start-Sleep -Seconds 1
+            Start-LiteLLMService
         }
     }
 }
