@@ -184,6 +184,9 @@ function Setup-Service {
     & $script:nssmExecutable set $serviceName AppRotateSeconds 86400
     & $script:nssmExecutable set $serviceName AppRotateBytes 10485760
     
+    # Prevent pause on error
+    & $script:nssmExecutable set $serviceName AppExit Default Exit
+    
     # Logging
     $logPath = Join-Path $PSScriptRoot "logs"
     New-Item -ItemType Directory -Path $logPath -Force | Out-Null
