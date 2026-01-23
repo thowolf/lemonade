@@ -1,5 +1,7 @@
 #include "lemon/system_info.h"
 #include "lemon/version.h"
+#include "lemon/utils/path_utils.h"
+#include "lemon/backends/ryzenaiserver.h"
 #include <filesystem>
 #include <fstream>
 #include <sstream>
@@ -20,6 +22,7 @@
 namespace lemon {
 
 namespace fs = std::filesystem;
+using namespace lemon::utils;
 
 // AMD discrete GPU keywords
 const std::vector<std::string> AMD_DISCRETE_GPU_KEYWORDS = {
@@ -269,14 +272,11 @@ json SystemInfo::detect_inference_engines(const std::string& device_type, const 
 
 std::string SystemInfo::get_llamacpp_version(const std::string& backend) {
     // Try to find version.txt in the llamacpp directory for specific backend
-    // Location: {executable_dir}/{backend}/llama_server/version.txt
+    // Location: {cache_dir}/bin/llama/{backend}/version.txt
     
-    #ifdef _WIN32
-    char exe_path[MAX_PATH];
-    GetModuleFileNameA(NULL, exe_path, MAX_PATH);
-    fs::path exe_dir = fs::path(exe_path).parent_path();
+    fs::path bin_dir = utils::get_downloaded_bin_dir();
+    fs::path version_file = bin_dir / "llama" / backend / "version.txt";
     
-    fs::path version_file = exe_dir / backend / "llama_server" / "version.txt";
     if (fs::exists(version_file)) {
         std::ifstream file(version_file);
         if (file.is_open()) {
@@ -291,45 +291,29 @@ std::string SystemInfo::get_llamacpp_version(const std::string& backend) {
             }
         }
     }
-    #else
-    // For Linux, check relative to current executable
-    std::string version_file = backend + "/llama_server/version.txt";
-    std::ifstream file(version_file);
-    if (file.is_open()) {
-        std::string version;
-        std::getline(file, version);
-        file.close();
-        // Trim whitespace
-        size_t start = version.find_first_not_of(" \t\n\r");
-        size_t end = version.find_last_not_of(" \t\n\r");
-        if (start != std::string::npos && end != std::string::npos) {
-            return version.substr(start, end - start + 1);
-        }
-    }
-    #endif
     
     return "unknown";
 }
 
 bool SystemInfo::is_llamacpp_installed(const std::string& backend) {
     // Check if llama-server executable exists for the given backend
+    // Location: {cache_dir}/bin/llama/{backend}/
     
-    #ifdef _WIN32
-    char exe_path[MAX_PATH];
-    GetModuleFileNameA(NULL, exe_path, MAX_PATH);
-    fs::path exe_dir = fs::path(exe_path).parent_path();
+    fs::path bin_dir = utils::get_downloaded_bin_dir();
+    fs::path install_dir = bin_dir / "llama" / backend;
     
-    fs::path llama_exe = exe_dir / backend / "llama_server" / "llama-server.exe";
+#ifdef _WIN32
+    fs::path llama_exe = install_dir / "llama-server.exe";
     return fs::exists(llama_exe);
-    #else
+#else
     // For Linux, check build/bin subdirectory first, then root
-    std::string build_bin_path = backend + "/llama_server/build/bin/llama-server";
+    fs::path build_bin_path = install_dir / "build" / "bin" / "llama-server";
     if (fs::exists(build_bin_path)) {
         return true;
     }
-    std::string root_path = backend + "/llama_server/llama-server";
+    fs::path root_path = install_dir / "llama-server";
     return fs::exists(root_path);
-    #endif
+#endif
 }
 
 bool SystemInfo::check_vulkan_support() {
@@ -380,14 +364,16 @@ std::string identify_rocm_arch_from_name(const std::string& device_name) {
     std::string device_lower = device_name;
     std::transform(device_lower.begin(), device_lower.end(), device_lower.begin(), ::tolower);
     
-    if (device_lower.find("radeon") == std::string::npos) {
+    if (device_lower.find("radeon") == std::string::npos &&
+        device_lower.find("amd") == std::string::npos) {
         return "";
     }
     
     // STX Halo iGPUs (gfx1151 architecture)
     // Radeon 8050S Graphics / Radeon 8060S Graphics
     if (device_lower.find("8050s") != std::string::npos || 
-        device_lower.find("8060s") != std::string::npos) {
+        device_lower.find("8060s") != std::string::npos ||
+        device_lower.find("device 1586") != std::string::npos) {
         return "gfx1151";
     }
     
@@ -460,55 +446,7 @@ std::string SystemInfo::get_flm_version() {
 }
 
 bool SystemInfo::is_ryzenai_serve_available() {
-    // Use the same logic as RyzenAIServer::get_ryzenai_serve_path()
-    
-    #ifdef _WIN32
-    std::string exe_name = "ryzenai-server.exe";
-    std::string check_cmd = "where ryzenai-server.exe >nul 2>&1";
-#else
-    std::string exe_name = "ryzenai-server";
-    std::string check_cmd = "which ryzenai-server >/dev/null 2>&1";
-#endif
-    
-    // Check if executable exists in PATH
-    if (system(check_cmd.c_str()) == 0) {
-        return true;
-    }
-    
-    // Check in common locations relative to lemonade executable
-    // This uses the same path resolution as RyzenAIServer
-    #ifdef _WIN32
-    // Get executable path
-    char exe_path[MAX_PATH];
-    GetModuleFileNameA(NULL, exe_path, MAX_PATH);
-    fs::path exe_dir = fs::path(exe_path).parent_path();
-    
-    // Check relative path: from executable to ../../../ryzenai-server/build/bin/Release (source tree)
-    fs::path relative_path = exe_dir / ".." / ".." / ".." / "ryzenai-server" / "build" / "bin" / "Release" / exe_name;
-    if (fs::exists(relative_path)) {
-        return true;
-    }
-    
-    // Check installed location next to lemonade binary
-    fs::path install_path = exe_dir / "ryzenai-server" / exe_name;
-    if (fs::exists(install_path)) {
-        return true;
-    }
-    #else
-    // For Linux/macOS
-    fs::path relative_path = fs::path("../../../ryzenai-server/build/bin/Release") / exe_name;
-    if (fs::exists(relative_path)) {
-        return true;
-    }
-    
-    // Check installed location
-    fs::path install_path = fs::path("ryzenai-server") / exe_name;
-    if (fs::exists(install_path)) {
-        return true;
-    }
-    #endif
-    
-    return false;
+    return RyzenAIServer::is_available();
 }
 
 // ============================================================================
@@ -1702,27 +1640,6 @@ NPUInfo MacOSSystemInfo::get_npu_device() {
 
 SystemInfoCache::SystemInfoCache() {
     cache_file_path_ = get_cache_dir() + "/hardware_info.json";
-}
-
-std::string SystemInfoCache::get_cache_dir() const {
-    const char* cache_dir_env = std::getenv("LEMONADE_CACHE_DIR");
-    if (cache_dir_env) {
-        return std::string(cache_dir_env);
-    }
-    
-    #ifdef _WIN32
-    const char* userprofile = std::getenv("USERPROFILE");
-    if (userprofile) {
-        return std::string(userprofile) + "\\.cache\\lemonade";
-    }
-    #else
-    const char* home = std::getenv("HOME");
-    if (home) {
-        return std::string(home) + "/.cache/lemonade";
-    }
-    #endif
-    
-    return ".cache/lemonade";
 }
 
 std::string SystemInfoCache::get_lemonade_version() const {
