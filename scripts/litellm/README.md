@@ -1,113 +1,278 @@
-# LiteLLM Proxy Server
+# LiteLLM Proxy Server with OpenedAI Speech (RoCm)
 
-LiteLLM Proxy provides a unified API interface for managing and routing requests to multiple LLM backends.
+Production-ready AI proxy infrastructure combining:
+- **LiteLLM Proxy**: Multi-backend model routing and API gateway
+- **OpenedAI Speech**: Text-to-Speech with RoCm GPU acceleration
+- **Lemonade Server**: Local LLM inference backend
+- **Nextcloud AI Integration**: End-to-end AI capabilities
+
+## Architecture
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│  Nextcloud AI Integration App                               │
+└─────────────────────────────────────────────────────────────┘
+                            │
+                    ┌───────▼────────┐
+                    │ LiteLLM Proxy  │ (Port 4014)
+                    │ (API Gateway)  │
+                    └───────┬────────┘
+                    ┌───────┴──────────────────┐
+                    │                          │
+        ┌───────────▼──────────────┐  ┌───────▼─────────────┐
+        │ Lemonade Server          │  │ OpenedAI Speech     │
+        │ (LLMs: Qwen, Phi, etc)   │  │ (TTS with RoCm)     │
+        │ (Port 8000)              │  │ (Port 8888)         │
+        └──────────────────────────┘  └─────────────────────┘
+```
 
 ## Features
 
-- **Multi-backend support**: Route to OpenAI, Anthropic, Local models, etc.
-- **Model aliasing**: Map multiple model providers to simple aliases
-- **API key management**: Centralized key management for different backends
-- **Caching**: Built-in request caching for common queries
-- **Load balancing**: Distribute requests across multiple endpoints
-- **Comprehensive logging**: Track all API calls and performance metrics
+- **Multi-backend support**: Route to multiple LLM models and services
+- **Model aliasing**: Simple names (llm-text-gen, llm-code-gen, tts-openedai)
+- **GPU acceleration**: RoCm support for AMD GPUs (Radeon, RDNA, MI series)
+- **Docker containers**: Simplified deployment and isolation
+- **Health checking**: Automatic service monitoring
+- **Comprehensive logging**: Track all requests and performance
 
 ## Quick Start
 
-### Start LiteLLM Proxy
+### Prerequisites
 
-```bash
-# Default (port 8090)
-.\start-litellm.bat
+- Docker Desktop installed ([download](https://www.docker.com/products/docker-desktop))
+- Lemonade Server running on `localhost:8000`
+- RoCm-compatible AMD GPU (for openedai-speech acceleration)
 
-# Or with PowerShell
-.\start-litellm.ps1 -Port 8090
+### Start Services with Docker
 
-# Force restart if already running
-.\start-litellm.ps1 -Force
+```powershell
+# Navigate to scripts/litellm
+cd scripts/litellm
+
+# Start all services
+.\manage-docker-services.ps1 -Action start -Service all
+
+# Check status
+.\manage-docker-services.ps1 -Action status
+
+# View logs
+.\manage-docker-services.ps1 -Action logs -Service litellm
+.\manage-docker-services.ps1 -Action logs -Service openedai-speech
 ```
 
-### Configuration
+### Available Services
 
-Create or edit `config/litellm_config.yaml`:
+| Service | Port | URL |
+|---------|------|-----|
+| LiteLLM Proxy | 4014 | `http://localhost:4014` |
+| OpenedAI Speech | 8888 | `http://localhost:8888` |
+| Lemonade Server | 8000 | `http://localhost:8000` |
+
+## Configuration
+
+### Model Aliases (litellm-config.yaml)
+
+Pre-configured aliases for easy use:
 
 ```yaml
-model_list:
-  - model_name: gpt-4
-    litellm_params:
-      model: gpt-4
-      api_key: $OPENAI_API_KEY
-      
-  - model_name: claude-3
-    litellm_params:
-      model: claude-3-sonnet-20240229
-      api_key: $ANTHROPIC_API_KEY
+# Text Generation
+llm-text-gen       → Qwen3-Next-80B (powerful reasoning)
+llm-code-gen       → Qwen3-Coder-30B (code generation)
+llm-text-fast      → Gemma-3-4b (quick responses)
+llm-instruct       → Phi-4-mini (instruction following)
 
-general_settings:
-  log_file: "litellm_logs.log"
-  cache:
-    type: redis
-    host: localhost
+# Audio
+audio-transcription → Whisper-Large-v3-Turbo (speech-to-text)
+
+# Text-to-Speech
+tts-openedai       → OpenedAI Speech with RoCm (TTS)
 ```
+
+### Docker Compose Configuration
+
+Edit `docker-compose.yml` to customize:
+
+- **GPU device**: `CUDA_VISIBLE_DEVICES` in openedai-speech service
+- **Memory limits**: Add `mem_limit` to service config
+- **Log rotation**: Already configured with 10MB max, 3 files
+- **Network**: Uses internal `lemonade-network` bridge
 
 ## API Usage
 
-### List Models
+### Chat Completions (via LiteLLM)
 
 ```bash
-curl http://localhost:8090/models
-```
-
-### Make a Request
-
-```bash
-curl http://localhost:8090/v1/chat/completions \
+curl -X POST http://localhost:4014/v1/chat/completions \
   -H "Content-Type: application/json" \
+  -H "Authorization: Bearer sk-1234567890abcdefghijklmnopqrstuv" \
   -d '{
-    "model": "gpt-4",
-    "messages": [{"role": "user", "content": "Hello"}]
+    "model": "llm-text-gen",
+    "messages": [{"role": "user", "content": "Hello"}],
+    "max_tokens": 256
   }'
 ```
 
-## Integration with Lemonade
+### Text-to-Speech (via OpenedAI Speech)
 
-LiteLLM can be used as a backend router for Lemonade Server to provide:
-- Consistent API across different model providers
-- Centralized model management
-- Advanced routing and load balancing
+```bash
+curl -X POST http://localhost:8888/v1/audio/speech \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "tts-1",
+    "input": "Hello, this is a test",
+    "voice": "alloy"
+  }' \
+  --output speech.mp3
+```
+
+### List Available Models
+
+```bash
+curl http://localhost:4014/v1/models \
+  -H "Authorization: Bearer sk-1234567890abcdefghijklmnopqrstuv"
+```
+
+## Management Commands
+
+```powershell
+# Start services
+.\manage-docker-services.ps1 -Action start
+
+# Stop services
+.\manage-docker-services.ps1 -Action stop
+
+# Restart services
+.\manage-docker-services.ps1 -Action restart
+
+# Check status and health
+.\manage-docker-services.ps1 -Action status
+
+# View container logs
+.\manage-docker-services.ps1 -Action logs -Service litellm
+.\manage-docker-services.ps1 -Action logs -Service openedai-speech
+
+# Pull latest images
+.\manage-docker-services.ps1 -Action pull
+```
+
+## GPU Setup (RoCm)
+
+### Requirements
+
+- AMD GPU: Radeon RX 7000 series, RDNA 3/2, MI series
+- ROCm drivers installed (usually via Docker image)
+- Sufficient VRAM: 8GB+ recommended
+
+### Verify GPU Access
+
+```bash
+# Check if GPU is accessible
+docker run --rm --device=/dev/kfd --device=/dev/dri \
+  ghcr.io/matatonic/openedai-speech:rocm \
+  rocminfo | grep "GPU"
+
+# Monitor GPU usage during inference
+rocm-smi watch
+```
+
+## Troubleshooting
+
+### Services Won't Start
+
+```powershell
+# Check Docker is running
+docker ps
+
+# Check logs
+.\manage-docker-services.ps1 -Action logs -Service litellm
+
+# Restart Docker and retry
+docker restart litellm-proxy openedai-speech-rocm
+```
+
+### GPU Not Being Used
+
+```powershell
+# Check GPU detection
+docker exec openedai-speech-rocm rocminfo
+
+# Verify in logs
+.\manage-docker-services.ps1 -Action logs -Service openedai-speech | 
+  findstr /I "GPU device cuda rocm"
+```
+
+### Port Conflicts
+
+If ports 4014 or 8888 are already in use:
+
+1. Edit `docker-compose.yml`
+2. Change `ports:` section:
+   ```yaml
+   # LiteLLM - change first port
+   ports:
+     - "8089:4000"  # Now accessible on localhost:8089
+   
+   # OpenedAI Speech - change first port
+   ports:
+     - "8887:8000"  # Now accessible on localhost:8887
+   ```
+3. Update `litellm-config.yaml` with new ports
+4. Restart services
+
+### Memory Issues
+
+```yaml
+# In docker-compose.yml, add to service:
+mem_limit: "16g"
+memswap_limit: "20g"
+```
+
+## Integration with Nextcloud
+
+1. Install Nextcloud AI Integration app
+2. Configure AI Provider:
+   - **Provider URL**: `http://your-server:4014`
+   - **API Key**: `sk-1234567890abcdefghijklmnopqrstuv` (or set in config)
+   - **Models Available**:
+     - `llm-text-gen` (Text Generation)
+     - `llm-code-gen` (Code Generation)
+     - `tts-openedai` (Text-to-Speech)
+     - `audio-transcription` (Speech-to-Text)
+
+3. Test in Nextcloud:
+   - Create a new text document
+   - Use "AI" menu to generate content
+   - Or use voice commands for audio transcription
+
+## Production Deployment
+
+For production on internal network (192.168.86.196):
+
+1. Use Apache reverse proxy on DMZ (see `configs/apache-api-proxy.conf`)
+2. Configure SSL/TLS certificates
+3. Set strong API key in `litellm-config.yaml`
+4. Enable database logging for audit trail
+5. Set up monitoring (Prometheus/Grafana)
+6. Configure key rotation policy
+
+See: `specs/006-nextcloud-litellm-infra/` for complete infrastructure spec
 
 ## Documentation
 
 - [LiteLLM Official Docs](https://docs.litellm.ai/)
-- [Configuration Guide](https://docs.litellm.ai/docs/proxy/configs)
-- [API Reference](https://docs.litellm.ai/docs/proxy/user_config)
-
-## Troubleshooting
-
-### Port Already in Use
-
-```bash
-# Use a different port
-.\start-litellm.ps1 -Port 8091
-```
-
-### Configuration Not Loading
-
-- Check `config/litellm_config.yaml` syntax
-- Verify all required environment variables are set
-- Check logs in `litellm_logs.log`
-
-### API Key Issues
-
-Set environment variables or use config file:
-
-```powershell
-$env:OPENAI_API_KEY = "sk-..."
-$env:ANTHROPIC_API_KEY = "sk-ant-..."
-```
+- [OpenedAI Speech GitHub](https://github.com/matatonic/openedai-speech)
+- [RoCm Documentation](https://rocmdocs.amd.com/)
+- [Nextcloud AI Integration](https://apps.nextcloud.com/)
 
 ## Support
 
-For issues or questions:
-1. Check [LiteLLM documentation](https://docs.litellm.ai/)
-2. Review logs in `litellm_logs.log`
-3. Open an issue on the project repository
+For issues:
+1. Check service logs with `manage-docker-services.ps1 -Action logs`
+2. Verify Lemonade Server is running and accessible
+3. Check GPU availability with `rocminfo`
+4. Review Docker resource limits and memory usage
+5. Consult project repository issues
+
+## License
+
+See LICENSE file in project root

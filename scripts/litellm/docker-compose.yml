@@ -1,0 +1,131 @@
+version: '3.8'
+
+services:
+  # OpenedAI Speech Server with RoCm GPU acceleration
+  openedai-speech:
+    image: ghcr.io/matatonic/openedai-speech:rocm
+    container_name: openedai-speech-rocm
+    ports:
+      - "8888:8000"
+    environment:
+      # RoCm GPU Configuration
+      HSA_OVERRIDE_GFX_VERSION: ""  # Auto-detect GPU
+      GPU_DEVICE_ORDINAL: "0"
+      TZ: "UTC"
+      
+      # OpenedAI Speech Settings
+      OPENEDAI_API_KEY: "sk-1234567890abcdefghijklmnopqrstuv"  # Match LiteLLM master_key
+      
+      # TTS Model (use small, fast model for RoCm)
+      TTS_MODEL: "tts-1"  # or "tts-1-hd" for higher quality
+      TTS_DEVICE: "cuda"   # Use GPU
+      
+      # Speech Recognition (optional)
+      SPEECH_RECOGNITION_MODEL: "base"  # whisper model size
+      
+      # Performance tuning
+      OMP_NUM_THREADS: "16"
+      CUDA_VISIBLE_DEVICES: "0"
+    
+    volumes:
+      # Cache TTS/Whisper models
+      - openedai-cache:/root/.cache
+      
+      # Optional: Mount config directory
+      - ./openedai-config:/app/config:ro
+    
+    devices:
+      # GPU access for RoCm
+      - /dev/kfd:/dev/kfd
+      - /dev/dri:/dev/dri
+    
+    cap_add:
+      # Required for GPU access
+      - SYS_PTRACE
+      - IPC_LOCK
+    
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    
+    networks:
+      - lemonade-network
+    
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # LiteLLM Proxy Server
+  litellm:
+    image: ghcr.io/berriai/litellm:main
+    container_name: litellm-proxy
+    ports:
+      - "4014:4000"
+    environment:
+      # LiteLLM Configuration
+      LITELLM_CONFIG_PATH: "/app/litellm-config.yaml"
+      LITELLM_LOG: "INFO"
+      LITELLM_MASTER_KEY: "sk-1234567890abcdefghijklmnopqrstuv"
+      
+      # Database (optional)
+      DATABASE_URL: ""
+      
+      # Proxy settings
+      PROXY_BATCH_WRITE_TIMEOUT: "120"
+      PROXY_MAX_PARALLEL_REQUESTS: "1000"
+    
+    volumes:
+      # Mount config file
+      - ./litellm-config.yaml:/app/litellm-config.yaml:ro
+      
+      # Logs
+      - ./logs:/app/logs
+    
+    depends_on:
+      openedai-speech:
+        condition: service_healthy
+    
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+    
+    networks:
+      - lemonade-network
+    
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # Optional: Monitoring/Observability
+  # Uncomment to enable Prometheus metrics scraping
+  # prometheus:
+  #   image: prom/prometheus:latest
+  #   ports:
+  #     - "9090:9090"
+  #   volumes:
+  #     - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+  #   networks:
+  #     - lemonade-network
+
+volumes:
+  openedai-cache:
+    driver: local
+
+networks:
+  lemonade-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16

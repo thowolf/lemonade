@@ -1,0 +1,162 @@
+# LiteLLM Proxy Configuration
+# On-Premise AI Infrastructure with Nextcloud, Lemonade Server, and OpenedAI Speech (RoCm)
+
+model_list:
+  # TEXT GENERATION MODELS (via Lemonade Server)
+  - model_name: llm-text-gen
+    litellm_params:
+      model: lemonade/qwen3-next-80b
+      api_base: http://127.0.0.1:8000/v1
+      api_key: "not-needed"
+    model_info:
+      description: "Qwen3-Next-80B for powerful text generation and reasoning"
+      type: "llm"
+      max_tokens: 32768
+
+  - model_name: llm-code-gen
+    litellm_params:
+      model: lemonade/qwen3-coder-30b
+      api_base: http://127.0.0.1:8000/v1
+      api_key: "not-needed"
+    model_info:
+      description: "Qwen3-Coder-30B for code generation and technical tasks"
+      type: "llm"
+      max_tokens: 32768
+
+  - model_name: llm-text-fast
+    litellm_params:
+      model: lemonade/gemma-3-4b
+      api_base: http://127.0.0.1:8000/v1
+      api_key: "not-needed"
+    model_info:
+      description: "Gemma-3-4b for fast responses and lightweight tasks"
+      type: "llm"
+      max_tokens: 16384
+
+  - model_name: llm-instruct
+    litellm_params:
+      model: lemonade/phi-4-mini
+      api_base: http://127.0.0.1:8000/v1
+      api_key: "not-needed"
+    model_info:
+      description: "Phi-4-mini-instruct for instruction following"
+      type: "llm"
+      max_tokens: 16384
+
+  # AUDIO TRANSCRIPTION (via Lemonade Server)
+  - model_name: audio-transcription
+    litellm_params:
+      model: lemonade/whisper-large-v3-turbo
+      api_base: http://127.0.0.1:8000/v1
+      api_key: "not-needed"
+    model_info:
+      description: "Whisper Large v3 Turbo for audio transcription"
+      type: "audio"
+      max_tokens: 8192
+
+  # TEXT-TO-SPEECH (via OpenedAI Speech container with RoCm)
+  - model_name: tts-openedai
+    litellm_params:
+      model: openedai-api/openedai
+      api_base: http://127.0.0.1:8888/v1
+      api_key: "not-needed"
+    model_info:
+      description: "OpenedAI Speech with RoCm acceleration for text-to-speech"
+      type: "tts"
+      supported_voices: ["alloy", "echo", "fable", "onyx", "nova", "shimmer"]
+
+  # FALLBACK - Direct Lemonade models for compatibility
+  - model_name: qwen3-next-80b
+    litellm_params:
+      model: lemonade/qwen3-next-80b
+      api_base: http://127.0.0.1:8000/v1
+      api_key: "not-needed"
+
+  - model_name: qwen3-coder-30b
+    litellm_params:
+      model: lemonade/qwen3-coder-30b
+      api_base: http://127.0.0.1:8000/v1
+      api_key: "not-needed"
+
+  - model_name: gemma-3-4b
+    litellm_params:
+      model: lemonade/gemma-3-4b
+      api_base: http://127.0.0.1:8000/v1
+      api_key: "not-needed"
+
+  - model_name: phi-4-mini
+    litellm_params:
+      model: lemonade/phi-4-mini
+      api_base: http://127.0.0.1:8000/v1
+      api_key: "not-needed"
+
+  - model_name: whisper-large-v3-turbo
+    litellm_params:
+      model: lemonade/whisper-large-v3-turbo
+      api_base: http://127.0.0.1:8000/v1
+      api_key: "not-needed"
+
+# ROUTER SETTINGS
+router:
+  strategies:
+    - name: "round-robin"
+      mode: round_robin
+    - name: "least-busy"
+      mode: least_busy
+
+# GENERAL SETTINGS
+general_settings:
+  # API Security
+  master_key: "sk-1234567890abcdefghijklmnopqrstuv"
+  
+  # Logging
+  log_file: "litellm.log"
+  log_level: "INFO"
+  
+  # Performance
+  cache:
+    type: "in_memory"
+    ttl: 3600
+  
+  # Request handling
+  timeout: 120
+  max_tokens: 32768
+  
+  # Database (optional - for analytics)
+  database_url: null  # Set to postgres://user:pass@localhost/litellm for production
+
+# NEXTCLOUD AI INTEGRATION
+nextcloud:
+  # These are the aliases that Nextcloud apps will call
+  # Configure in Nextcloud Admin > AI > Providers
+  enabled_providers:
+    - llm-text-gen          # For text generation tasks
+    - llm-code-gen          # For code suggestions
+    - llm-text-fast         # For quick responses
+    - tts-openedai          # For text-to-speech
+    - audio-transcription   # For speech-to-text
+  
+  # Authentication
+  api_key_required: false   # Set to true if using Nextcloud auth tokens
+  
+  # Rate limiting
+  max_requests_per_minute: 100
+
+# DOCKER SERVICES HEALTH CHECK
+services:
+  lemonade_server:
+    url: "http://127.0.0.1:8000/api/v1/models"
+    timeout: 5
+    
+  openedai_speech:
+    url: "http://127.0.0.1:8888/v1/audio/speech"
+    timeout: 5
+
+# DEPLOYMENT INFO
+deployment:
+  environment: development  # Change to 'production' for hardened settings
+  internal_vlan: "192.168.86.196"
+  external_dmz: "192.168.178.41"
+  
+  # For production: Set up Apache reverse proxy on DMZ
+  # See: scripts/litellm/configs/apache-api-proxy.conf
