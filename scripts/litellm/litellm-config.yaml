@@ -57,7 +57,7 @@ model_list:
   # TEXT-TO-SPEECH (via OpenedAI Speech container with RoCm)
   - model_name: tts-openedai
     litellm_params:
-      model: openedai-api/openedai
+      model: openai/tts-1
       api_base: http://127.0.0.1:8888/v1
       api_key: "not-needed"
     model_info:
