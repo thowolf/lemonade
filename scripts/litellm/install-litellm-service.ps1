@@ -61,8 +61,18 @@ function Test-Administrator {
 function Install-Nssm {
     Write-Status "Checking NSSM (service wrapper)..."
     
+    # First, check if NSSM is already in PATH (from winget or manual installation)
+    try {
+        $nssmCheck = & nssm.exe --version 2>&1
+        Write-Status "NSSM already in PATH: $nssmCheck" "SUCCESS"
+        return
+    }
+    catch {
+        Write-Status "NSSM not in PATH, attempting download..." "WARNING"
+    }
+    
     if (Test-Path "$nssmPath\nssm.exe") {
-        Write-Status "NSSM already installed" "SUCCESS"
+        Write-Status "NSSM already installed locally" "SUCCESS"
         return
     }
     
@@ -139,6 +149,22 @@ function Setup-Service {
     $masterKey = Generate-MasterKey
     $pythonExe = (& $pythonPath -c "import sys; print(sys.executable)").Trim()
     
+    # Find nssm.exe (either in PATH or local)
+    $nssmExe = $null
+    try {
+        $nssmExe = (Get-Command nssm.exe -ErrorAction Stop).Source
+        Write-Status "Using NSSM from PATH: $nssmExe" "INFO"
+    }
+    catch {
+        if (Test-Path "$nssmPath\nssm.exe") {
+            $nssmExe = "$nssmPath\nssm.exe"
+            Write-Status "Using local NSSM: $nssmExe" "INFO"
+        }
+        else {
+            throw "NSSM not found in PATH or local directory"
+        }
+    }
+    
     # Environment for service
     $env:PYTHONIOENCODING = "utf-8"
     $env:LITELLM_MASTER_KEY = $masterKey
@@ -146,8 +172,8 @@ function Setup-Service {
     # Check if service exists
     if (Get-Service -Name $serviceName -ErrorAction SilentlyContinue) {
         Write-Status "Service already exists. Removing..." "WARNING"
-        & "$nssmPath\nssm.exe" stop $serviceName
-        & "$nssmPath\nssm.exe" remove $serviceName confirm
+        & $nssmExe stop $serviceName
+        & $nssmExe remove $serviceName confirm
         Start-Sleep -Seconds 2
     }
     
@@ -155,29 +181,29 @@ function Setup-Service {
     $serviceCmd = "$pythonExe -m litellm.main --config `"$configFullPath`" --port $Port"
     
     Write-Status "Creating service with NSSM..."
-    & "$nssmPath\nssm.exe" install $serviceName $serviceCmd
-    & "$nssmPath\nssm.exe" set $serviceName DisplayName "$serviceDisplayName"
-    & "$nssmPath\nssm.exe" set $serviceName Description "LiteLLM API Proxy - Routes requests to Lemonade Server"
+    & $nssmExe install $serviceName $serviceCmd
+    & $nssmExe set $serviceName DisplayName "$serviceDisplayName"
+    & $nssmExe set $serviceName Description "LiteLLM API Proxy - Routes requests to Lemonade Server"
     
     # Set startup type
-    & "$nssmPath\nssm.exe" set $serviceName Start SERVICE_AUTO_START
+    & $nssmExe set $serviceName Start SERVICE_AUTO_START
     
     # Environment variables
-    & "$nssmPath\nssm.exe" set $serviceName AppEnvironmentExtra "PYTHONIOENCODING=utf-8"
-    & "$nssmPath\nssm.exe" set $serviceName AppEnvironmentExtra "LITELLM_MASTER_KEY=$masterKey"
+    & $nssmExe set $serviceName AppEnvironmentExtra "PYTHONIOENCODING=utf-8"
+    & $nssmExe set $serviceName AppEnvironmentExtra "LITELLM_MASTER_KEY=$masterKey"
     
     # Auto-restart on failure
-    & "$nssmPath\nssm.exe" set $serviceName AppRestartDelay 5000
-    & "$nssmPath\nssm.exe" set $serviceName AppRotateFiles 1
-    & "$nssmPath\nssm.exe" set $serviceName AppRotateOnline 1
-    & "$nssmPath\nssm.exe" set $serviceName AppRotateSeconds 86400
-    & "$nssmPath\nssm.exe" set $serviceName AppRotateBytes 10485760
+    & $nssmExe set $serviceName AppRestartDelay 5000
+    & $nssmExe set $serviceName AppRotateFiles 1
+    & $nssmExe set $serviceName AppRotateOnline 1
+    & $nssmExe set $serviceName AppRotateSeconds 86400
+    & $nssmExe set $serviceName AppRotateBytes 10485760
     
     # Logging
     $logPath = Join-Path $PSScriptRoot "logs"
     New-Item -ItemType Directory -Path $logPath -Force | Out-Null
-    & "$nssmPath\nssm.exe" set $serviceName AppStdout "$logPath\litellm-service.log"
-    & "$nssmPath\nssm.exe" set $serviceName AppStderr "$logPath\litellm-error.log"
+    & $nssmExe set $serviceName AppStdout "$logPath\litellm-service.log"
+    & $nssmExe set $serviceName AppStderr "$logPath\litellm-error.log"
     
     Write-Status "Service created successfully" "SUCCESS"
     Write-Status "Master Key (SAVE THIS SECURELY): $masterKey" "SUCCESS"
