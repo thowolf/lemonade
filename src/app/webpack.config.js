@@ -46,6 +46,7 @@ module.exports = (env, argv) => ({
   output: {
     filename: 'renderer.bundle.js',
     path: path.resolve(__dirname, 'dist/renderer'),
+    publicPath: '/',
   },
   plugins: [
     new HtmlWebpackPlugin({

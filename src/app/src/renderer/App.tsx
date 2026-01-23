@@ -37,8 +37,10 @@ const App: React.FC = () => {
   useEffect(() => {
     const loadLayoutSettings = async () => {
       try {
+        console.log('[Lemonade App] Loading layout settings...');
         if (window?.api?.getSettings) {
           const settings = await window.api.getSettings();
+          console.log('[Lemonade App] Settings retrieved:', settings);
           if (settings.layout) {
             setIsChatVisible(settings.layout.isChatVisible);
             setIsModelManagerVisible(settings.layout.isModelManagerVisible);
