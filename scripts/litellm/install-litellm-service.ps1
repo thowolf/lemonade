@@ -197,15 +197,20 @@ function Start-LiteLLMService {
         $svc = Get-Service -Name $serviceName -ErrorAction Stop
         if ($svc.Status -ne "Running") {
             $svc.Start()
+            Start-Sleep -Seconds 3
         }
-        Start-Sleep -Seconds 2
         
         $service = Get-Service -Name $serviceName
         if ($service.Status -eq "Running") {
             Write-Status "Service started successfully" "SUCCESS"
             return $true
         } else {
-            Write-Status "Service failed to start" "ERROR"
+            Write-Status "Service failed to start. Checking logs..." "ERROR"
+            $logPath = Join-Path $PSScriptRoot "logs"
+            if (Test-Path "$logPath\litellm-error.log") {
+                Write-Status "Error log contents:" "WARNING"
+                Get-Content "$logPath\litellm-error.log" -Tail 20 | ForEach-Object { Write-Host "  $_" }
+            }
             return $false
         }
     }
@@ -217,8 +222,18 @@ function Start-LiteLLMService {
 
 function Check-ServiceHealth {
     Write-Status "Checking LiteLLM health..."
+    Write-Status "Service must be running. Verifying service status..." "INFO"
     
-    $maxRetries = 10
+    $service = Get-Service -Name $serviceName -ErrorAction SilentlyContinue
+    if ($null -eq $service -or $service.Status -ne "Running") {
+        Write-Status "Service is not running. Start the service first:" "ERROR"
+        Write-Status "  net start LiteLLM-Proxy" "INFO"
+        Write-Status "Or check logs in: .\scripts\litellm\logs\" "INFO"
+        return $false
+    }
+    
+    Write-Status "Service is running. Testing API endpoint..." "INFO"
+    $maxRetries = 5
     $retryCount = 0
     
     while ($retryCount -lt $maxRetries) {
@@ -233,12 +248,15 @@ function Check-ServiceHealth {
             $retryCount++
             if ($retryCount -lt $maxRetries) {
                 Write-Status "Health check attempt $retryCount/$maxRetries failed, retrying..." "WARNING"
-                Start-Sleep -Seconds 1
+                Start-Sleep -Seconds 2
             }
         }
     }
     
-    Write-Status "Health check failed after $maxRetries attempts" "ERROR"
+    Write-Status "Health check failed after $maxRetries attempts" "WARNING"
+    Write-Status "Service may still be initializing. Check logs:" "INFO"
+    $logPath = Join-Path $PSScriptRoot "logs"
+    Write-Status "  Type: Get-Content .\scripts\litellm\logs\litellm-service.log -Tail 50" "INFO"
     return $false
 }
 
@@ -293,8 +311,14 @@ try {
             Check-ServiceHealth
             Write-Status "`nLiteLLM Production Service installed and running" "SUCCESS"
             Write-Status "API available at: http://localhost:$Port" "INFO"
-            Write-Status "Master Key: $key (save this!)" "SUCCESS"
-        }
+            Write-Status "Master Key: $key (save this!)" "SUCCESS"            Write-Status "" "INFO"
+            Write-Status "TROUBLESHOOTING:" "INFO"
+            Write-Status "  Service not starting? Check logs:" "INFO"
+            Write-Status "    Get-Content .\scripts\litellm\logs\litellm-error.log -Tail 50" "INFO"
+            Write-Status "  Is Lemonade Server running?" "INFO"
+            Write-Status "    curl http://localhost:8000/api/v1/models" "INFO"
+            Write-Status "  Test API manually:" "INFO"
+            Write-Status "    curl http://localhost:4014/v1/health" "INFO"        }
         "uninstall" {
             Write-Status "Uninstalling service..." "WARNING"
             & "$nssmPath\nssm.exe" stop $serviceName
