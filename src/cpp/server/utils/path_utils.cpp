@@ -134,6 +134,41 @@ std::string find_flm_executable() {
 #endif
 }
 
+std::string get_cache_dir() {
+    const char* cache_dir_env = std::getenv("LEMONADE_CACHE_DIR");
+    if (cache_dir_env) {
+        return std::string(cache_dir_env);
+    }
+    
+    #ifdef _WIN32
+    const char* userprofile = std::getenv("USERPROFILE");
+    if (userprofile) {
+        return std::string(userprofile) + "\\.cache\\lemonade";
+    }
+    #else
+    const char* home = std::getenv("HOME");
+    if (home) {
+        return std::string(home) + "/.cache/lemonade";
+    }
+    #endif
+    
+    return ".cache/lemonade";
+}
+
+std::string get_downloaded_bin_dir() {
+    // Use cache directory on all platforms for consistent multi-user support
+    // This is important for All Users installs on Windows where Program Files is read-only
+    std::string bin_dir = get_cache_dir() + "/bin";
+    
+    // Ensure directory exists
+    if (!fs::exists(bin_dir)) {
+        fs::create_directories(bin_dir);
+    }
+    
+    return bin_dir;
+}
+
+
 } // namespace utils
 } // namespace lemon
 

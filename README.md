@@ -7,9 +7,9 @@
     <img src="https://github.com/lemonade-sdk/lemonade/actions/workflows/test_lemonade.yml/badge.svg" alt="Lemonade tests" /></a>
   <a href="docs/README.md#installation" title="Check out our instructions">
     <img src="https://img.shields.io/badge/Windows-11-0078D6?logo=windows&logoColor=white" alt="Windows 11" /></a>
-  <a href="https://lemonade-server.ai/#linux" title="Ubuntu 24.04 & 25.04 Supported">
+  <a href="https://lemonade-server.ai/install_options.html#ubuntu" title="Ubuntu 24.04 & 25.04 Supported">
     <img src="https://img.shields.io/badge/Ubuntu-24.04%20%7C%2025.04-E95420?logo=ubuntu&logoColor=white" alt="Ubuntu 24.04 | 25.04" /></a>
-  <a href="https://lemonade-server.ai/#linux" title="Arch Linux Supported">
+  <a href="https://lemonade-server.ai/install_options.html#arch" title="Arch Linux Supported">
     <img src="https://img.shields.io/aur/version/lemonade-server" alt="Arch Linux"></a>
   <a href="docs/README.md#installation" title="Check out our instructions">
     <img src="https://img.shields.io/badge/Python-3.10--3.13-blue?logo=python&logoColor=white" alt="Made with Python" /></a>
@@ -32,7 +32,7 @@
   <img src="https://github.com/lemonade-sdk/assets/blob/main/docs/banner_02.png?raw=true" alt="Lemonade Banner" />
 </p>
 <h3 align="center">
-  <a href="https://lemonade-server.ai">Download</a> | 
+  <a href="https://lemonade-server.ai/install_options.html">Download</a> | 
   <a href="https://lemonade-server.ai/docs/">Documentation</a> | 
   <a href="https://discord.gg/5xXzkMu8Zk">Discord</a>
 </h3>
@@ -43,7 +43,7 @@ Apps like [n8n](https://n8n.io/integrations/lemonade-model/), [VS Code Copilot](
 
 ## Getting Started
 
-1. **Install**: [Windows](https://github.com/lemonade-sdk/lemonade/releases/latest/download/lemonade.msi) · [Linux](https://lemonade-server.ai/install_options.html) · [Source](https://lemonade-server.ai/install_options.html)
+1. **Install**: [Windows](https://lemonade-server.ai/install_options.html#windows) · [Linux](https://lemonade-server.ai/install_options.html#linux) · [Docker](https://lemonade-server.ai/install_options.html#docker) · [Source](https://lemonade-server.ai/install_options.html)
 2. **Get Models**: Browse and download with the [Model Manager](#model-library)
 3. **Chat**: Try models with the built-in chat interface
 4. **Connect**: Use Lemonade with your favorite apps:
@@ -74,9 +74,7 @@ To check all models available, use the `list` command:
 lemonade-server list
 ```
 
-> 💡 Tip: The `scripts/benchmarks/continue-testing/test_runner.py` supports `--wandb` to optionally log runs to Weights & Biases. The runner is designed to be robust: it will only call W&B methods that exist on the provided logger (e.g., `start_run`, `log_metrics`, `log_test_run`, `finish_run`), which makes it friendly to lightweight test fakes and partial W&B integrations.
-
-> **Tip**: You can use `--llamacpp vulkan` to select the backend when running GGUF models.
+> **Tip**: You can use `--llamacpp vulkan/rocm` to select a backend when running GGUF models.
 
 
 ## Model Library
@@ -93,16 +91,16 @@ Use `lemonade-server pull` or the built-in **Model Manager** to download models.
 
 ## Supported Configurations
 
-Lemonade supports the following configurations, while also making it easy to switch between them at runtime. Find more information about it [here](./docs/README.md#software-and-hardware-overview).
+Lemonade supports the following configurations, while also making it easy to switch between them at runtime.
 
 | Hardware | Engine: OGA | Engine: llamacpp | Engine: FLM | Windows | Linux |
 |----------|-------------|------------------|------------|---------|-------|
 | **🧠 CPU** | All platforms | All platforms | - | ✅ | ✅ |
-| **🎮 GPU** | — | Vulkan: All platforms<br>AMD GPU: Selected AMD platforms*<br>Metal: Apple Silicon | — | ✅ | ✅ |
+| **🎮 GPU** | — | Vulkan: All platforms<br>ROCm: Selected AMD platforms*<br>Metal: Apple Silicon | — | ✅ | ✅ |
 | **🤖 NPU** | AMD Ryzen™ AI 300 series | — | Ryzen™ AI 300 series | ✅ | — |
 
 <details>
-<summary><small><i>* See supported AMD GPU platforms</i></small></summary>
+<summary><small><i>* See supported AMD ROCm platforms</i></small></summary>
 
 <br>
 
@@ -139,13 +137,10 @@ Lemonade supports the following configurations, while also making it easy to swi
 | Under Development                                 | Under Consideration                            | Recently Completed                       |
 |---------------------------------------------------|------------------------------------------------|------------------------------------------|
 | Image Generation      | vLLM support                                   | General speech-to-text support (whisper.cpp)                 |
-<<<<<<< HEAD
-| Check back in 2026 :)    | Handheld devices: Ryzen AI Z2 Extreme APUs     | AMD GPU support for Ryzen AI 360-375 (Strix) APUs  |
-|     | Text to speech                               | Lemonade desktop app                     |
-=======
-| Text to speech    |      | ROCm support for Ryzen AI 360-375 (Strix) APUs  |
-|     |                                | Lemonade desktop app                     |
->>>>>>> upstream/main
+| macOS    | Text to speech     | ROCm support for Ryzen AI 360-375 (Strix) APUs  |
+| Apps marketplace     | MLX support                       | Lemonade desktop app                     |
+| lemonade-eval CLI     | ryzenai-server dedicated repo                               |                      |
+|      | Enhanced custom model support                               |                      |
 
 ## Integrate Lemonade Server with Your Application
 
@@ -190,86 +185,6 @@ The [Lemonade Python SDK](./docs/README.md) is also available, which includes th
 - 🐍 **[Lemonade Python API](./docs/lemonade_api.md)**: High-level Python API to directly integrate Lemonade LLMs into Python applications.
 - 🖥️ **[Lemonade CLI](./docs/dev_cli/README.md)**: The `lemonade` CLI lets you mix-and-match LLMs (ONNX, GGUF, SafeTensors) with prompting templates, accuracy testing, performance benchmarking, and memory profiling to characterize your models on your hardware.
 
-## Quick Start with Docker
-
-> You may need additional configuration depending on your environment.
-
-### Docker Run with Default Configuration
-
-```bash
-docker run -d \
-  --name lemonade-server \
-  -p 8000:8000 \
-  -v lemonade-cache:/root/.cache/huggingface \
-  -v lemonade-llama:/opt/lemonade/llama \
-  -e LEMONADE_LLAMACPP_BACKEND=cpu \
-  ghcr.io/lemonade-sdk/lemonade-server:latest
-```
-
-### Docker Run with a Specific Port and Version
-
-```bash
-docker run -d \
-  --name lemonade-server \
-  -p 4000:5000 \
-  -v lemonade-cache:/root/.cache/huggingface \
-  -v lemonade-llama:/opt/lemonade/llama \
-  -e LEMONADE_LLAMACPP_BACKEND=cpu \
-  ghcr.io/lemonade-sdk/lemonade-server:v9.1.3 \
-  ./lemonade-server serve --no-tray --host 0.0.0.0 --port 5000
-```
-
-> This will run the server on port 5000 inside the container, mapped to port 4000 on your host.
-
-### Other Docker Methods
-
-#### Docker Compose Setup
-Docker Compose makes it easier to manage multi-container applications.
-1. Make sure you have Docker Compose installed.
-2. Create a `docker-compose.yml` file like this:
-
-```yml
-services:
-  lemonade:
-    image: ghcr.io/lemonade-sdk/lemonade-server:latest
-    container_name: lemonade-server
-    ports:
-      - "8000:8000"
-    volumes:
-      # Persist downloaded models
-      - lemonade-cache:/root/.cache/huggingface
-      # # Persist llama binaries
-      - lemonade-llama:/opt/lemonade/llama
-    environment:
-      - LEMONADE_LLAMACPP_BACKEND=cpu
-    restart: unless-stopped
-
-volumes:
-  lemonade-cache:
-  lemonade-llama:
-```
-
-> You can add more services as needed.
-
-3. Run the following command in the directory containing your docker-compose.yml:
-
-```bash
-docker-compose up -d
-```
-
-This will pull the latest image (or the version you specified) from the Lemonade container registry and start the server with your mapped ports.
-
-Once the container is running, verify it’s working:
-
-```bash
-curl http://localhost:8000/api/v1/models
-```
-
-You should receive a response listing available models.
-
-#### Build Your Own Docker Image
-If you want to build a custom image, check out the `DOCKER_GUIDE` for detailed instructions.
-
 ## FAQ
 
 To read our frequently asked questions, see our [FAQ Guide](./docs/faq.md)
@@ -286,7 +201,7 @@ New contributors can find beginner-friendly issues tagged with "Good First Issue
 
 ## Maintainers
 
-This project is sponsored by AMD. It is maintained by @danielholanda @jeremyfowers @ramkrishna @vgodsoe in equal measure. You can reach us by filing an [issue](https://github.com/lemonade-sdk/lemonade/issues), emailing [lemonade@amd.com](mailto:lemonade@amd.com), or joining our [Discord](https://discord.gg/5xXzkMu8Zk).
+This is a community project maintained by @amd-pworfolk @bitgamma @danielholanda @jeremyfowers @Geramy @ramkrishna2910 @siavashhub @sofiageo @vgodsoe, and sponsored by AMD. You can reach us by filing an [issue](https://github.com/lemonade-sdk/lemonade/issues), emailing [lemonade@amd.com](mailto:lemonade@amd.com), or joining our [Discord](https://discord.gg/5xXzkMu8Zk).
 
 ## License and Attribution
 

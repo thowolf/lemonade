@@ -26,6 +26,18 @@ std::string get_resource_path(const std::string& relative_path);
  */
 std::string find_flm_executable();
 
+/**
+ * Get the cache directory
+ */
+std::string get_cache_dir();
+
+/**
+ * Get the directory where backend executables will be downloaded.
+ * This is in the user's cache directory (~/.cache/lemonade/bin on all platforms)
+ * to support All Users installations where the install directory may be read-only.
+ */
+std::string get_downloaded_bin_dir();
+
 } // namespace utils
 } // namespace lemon
 
