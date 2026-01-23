@@ -31,8 +31,14 @@ $ErrorActionPreference = "Stop"
 $serviceName = "LiteLLM-Proxy"
 $serviceDisplayName = "LiteLLM API Proxy (Lemonade)"
 $pythonPath = "python"
-$nssmUrl = "https://nssm.cc/download/nssm-2.24-101-g897c7ad.zip"
 $nssmPath = "$PSScriptRoot\nssm"
+
+# NSSM download URLs (multiple sources for redundancy)
+$nssmUrls = @(
+    "https://github.com/nssm-io/nssm/releases/download/2.24/nssm-2.24-101-g897c7ad.zip",
+    "https://nssm.cc/download/nssm-2.24-101-g897c7ad.zip",
+    "https://github.com/nssm-io/nssm/releases/download/2.24/nssm-2.24.zip"
+)
 
 function Write-Status {
     param([string]$Message, [string]$Status = "INFO")
@@ -60,13 +66,33 @@ function Install-Nssm {
         return
     }
     
-    Write-Status "Downloading NSSM..."
+    Write-Status "Downloading NSSM from multiple sources..."
     $tempZip = "$PSScriptRoot\nssm-temp.zip"
+    $downloaded = $false
+    
+    foreach ($url in $nssmUrls) {
+        try {
+            Write-Status "Trying: $url" "INFO"
+            [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+            Invoke-WebRequest -Uri $url -OutFile $tempZip -ErrorAction Stop
+            $downloaded = $true
+            Write-Status "Download successful from: $url" "SUCCESS"
+            break
+        }
+        catch {
+            Write-Status "Failed: $_" "WARNING"
+        }
+    }
+    
+    if (-not $downloaded) {
+        Write-Status "All NSSM download sources failed. Trying manual fallback..." "WARNING"
+        Write-Status "Please download NSSM manually from: https://nssm.cc/download" "WARNING"
+        Write-Status "Extract to: $nssmPath" "WARNING"
+        Write-Status "Then run: .\install-litellm-service.ps1 -Action install" "WARNING"
+        throw "NSSM download failed from all sources"
+    }
     
     try {
-        [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-        Invoke-WebRequest -Uri $nssmUrl -OutFile $tempZip -ErrorAction Stop
-        
         Expand-Archive -Path $tempZip -DestinationPath "$PSScriptRoot\nssm-extract" -Force
         
         Get-ChildItem "$PSScriptRoot\nssm-extract" -Recurse -Filter "nssm.exe" | 
@@ -76,7 +102,7 @@ function Install-Nssm {
         Write-Status "NSSM installed" "SUCCESS"
     }
     catch {
-        Write-Status "Failed to install NSSM: $_" "ERROR"
+        Write-Status "Failed to extract NSSM: $_" "ERROR"
         throw
     }
 }
