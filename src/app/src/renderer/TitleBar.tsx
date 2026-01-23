@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
-import logo from '../assets/logo.svg';
-import appIcon from '../assets/icon_64.png';
+import logo from '../../assets/logo.svg';
+const appIcon = require('../../assets/icon_64.png');
 import SettingsModal from './SettingsModal';
 import AboutModal from './AboutModal';
 

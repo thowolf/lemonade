@@ -4,6 +4,8 @@ const fs = require('fs');
 const os = require('os');
 const { exec } = require('child_process');
 
+console.log('[Lemonade] main.js loaded successfully');
+
 const DEFAULT_MIN_WIDTH = 400;
 const DEFAULT_MIN_HEIGHT = 600;
 const ABSOLUTE_MIN_WIDTH = 400;
@@ -477,7 +479,20 @@ function createWindow() {
     ? path.join(__dirname, 'dist', 'renderer', 'index.html')
     : path.join(__dirname, 'dist', 'renderer', 'index.html');
   
-  mainWindow.loadFile(htmlPath);
+  console.log('[Lemonade] Loading HTML from:', htmlPath);
+  console.log('[Lemonade] File exists:', require('fs').existsSync(htmlPath));
+  
+  mainWindow.loadFile(htmlPath).catch(err => {
+    console.error('[Lemonade] Failed to load file:', err);
+  });
+  
+  mainWindow.webContents.on('crashed', () => {
+    console.error('[Lemonade] Renderer process crashed');
+  });
+  
+  mainWindow.webContents.on('render-process-gone', (event, details) => {
+    console.error('[Lemonade] Render process gone:', details);
+  });
 
   // Open all external links in the default browser
   mainWindow.webContents.setWindowOpenHandler(({ url }) => {
@@ -488,7 +503,11 @@ function createWindow() {
 
   // Open DevTools in development mode
   if (!app.isPackaged) {
-    mainWindow.webContents.openDevTools();
+    setTimeout(() => {
+      if (mainWindow && !mainWindow.isDestroyed()) {
+        mainWindow.webContents.openDevTools();
+      }
+    }, 3000);
   }
 
   // Listen for maximize/unmaximize events
