@@ -61,60 +61,51 @@ function Test-Administrator {
 function Install-Nssm {
     Write-Status "Checking NSSM (service wrapper)..."
     
-    # First, check if NSSM is already in PATH (from winget or manual installation)
-    try {
-        $nssmCheck = & nssm.exe --version 2>&1
-        Write-Status "NSSM already in PATH: $nssmCheck" "SUCCESS"
-        return
-    }
-    catch {
-        Write-Status "NSSM not in PATH, attempting download..." "WARNING"
-    }
+    # Try multiple ways to find NSSM
+    $nssmExePaths = @(
+        # PATH
+        (Get-Command nssm.exe -ErrorAction SilentlyContinue).Source,
+        # Common winget locations
+        "$env:ProgramFiles\NSSM\nssm.exe",
+        "$env:ProgramFiles(x86)\NSSM\nssm.exe",
+        "$env:LocalAppData\Programs\nssm\nssm.exe",
+        # Local installation
+        "$nssmPath\nssm.exe"
+    )
     
-    if (Test-Path "$nssmPath\nssm.exe") {
-        Write-Status "NSSM already installed locally" "SUCCESS"
-        return
-    }
-    
-    Write-Status "Downloading NSSM from multiple sources..."
-    $tempZip = "$PSScriptRoot\nssm-temp.zip"
-    $downloaded = $false
-    
-    foreach ($url in $nssmUrls) {
-        try {
-            Write-Status "Trying: $url" "INFO"
-            [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-            Invoke-WebRequest -Uri $url -OutFile $tempZip -ErrorAction Stop
-            $downloaded = $true
-            Write-Status "Download successful from: $url" "SUCCESS"
-            break
-        }
-        catch {
-            Write-Status "Failed: $_" "WARNING"
+    foreach ($path in $nssmExePaths) {
+        if ($path -and (Test-Path $path)) {
+            try {
+                $version = & $path --version 2>&1
+                Write-Status "Found NSSM at: $path (Version: $version)" "SUCCESS"
+                # Store the path globally for Setup-Service
+                $script:nssmExecutable = $path
+                return
+            }
+            catch {
+                Write-Status "NSSM at $path not executable" "WARNING"
+            }
         }
     }
     
-    if (-not $downloaded) {
-        Write-Status "All NSSM download sources failed. Trying manual fallback..." "WARNING"
-        Write-Status "Please download NSSM manually from: https://nssm.cc/download" "WARNING"
-        Write-Status "Extract to: $nssmPath" "WARNING"
-        Write-Status "Then run: .\install-litellm-service.ps1 -Action install" "WARNING"
-        throw "NSSM download failed from all sources"
-    }
-    
+    Write-Status "NSSM not found. Attempting to install via winget..." "WARNING"
     try {
-        Expand-Archive -Path $tempZip -DestinationPath "$PSScriptRoot\nssm-extract" -Force
+        Write-Status "Installing NSSM via winget..." "INFO"
+        & winget install --exact --quiet nssm 2>&1 | ForEach-Object { Write-Status "$_" "INFO" }
         
-        Get-ChildItem "$PSScriptRoot\nssm-extract" -Recurse -Filter "nssm.exe" | 
-            ForEach-Object { Copy-Item -Path $_.Directory -Destination $nssmPath -Recurse -Force }
-        
-        Remove-Item $tempZip, "$PSScriptRoot\nssm-extract" -Recurse -Force
-        Write-Status "NSSM installed" "SUCCESS"
+        # Try to find it again after installation
+        $nssmExe = Get-Command nssm.exe -ErrorAction SilentlyContinue
+        if ($nssmExe) {
+            Write-Status "NSSM installed successfully via winget" "SUCCESS"
+            $script:nssmExecutable = $nssmExe.Source
+            return
+        }
     }
     catch {
-        Write-Status "Failed to extract NSSM: $_" "ERROR"
-        throw
+        Write-Status "winget installation failed: $_" "WARNING"
     }
+    
+    throw "NSSM not found and automatic installation failed. Please install manually: winget install nssm"
 }
 
 function Install-LiteLLM {
@@ -145,25 +136,14 @@ function Generate-MasterKey {
 function Setup-Service {
     Write-Status "Setting up LiteLLM Windows Service..."
     
+    # Use the NSSM executable found/installed by Install-Nssm
+    if (-not $script:nssmExecutable) {
+        throw "NSSM executable not set. Install-Nssm must run first."
+    }
+    
     $configFullPath = Resolve-Path $ConfigPath
     $masterKey = Generate-MasterKey
     $pythonExe = (& $pythonPath -c "import sys; print(sys.executable)").Trim()
-    
-    # Find nssm.exe (either in PATH or local)
-    $nssmExe = $null
-    try {
-        $nssmExe = (Get-Command nssm.exe -ErrorAction Stop).Source
-        Write-Status "Using NSSM from PATH: $nssmExe" "INFO"
-    }
-    catch {
-        if (Test-Path "$nssmPath\nssm.exe") {
-            $nssmExe = "$nssmPath\nssm.exe"
-            Write-Status "Using local NSSM: $nssmExe" "INFO"
-        }
-        else {
-            throw "NSSM not found in PATH or local directory"
-        }
-    }
     
     # Environment for service
     $env:PYTHONIOENCODING = "utf-8"
@@ -172,8 +152,8 @@ function Setup-Service {
     # Check if service exists
     if (Get-Service -Name $serviceName -ErrorAction SilentlyContinue) {
         Write-Status "Service already exists. Removing..." "WARNING"
-        & $nssmExe stop $serviceName
-        & $nssmExe remove $serviceName confirm
+        & $script:nssmExecutable stop $serviceName
+        & $script:nssmExecutable remove $serviceName confirm
         Start-Sleep -Seconds 2
     }
     
@@ -181,29 +161,29 @@ function Setup-Service {
     $serviceCmd = "$pythonExe -m litellm.main --config `"$configFullPath`" --port $Port"
     
     Write-Status "Creating service with NSSM..."
-    & $nssmExe install $serviceName $serviceCmd
-    & $nssmExe set $serviceName DisplayName "$serviceDisplayName"
-    & $nssmExe set $serviceName Description "LiteLLM API Proxy - Routes requests to Lemonade Server"
+    & $script:nssmExecutable install $serviceName $serviceCmd
+    & $script:nssmExecutable set $serviceName DisplayName "$serviceDisplayName"
+    & $script:nssmExecutable set $serviceName Description "LiteLLM API Proxy - Routes requests to Lemonade Server"
     
     # Set startup type
-    & $nssmExe set $serviceName Start SERVICE_AUTO_START
+    & $script:nssmExecutable set $serviceName Start SERVICE_AUTO_START
     
     # Environment variables
-    & $nssmExe set $serviceName AppEnvironmentExtra "PYTHONIOENCODING=utf-8"
-    & $nssmExe set $serviceName AppEnvironmentExtra "LITELLM_MASTER_KEY=$masterKey"
+    & $script:nssmExecutable set $serviceName AppEnvironmentExtra "PYTHONIOENCODING=utf-8"
+    & $script:nssmExecutable set $serviceName AppEnvironmentExtra "LITELLM_MASTER_KEY=$masterKey"
     
     # Auto-restart on failure
-    & $nssmExe set $serviceName AppRestartDelay 5000
-    & $nssmExe set $serviceName AppRotateFiles 1
-    & $nssmExe set $serviceName AppRotateOnline 1
-    & $nssmExe set $serviceName AppRotateSeconds 86400
-    & $nssmExe set $serviceName AppRotateBytes 10485760
+    & $script:nssmExecutable set $serviceName AppRestartDelay 5000
+    & $script:nssmExecutable set $serviceName AppRotateFiles 1
+    & $script:nssmExecutable set $serviceName AppRotateOnline 1
+    & $script:nssmExecutable set $serviceName AppRotateSeconds 86400
+    & $script:nssmExecutable set $serviceName AppRotateBytes 10485760
     
     # Logging
     $logPath = Join-Path $PSScriptRoot "logs"
     New-Item -ItemType Directory -Path $logPath -Force | Out-Null
-    & $nssmExe set $serviceName AppStdout "$logPath\litellm-service.log"
-    & $nssmExe set $serviceName AppStderr "$logPath\litellm-error.log"
+    & $script:nssmExecutable set $serviceName AppStdout "$logPath\litellm-service.log"
+    & $script:nssmExecutable set $serviceName AppStderr "$logPath\litellm-error.log"
     
     Write-Status "Service created successfully" "SUCCESS"
     Write-Status "Master Key (SAVE THIS SECURELY): $masterKey" "SUCCESS"
