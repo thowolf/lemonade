@@ -161,7 +161,12 @@ function Setup-Service {
     $serviceCmd = "$pythonExe -m litellm.main --config `"$configFullPath`" --port $Port"
     
     Write-Status "Creating service with NSSM..."
-    & $script:nssmExecutable install $serviceName $serviceCmd
+    & $script:nssmExecutable install $serviceName "$pythonExe" "-m litellm.main --config `"$configFullPath`" --port $Port"
+    
+    # Fix: Set Application and AppParameters separately for proper parsing
+    & $script:nssmExecutable set $serviceName Application "$pythonExe"
+    & $script:nssmExecutable set $serviceName AppParameters "-m litellm.main --config `"$configFullPath`" --port $Port"
+    
     & $script:nssmExecutable set $serviceName DisplayName "$serviceDisplayName"
     & $script:nssmExecutable set $serviceName Description "LiteLLM API Proxy - Routes requests to Lemonade Server"
     
