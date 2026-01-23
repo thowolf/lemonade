@@ -158,15 +158,14 @@ function Setup-Service {
     }
     
     # Create service command
-    # Use litellm CLI directly (not as python module)
-    $serviceCmd = "litellm --config `"$configFullPath`" --port $Port"
+    # Use wrapper batch to fix UTF-8 encoding issues on Windows
+    $wrapperBat = Join-Path $PSScriptRoot "litellm-start.bat"
     
     Write-Status "Creating service with NSSM..."
-    & $script:nssmExecutable install $serviceName "litellm" "--config `"$configFullPath`" --port $Port"
+    & $script:nssmExecutable install $serviceName "$wrapperBat"
     
     # Fix: Set Application and AppParameters separately for proper parsing
-    & $script:nssmExecutable set $serviceName Application "litellm"
-    & $script:nssmExecutable set $serviceName AppParameters "--config `"$configFullPath`" --port $Port"
+    & $script:nssmExecutable set $serviceName Application "$wrapperBat"
     
     & $script:nssmExecutable set $serviceName DisplayName "$serviceDisplayName"
     & $script:nssmExecutable set $serviceName Description "LiteLLM API Proxy - Routes requests to Lemonade Server"
