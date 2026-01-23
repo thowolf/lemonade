@@ -45,8 +45,8 @@ function Write-ColorOutput {
 # Format context window size (16384 -> 16k)
 function Format-ContextSize {
     param([int]$Size)
-    if ($Size -ge 1000000) { return "$($Size / 1000000)M" }
-    if ($Size -ge 1000) { return "$($Size / 1000)k" }
+    if ($Size -ge 1000000) { return "$([math]::Round($Size / 1000000))M" }
+    if ($Size -ge 1000) { return "$([math]::Round($Size / 1000))k" }
     return $Size
 }
 
@@ -420,10 +420,10 @@ try {
         Write-ColorOutput "  Waiting for server to be ready..." "Cyan"
         
         if (Wait-ServerReady -MaxWait 30) {
-            Write-ColorOutput "" "Reset"
+            Write-ColorOutput "" "White"
             Write-ColorOutput "[OK] Server is responding" "Green"
         } else {
-            Write-ColorOutput "" "Reset"
+            Write-ColorOutput "" "White"
             Write-ColorOutput "[WARN] Server started but not responding to /models endpoint (may still be loading)" "Yellow"
         }
     }
