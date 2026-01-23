@@ -185,6 +185,8 @@ All operations MUST produce clear, structured logs. Performance profiling tools 
 "C:\Users\tomwo\AppData\Local\lemonade_server\bin\lemonade-server.exe" serve
 ```
 
+**DMZ operator note (project-specific)**: Für Deploys in der DMZ darf **nicht** der Benutzer `admin` verwendet werden — verwende zwingend den vorgesehenen Deploy‑Account `two@192.168.178.41`. Dokumentiere und prüfe alle Deploy‑Aktionen über den Bastion/VPN‑Zugang; entferne temporäre hosts‑overrides nach Validierung.
+
 **Test Hardware**: AMD AI Max+ 395 with **96GB VRAM** (gfx1151) — system RAM: 128 GB
 
 **Verified Software Stack**:

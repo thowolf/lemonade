@@ -131,7 +131,7 @@ const TitleBar: React.FC<TitleBarProps> = ({
     <>
       <div className="title-bar">
         <div className="title-bar-left" ref={menuRef}>
-          <img src={logo} alt="Lemonade" className="title-bar-logo" />
+          <div className="title-bar-logo" style={{fontSize: '20px', fontWeight: 'bold'}}>🍋 Lemonade</div>
           <div className="menu-items">
             <div className="menu-item-wrapper">
               <span 

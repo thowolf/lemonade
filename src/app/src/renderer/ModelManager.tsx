@@ -186,7 +186,7 @@ const ModelManager: React.FC<ModelManagerProps> = ({ isVisible, width = 280 }) =
     
     filteredModels.forEach(model => {
       if (model.info.labels && model.info.labels.length > 0) {
-        model.info.labels.forEach(label => {
+        model.info.labels.forEach((label: string) => {
           if (!grouped[label]) {
             grouped[label] = [];
           }
