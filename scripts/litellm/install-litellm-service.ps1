@@ -256,7 +256,7 @@ try {
             $key = Setup-Service
             Start-Service
             Check-ServiceHealth
-            Write-Status "`n✓ LiteLLM Production Service installed and running" "SUCCESS"
+            Write-Status "`nLiteLLM Production Service installed and running" "SUCCESS"
             Write-Status "API available at: http://localhost:$Port" "INFO"
             Write-Status "Master Key: $key (save this!)" "SUCCESS"
         }
@@ -286,6 +286,7 @@ try {
     }
 }
 catch {
-    Write-Status "Error: $($_)" "ERROR"
+    $errorMsg = $_.ToString()
+    Write-Status "Error: $errorMsg" "ERROR"
     exit 1
 }
