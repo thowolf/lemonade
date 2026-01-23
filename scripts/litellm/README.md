@@ -32,10 +32,49 @@ Production-ready AI proxy infrastructure combining:
 - **Model aliasing**: Simple names (llm-text-gen, llm-code-gen, tts-openedai)
 - **GPU acceleration**: RoCm support for AMD GPUs (Radeon, RDNA, MI series)
 - **Docker containers**: Simplified deployment and isolation
-- **Health checking**: Automatic service monitoring
+- **Windows Service**: Production-ready with auto-restart and health checking
 - **Comprehensive logging**: Track all requests and performance
 
-## Quick Start
+## Installation & Deployment
+
+### 🔧 Production Installation (Windows Service)
+
+**⚠️ Requires Administrator PowerShell**
+
+```powershell
+# Run PowerShell as Administrator
+cd C:\path\to\lemonade
+
+# Install LiteLLM as Windows Service
+.\scripts\litellm\install-litellm-service.ps1 -Action install
+
+# Check service status
+.\scripts\litellm\install-litellm-service.ps1 -Action status
+```
+
+**Service Management:**
+```powershell
+# Start the service
+.\scripts\litellm\install-litellm-service.ps1 -Action start
+
+# Stop the service
+.\scripts\litellm\install-litellm-service.ps1 -Action stop
+
+# Restart with health check
+.\scripts\litellm\install-litellm-service.ps1 -Action restart
+
+# Check logs
+Get-Content .\scripts\litellm\logs\litellm-service.log -Tail 20
+```
+
+**After Installation:**
+- ✅ Service name: `LiteLLM-Proxy`
+- ✅ Auto-starts on Windows boot
+- ✅ Accessible at `http://localhost:4014`
+- ✅ Master Key in service environment
+- ✅ Logs in `.\scripts\litellm\logs\`
+
+### 🐳 Development (Docker)
 
 ### Prerequisites
 
