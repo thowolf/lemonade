@@ -226,9 +226,9 @@ function Show-Status {
     # Port status
     $portCheck = netstat -ano | Select-String ":$Port\s"
     if ($portCheck) {
-        Write-Status "Port $Port: LISTENING" "SUCCESS"
+        Write-Status "Port ${Port}: LISTENING" "SUCCESS"
     } else {
-        Write-Status "Port $Port: NOT LISTENING" "WARNING"
+        Write-Status "Port ${Port}: NOT LISTENING" "WARNING"
     }
     
     # Log files
@@ -286,6 +286,6 @@ try {
     }
 }
 catch {
-    Write-Status "Error: $_" "ERROR"
+    Write-Status "Error: $($_)" "ERROR"
     exit 1
 }
