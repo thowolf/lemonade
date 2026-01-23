@@ -246,7 +246,8 @@ function Check-ServiceHealth {
     
     while ($retryCount -lt $maxRetries) {
         try {
-            $response = Invoke-WebRequest -Uri "http://localhost:$Port/v1/health" -ErrorAction Stop
+            # Test root endpoint which returns Swagger UI (200 OK)
+            $response = Invoke-WebRequest -Uri "http://localhost:$Port/" -ErrorAction Stop
             if ($response.StatusCode -eq 200) {
                 Write-Status "Health check passed (HTTP 200)" "SUCCESS"
                 return $true
@@ -319,14 +320,18 @@ try {
             Check-ServiceHealth
             Write-Status "`nLiteLLM Production Service installed and running" "SUCCESS"
             Write-Status "API available at: http://localhost:$Port" "INFO"
-            Write-Status "Master Key: $key (save this!)" "SUCCESS"            Write-Status "" "INFO"
+            Write-Status "Master Key: $key (save this!)" "SUCCESS"
+            Write-Status "" "INFO"
+            Write-Status "QUICK TEST:" "INFO"
+            Write-Status "  curl -H 'Authorization: Bearer $key' http://localhost:$Port/health" "INFO"
+            Write-Status "" "INFO"
             Write-Status "TROUBLESHOOTING:" "INFO"
             Write-Status "  Service not starting? Check logs:" "INFO"
             Write-Status "    Get-Content .\scripts\litellm\logs\litellm-error.log -Tail 50" "INFO"
             Write-Status "  Is Lemonade Server running?" "INFO"
             Write-Status "    curl http://localhost:8000/api/v1/models" "INFO"
-            Write-Status "  Test API manually:" "INFO"
-            Write-Status "    curl http://localhost:4014/v1/health" "INFO"        }
+            Write-Status "  Test models endpoint:" "INFO"
+            Write-Status "    curl -H 'Authorization: Bearer $key' http://localhost:$Port/v1/models" "INFO"        }
         "uninstall" {
             Write-Status "Uninstalling service..." "WARNING"
             & "$nssmPath\nssm.exe" stop $serviceName
