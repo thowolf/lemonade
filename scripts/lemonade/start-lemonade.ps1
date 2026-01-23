@@ -516,17 +516,56 @@ try {
         } else {
             $appDir = Join-Path $RepoRoot "src\app"
             
-            try {
-                $npmProc = Start-Process -FilePath powershell `
-                    -ArgumentList "-NoExit", "-Command", "cd '$appDir'; npm start" `
-                    -PassThru
-                
-                Write-ColorOutput "[OK] Lemonade Desktop app window opened" "Green"
-                Write-ColorOutput "  Process ID: $($npmProc.Id)" "Gray"
-                Start-Sleep -Seconds 1
-            } catch {
-                Write-ColorOutput "[ERROR] Failed to start app: $($_.Exception.Message)" "Red"
-                Write-ColorOutput "  Try running manually: cd src\app && npm start" "Gray"
+            # Check if app directory exists
+            if (-not (Test-Path $appDir)) {
+                Write-ColorOutput "[ERROR] App directory not found: $appDir" "Red"
+            } else {
+                try {
+                    # Start npm build and electron
+                    # Build renderer (ignore typescript errors, bundle still gets created)
+                    Write-ColorOutput "  Building renderer (webpack)..." "Gray"
+                    $buildCmd = "cd /d `"$appDir`" && npm run build:renderer >nul 2>&1"
+                    cmd /c $buildCmd
+                    
+                    # Start Electron directly with npx
+                    Write-ColorOutput "  Starting Electron app..." "Gray"
+                    $electronCmd = "cd /d `"$appDir`" && npx electron ."
+                    $proc = Start-Process -FilePath "cmd" `
+                        -ArgumentList "/c", $electronCmd `
+                        -PassThru
+                    
+                    # Wait for Electron process to start (max 20 seconds)
+                    $maxWait = 20
+                    $elapsed = 0
+                    $electronStarted = $false
+                    
+                    Write-ColorOutput "  Building and launching..." "Gray"
+                    
+                    while ($elapsed -lt $maxWait) {
+                        $electronProc = Get-Process -Name electron -ErrorAction SilentlyContinue
+                        if ($electronProc) {
+                            Write-ColorOutput "[OK] Lemonade Desktop app started" "Green"
+                            Write-ColorOutput "  Electron Process ID: $($electronProc.Id)" "Gray"
+                            $electronStarted = $true
+                            break
+                        }
+                        Start-Sleep -Milliseconds 500
+                        $elapsed += 0.5
+                        Write-Host "." -NoNewline -ForegroundColor Cyan
+                    }
+                    
+                    if (-not $electronStarted) {
+                        Write-ColorOutput ""
+                        Write-ColorOutput "[WARN] Electron window may be starting in background" "Yellow"
+                        Write-ColorOutput "  If the app doesn't appear, try:" "Gray"
+                        Write-ColorOutput "    cd src\\app && npm start" "Gray"
+                    } else {
+                        Write-ColorOutput ""
+                    }
+                } catch {
+                    Write-ColorOutput "[ERROR] Failed to start app: $($_.Exception.Message)" "Red"
+                    Write-ColorOutput "  Try running manually: cd src\app && npm start" "Gray"
+                }
             }
         }
     }
