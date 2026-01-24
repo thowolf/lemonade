@@ -73,6 +73,14 @@ Phase 5 (Extended Features)
   - **Action**: Create directory structure including `configs/`, `docs/`, `checklists/`
   - **Acceptance**: `ls -la specs/006-nextcloud-litellm-infra/` shows all subdirectories with correct permissions
 
+- [x] T001a Add `spec.md` for feature specification
+  - **File**: `specs/006-nextcloud-litellm-infra/spec.md`
+  - **Acceptance**: File present; contains goals, acceptance criteria, security notes
+
+- [x] T001b Add `plan.md` with milestones and runbook
+  - **File**: `specs/006-nextcloud-litellm-infra/plan.md`
+  - **Acceptance**: File present; contains deployment runbook, verification & rollback steps
+
 ---
 
 ### T002 - Prepare and validate all configuration templates
