@@ -231,6 +231,26 @@ Phase 5 (Extended Features)
 
 ---
 
+### T010a - SPIKE: Bifrost proof‑of‑concept (quick validation)
+
+- [ ] T010a [SPIKE][P] Run a Bifrost gateway locally and verify Nextcloud + Lemonade can be routed through it
+  - **Goal**: Determine integration work and blockers for migrating from LiteLLM → Bifrost
+  - **Steps**:
+    1. Start Bifrost (Docker): `docker run -p 8080:8080 maximhq/bifrost`
+    2. Smoke test Bifrost: `curl -X POST http://localhost:8080/v1/chat/completions -H "Content-Type: application/json" -d '{"model":"openai/gpt-4o-mini","messages":[{"role":"user","content":"hi"}]}'`
+    3. Configure Bifrost provider to proxy to Lemonade (local): add a provider entry that forwards requests to `http://localhost:8000` and enable it via the Bifrost UI or config
+    4. Point Nextcloud (dev) at Bifrost: set OpenAI base_url → `http://localhost:8080/openai` and run `specs/006-nextcloud-litellm-infra/tests/dmz_smoke.sh`
+    5. Collect basic perf: P50/P95 latency for 10 requests; capture logs for routing and auth
+  - **Acceptance (Spike)**:
+    - Nextcloud dev e2e completes for 3 sample prompts via Bifrost
+    - Bifrost successfully proxies at least one model alias to Lemonade and returns coherent responses
+    - No blocking ACL/permissions or auth issues discovered
+    - Short report produced with recommended next steps and estimated effort for full migration
+  - **Estimate**: 0.5–1 day
+  - **Output**: `specs/006-nextcloud-litellm-infra/reports/bifrost-spike-YYYYMMDD.md`
+
+---
+
 ## PHASE 4: User Story 2 - Secure API Gateway Access (DMZ ↔ Internal)
 
 **Goal**: Deploy Apache reverse proxy in DMZ to securely forward public requests to internal LiteLLM, with TLS termination and security headers.
