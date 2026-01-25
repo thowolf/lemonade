@@ -35,6 +35,12 @@ $ServerUrl = "http://localhost:8000"
 $ServerPort = 8000
 $RepoRoot = (Get-Location).Path
 
+# Ensure logs directory exists early and start a transcript so the script output is captured
+$logDir = Join-Path $RepoRoot "logs"
+if (-not (Test-Path $logDir)) { New-Item -ItemType Directory -Path $logDir | Out-Null }
+$ScriptLog = Join-Path $logDir ("start-lemonade-{0}.log" -f (Get-Date -Format 'yyyyMMdd-HHmmss'))
+try { Start-Transcript -Path $ScriptLog -Force -ErrorAction SilentlyContinue } catch { Write-Host "[WARN] Start-Transcript failed: $($_.Exception.Message)" -ForegroundColor Yellow }
+
 # Color output helper
 function Write-ColorOutput {
     param([string]$Message, [string]$Color)
@@ -51,13 +57,11 @@ function Format-ContextSize {
 }
 
 # Model configuration
-# NOTE: default "quality" set should match `tools/benchmarks/start_quality_multiport.ps1` (4 models).
-# The quality set is: Qwen3-Next-80B, Qwen3-Coder-30B, Gemma-3-4b, Whisper-Large-v3-Turbo
 $ModelsToLoad = @(
     @{
         name = "Qwen3-Next-80B-A3B-Instruct-GGUF"
         alias = "qwen-80b"
-        enabled = $true      # enable the 80B quality model by default for the "quality" startup
+        enabled = $false
         size = "32 GB"
         context = 32768
         description = "Powerful 80B reasoning model"
@@ -97,7 +101,7 @@ $ModelsToLoad = @(
     @{
         name = "Phi-4-mini-instruct-GGUF"
         alias = "phi-4"
-        enabled = $false     # not part of the "quality" 4-model default
+        enabled = $true
         size = "4.2 GB"
         context = 16384
         description = "Latest Phi (Compact)"
@@ -519,5 +523,8 @@ try {
 } catch {
     Write-ColorOutput ""
     Write-ColorOutput "[ERROR] $($_.Exception.Message)" "Red"
+    try { Stop-Transcript -ErrorAction SilentlyContinue } catch {}
     exit 1
+} finally {
+    try { Stop-Transcript -ErrorAction SilentlyContinue } catch {}
 }
