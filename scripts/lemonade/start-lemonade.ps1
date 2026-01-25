@@ -316,11 +316,11 @@ function Unload-Models {
 
 try {
     Write-ColorOutput "=====================================================" "Cyan"
-    Write-ColorOutput "  LEMONADE SERVER STARTUP (Quality Config)" "Cyan"
+    Write-ColorOutput "  LEMONADE SERVER STARTUP" "Cyan"
     Write-ColorOutput "=====================================================" "Cyan"
     Write-ColorOutput ""
     
-    Write-ColorOutput "=== Lemonade Server Quality Config ===" "Green"
+    Write-ColorOutput "=== Lemonade Server ===" "Green"
     Write-ColorOutput "Script Version: $ScriptVersion" "Gray"
     Write-ColorOutput ""
     
