@@ -51,11 +51,13 @@ function Format-ContextSize {
 }
 
 # Model configuration
+# NOTE: default "quality" set should match `tools/benchmarks/start_quality_multiport.ps1` (4 models).
+# The quality set is: Qwen3-Next-80B, Qwen3-Coder-30B, Gemma-3-4b, Whisper-Large-v3-Turbo
 $ModelsToLoad = @(
     @{
         name = "Qwen3-Next-80B-A3B-Instruct-GGUF"
         alias = "qwen-80b"
-        enabled = $false
+        enabled = $true      # enable the 80B quality model by default for the "quality" startup
         size = "32 GB"
         context = 32768
         description = "Powerful 80B reasoning model"
@@ -95,7 +97,7 @@ $ModelsToLoad = @(
     @{
         name = "Phi-4-mini-instruct-GGUF"
         alias = "phi-4"
-        enabled = $true
+        enabled = $false     # not part of the "quality" 4-model default
         size = "4.2 GB"
         context = 16384
         description = "Latest Phi (Compact)"
