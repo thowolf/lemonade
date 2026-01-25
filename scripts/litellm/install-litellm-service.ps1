@@ -120,11 +120,38 @@ function Install-LiteLLM {
             }
         }
         Write-Status "LiteLLM installed" "SUCCESS"
+
+        # Ensure Prisma runtime is available for SQLite / migrations
+        try {
+            $pythonExeForInstall = (& $pythonPath -c "import sys; print(sys.executable)").Trim()
+            Write-Status "Ensuring 'prisma' package is installed in $pythonExeForInstall..." "INFO"
+            & $pythonExeForInstall -m pip install prisma 2>&1 | ForEach-Object { Write-Status "$_" "INFO" }
+            $prismaCheck = & $pythonExeForInstall -c "import prisma, sys; print(getattr(prisma, '__version__', 'unknown'))" 2>&1
+            if ($LASTEXITCODE -eq 0) { Write-Status "prisma installed: $prismaCheck" "SUCCESS" } else { Write-Status "prisma install/verification produced: $prismaCheck" "WARNING" }
+        }
+        catch {
+            Write-Status "Automatic prisma install failed: $_" "WARNING"
+        }
     }
     catch {
         Write-Status "Failed to install LiteLLM: $_" "ERROR"
         throw
     }
+}
+
+function Test-PrismaInstalled {
+    param([string]$PythonCmd = "python")
+    try {
+        $ver = & $PythonCmd -c "import prisma; print(prisma.__version__)" 2>&1
+        if ($LASTEXITCODE -eq 0) {
+            Write-Status "prisma available: $ver" "SUCCESS"
+            return $true
+        }
+    }
+    catch {
+        Write-Status "prisma not found in $PythonCmd" "WARNING"
+    }
+    return $false
 }
 
 function Generate-MasterKey {
@@ -148,7 +175,39 @@ function Setup-Service {
     # Environment for service
     $env:PYTHONIOENCODING = "utf-8"
     $env:LITELLM_MASTER_KEY = $masterKey
-    
+
+    # If a DATABASE_URL is provided but prisma isn't installed in the service Python,
+    # clear DATABASE_URL so the service can still start (UI/API read-only) and
+    # surface an actionable warning to the operator.
+    $pythonExe = (& $pythonPath -c "import sys; print(sys.executable)").Trim()
+
+    $hasDatabaseUrl = $false
+    if ($env:DATABASE_URL) { $hasDatabaseUrl = $true }
+    else {
+        $envFile = Join-Path $PSScriptRoot ".env"
+        if (Test-Path $envFile) {
+            $content = Get-Content $envFile -Raw -ErrorAction SilentlyContinue
+            if ($content -match 'DATABASE_URL\s*=\s*.+') { $hasDatabaseUrl = $true }
+        }
+    }
+
+    if ($hasDatabaseUrl) {
+        if (-not (Test-PrismaInstalled -PythonCmd $pythonExe)) {
+            Write-Status "DATABASE_URL set but 'prisma' not found in $pythonExe. Clearing DATABASE_URL so service can start without DB (migrations skipped)." "WARNING"
+            # Ensure NSSM won't inject DATABASE_URL (service-level fallback)
+            & $script:nssmExecutable set $serviceName AppEnvironmentExtra "DATABASE_URL="
+            # Also unset in the current process to avoid startup attempt
+            Remove-Item Env:DATABASE_URL -ErrorAction SilentlyContinue
+            $script:prismaAvailable = $false
+        }
+        else {
+            $script:prismaAvailable = $true
+        }
+    }
+    else {
+        $script:prismaAvailable = $false
+    }
+
     # Check if service exists
     if (Get-Service -Name $serviceName -ErrorAction SilentlyContinue) {
         Write-Status "Service already exists. Removing..." "WARNING"
@@ -158,18 +217,27 @@ function Setup-Service {
     }
     
     # Create service command
-    # Use wrapper batch to fix UTF-8 encoding issues on Windows
+    # Prefer running under the detected python to avoid PATH mismatch (ensures prisma is available).
     $wrapperBat = Join-Path $PSScriptRoot "litellm-start.bat"
-    
-    Write-Status "Creating service with NSSM..."
-    & $script:nssmExecutable install $serviceName "$wrapperBat"
-    
-    # Fix: Set Application and AppParameters separately for proper parsing
-    & $script:nssmExecutable set $serviceName Application "$wrapperBat"
-    
+
+    $pythonExePath = $pythonExe
+    if ((Test-Path $pythonExePath) -and (Test-PrismaInstalled -PythonCmd $pythonExePath)) {
+        $appCmd = $pythonExePath
+        $appParams = "-m litellm --config `"$configFullPath`" --port $Port"
+        Write-Status "Creating service with NSSM (Application: $appCmd $appParams)" "INFO"
+        & $script:nssmExecutable install $serviceName $appCmd $appParams
+        & $script:nssmExecutable set $serviceName Application $appCmd
+        & $script:nssmExecutable set $serviceName AppParameters $appParams
+    }
+    else {
+        Write-Status "Falling back to wrapper batch for service startup (will rely on PATH)" "WARNING"
+        & $script:nssmExecutable install $serviceName "$wrapperBat"
+        & $script:nssmExecutable set $serviceName Application "$wrapperBat"
+    }
+
     & $script:nssmExecutable set $serviceName DisplayName "$serviceDisplayName"
     & $script:nssmExecutable set $serviceName Description "LiteLLM API Proxy - Routes requests to Lemonade Server"
-    
+
     # Set startup type
     & $script:nssmExecutable set $serviceName Start SERVICE_AUTO_START
     
@@ -328,6 +396,8 @@ try {
             Write-Status "TROUBLESHOOTING:" "INFO"
             Write-Status "  Service not starting? Check logs:" "INFO"
             Write-Status "    Get-Content .\scripts\litellm\logs\litellm-error.log -Tail 50" "INFO"
+            Write-Status "  If migrations fail with 'prisma package not found', install prisma into the service Python:" "INFO"
+            Write-Status "    C:\\Path\\To\\python.exe -m pip install prisma" "INFO"
             Write-Status "  Is Lemonade Server running?" "INFO"
             Write-Status "    curl http://localhost:8000/api/v1/models" "INFO"
             Write-Status "  Test models endpoint:" "INFO"

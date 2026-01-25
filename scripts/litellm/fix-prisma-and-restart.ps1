@@ -72,7 +72,8 @@ function Get-ServicePython() {
         if ($app -match '\.bat$' -and (Test-Path $app)) {
             # inspect wrapper for an explicit python path
             $txt = Get-Content $app -Raw -ErrorAction SilentlyContinue
-            if ($txt -match "C:\\\\[^\s\\\"']+python\.exe") { return $matches[0] }
+            # capture a Windows-style python.exe path (e.g. C:\Users\...\python.exe)
+            if ($txt -match '([A-Za-z]:\\\S+python\.exe)') { return $matches[1] }
         }
 
         # fallback: if AppDirectory looks like a conda prefix, use its python
@@ -146,5 +147,5 @@ Start-Sleep -Seconds 2
 
 if (-not (Test-Path $logPath)) { Write-Warn "Log file not found: $logPath"; exit 0 }
 
-Write-Note "Tailing log ($TailLines) lines. Press Ctrl+C to stop."
+Write-Note ("Tailing log (" + $TailLines + ") lines. Press Ctrl+C to stop.")
 Get-Content $logPath -Tail $TailLines -Wait | Select-String -Pattern 'alembic|Running upgrade|prisma|Connected to DB|Unable to connect to DB' | ForEach-Object { Write-Host $_ }

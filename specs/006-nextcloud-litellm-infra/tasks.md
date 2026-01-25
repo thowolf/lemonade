@@ -248,6 +248,7 @@ Phase 5 (Extended Features)
     - Short report produced with recommended next steps and estimated effort for full migration
   - **Estimate**: 0.5–1 day
   - **Output**: `specs/006-nextcloud-litellm-infra/reports/bifrost-spike-YYYYMMDD.md`
+  - **Status (2026-01-24)**: Partial — Bifrost container runs locally and Lemonade is healthy; provider not yet created via API (UI or correct API payload required). See `reports/bifrost-spike-2026-01-24.md` for full logs and next steps.
 
 ---
 
