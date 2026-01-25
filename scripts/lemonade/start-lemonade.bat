@@ -9,9 +9,7 @@ setlocal enabledelayedexpansion
 cd /d "%~dp0..\.."
 echo Current directory: %CD%
 echo.
-echo ====================================================
-echo   LEMONADE SERVER STARTUP (Quality Config)
-echo ====================================================
+echo Starting Lemonade (delegating to PowerShell script)...
 echo.
 
 REM Start PowerShell script

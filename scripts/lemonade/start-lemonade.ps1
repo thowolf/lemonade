@@ -437,20 +437,27 @@ try {
     # Step 3: Load models based on configuration
     $currentHealth = Get-HealthStatus
     $modelsCurrentlyLoaded = @($currentHealth.all_models_loaded).Count
+    $expectedEnabled = ($ModelsToLoad | Where-Object { $_.enabled -eq $true }).Count
     $shouldLoadModels = $false
-    
+
+    # Decide to (re)load models when server not running, when forced, or when the number
+    # of loaded models is less than the configured enabled set (recover partial state).
     if (-not $wasAlreadyRunning -or $Force -or $forceModelReload) {
         $shouldLoadModels = $true
     } elseif ($modelsCurrentlyLoaded -eq 0) {
         $shouldLoadModels = $true
         Write-ColorOutput "[INFO] No models currently loaded, loading configured models..." "Yellow"
+    } elseif ($modelsCurrentlyLoaded -lt $expectedEnabled) {
+        # NEW: attempt to load missing models even if the server is already running
+        Write-ColorOutput "[WARN] Partial model state detected: $modelsCurrentlyLoaded of $expectedEnabled configured models are loaded. Attempting to load missing models..." "Yellow"
+        $shouldLoadModels = $true
     }
-    
+
     if ($shouldLoadModels) {
         Check-NPUExclusivity
-        
+
         $modelsToLoadList = @($ModelsToLoad | Where-Object { $_.enabled -eq $true })
-        
+
         if ($modelsToLoadList.Count -eq 0) {
             Write-ColorOutput "[3/4] No models enabled for loading" "Yellow"
         } else {
@@ -459,7 +466,7 @@ try {
                 Write-ColorOutput "[WARN] Some models failed to load (they may still load in background)" "Yellow"
             }
         }
-        
+
         Unload-Models
     } else {
         Write-ColorOutput "[3/4] Server already running with models loaded - skipping model reload" "Yellow"
