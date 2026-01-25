@@ -56,57 +56,77 @@ function Format-ContextSize {
     return $Size
 }
 
-# Model configuration
-$ModelsToLoad = @(
-    @{
-        name = "Qwen3-Next-80B-A3B-Instruct-GGUF"
-        alias = "qwen-80b"
-        enabled = $false
-        size = "32 GB"
-        context = 32768
-        description = "Powerful 80B reasoning model"
-    },
-    @{
-        name = "Qwen3-Coder-30B-A3B-Instruct-GGUF"
-        alias = "qwen-coder-30b"
-        enabled = $true
-        size = "18.6 GB"
-        context = 32768
-        description = "Coding/Tools"
-    },
-    @{
-        name = "Gemma-3-4b-it-GGUF"
-        alias = "gemma-3-4b"
-        enabled = $true
-        size = "3.6 GB"
-        context = 16384
-        description = "Fast Responses"
-    },
-    @{
-        name = "Whisper-Large-v3-Turbo"
-        alias = "whisper"
-        enabled = $true
-        size = "1.55 GB"
-        context = 8192
-        description = "Audio Transcription"
-    },
-    @{
-        name = "Phi-3-Mini-Instruct-Hybrid"
-        alias = "phi-3-mini"
-        enabled = $false
-        size = "2.8 GB"
-        context = 8192
-        description = "Lightweight Phi"
-    },
-    @{
-        name = "Phi-4-mini-instruct-GGUF"
-        alias = "phi-4"
-        enabled = $true
-        size = "4.2 GB"
-        context = 16384
-        description = "Latest Phi (Compact)"
-    }
+# Model configuration (initialized from Lemonade catalog - source of truth)
+# Behavior:
+# - Attempt to initialize $ModelsToLoad from GET /api/v1/models?show_all=true
+# - Preserve a small repo-managed default enabled list (quality defaults)
+# - Fall back to an embedded static list if the catalog cannot be fetched
+
+$DefaultEnabledIds = @(
+    'Qwen3-Next-80B-A3B-Instruct-GGUF',
+    'Qwen3-Coder-30B-A3B-Instruct-GGUF',
+    'Gemma-3-4b-it-GGUF',
+    'Whisper-Large-v3-Turbo'
 )
+
+function Get-ModelsFromCatalog {
+    param([string]$ServerUrl)
+    try {
+        $resp = Invoke-RestMethod -Uri "$ServerUrl/api/v1/models?show_all=true" -TimeoutSec 10 -ErrorAction Stop
+        if (-not $resp.data) { return $null }
+        return $resp.data | ForEach-Object {
+            [pscustomobject]@{
+                id         = $_.id
+                created    = $_.created
+                object     = $_.object
+                owned_by   = $_.owned_by
+                checkpoint = $_.checkpoint
+                recipe     = $_.recipe
+                size       = $_.size
+                downloaded = $_.downloaded
+                suggested  = $_.suggested
+                labels     = @($_.labels) -as [string[]]
+                description= ($_.description -or $_.checkpoint)
+                context    = ($_.recipe_options.ctx_size -or 0)
+                alias      = ($_.id -replace '[^a-z0-9\-]','-' -replace '--','-').ToLower()
+            }
+        }
+    } catch {
+        return $null
+    }
+}
+
+$ModelsToLoad = @()
+$catalog = Get-ModelsFromCatalog -ServerUrl $ServerUrl
+if ($catalog) {
+    Write-ColorOutput "  Initialized model catalog from Lemonade server (source-of-truth)" "Gray"
+    foreach ($m in $catalog) {
+        $mps = @{
+            name        = $m.id
+            alias       = $m.alias
+            enabled     = ($DefaultEnabledIds -contains $m.id)
+            size        = ($m.size -as [string])
+            context     = ($m.context -as [int])
+            description = $m.description
+            checkpoint  = $m.checkpoint
+            recipe      = $m.recipe
+            downloaded  = $m.downloaded
+            suggested   = $m.suggested
+            labels      = $m.labels
+        }
+        $ModelsToLoad += $mps
+    }
+} else {
+    Write-ColorOutput "  WARNING: could not fetch model catalog from server — falling back to embedded defaults" "Yellow"
+    # fallback static minimal list (kept for offline/dev scenarios)
+    $ModelsToLoad = @(
+        @{ name = 'Qwen3-Coder-30B-A3B-Instruct-GGUF'; alias='qwen-coder-30b'; enabled=$true;  context=32768; description='Coding/Tools' },
+        @{ name = 'Gemma-3-4b-it-GGUF';                    alias='gemma-3-4b';    enabled=$true;  context=16384; description='Fast Responses' },
+        @{ name = 'Whisper-Large-v3-Turbo';               alias='whisper';       enabled=$true;  context=8192;  description='Audio Transcription' },
+        @{ name = 'Phi-4-mini-instruct-GGUF';              alias='phi-4';         enabled=$false; context=16384; description='Latest Phi (Compact)' }
+    )
+}
+
 
 # Update enabled models based on LoadModels parameter
 if ($LoadModels) {
@@ -199,90 +219,67 @@ function Wait-ServerReady {
 
 function Load-Models {
     Write-ColorOutput "[3/4] Loading enabled models with context sizes..." "Cyan"
-
+    
     $modelsToLoadList = @($ModelsToLoad | Where-Object { $_.enabled -eq $true })
-
+    
     if ($modelsToLoadList.Count -eq 0) {
         Write-ColorOutput "  No models enabled for loading" "Yellow"
         return $true
     }
-
+    
     $successCount = 0
     $failCount = 0
-
+    
     foreach ($model in $modelsToLoadList) {
         try {
             Write-Host "  Loading $($model.name) (ctx: $($model.context))..." -NoNewline -ForegroundColor Cyan
-
-            # 1) Request load via the dedicated load endpoint (idempotent)
-            $loadBody = @{ model_name = $model.name; ctx_size = [int]$model.context } | ConvertTo-Json
-            try {
-                Invoke-RestMethod -Method Post -Uri "$ServerUrl/api/v1/load" -Headers @{ 'Content-Type' = 'application/json' } -Body $loadBody -TimeoutSec 900 -ErrorAction Stop
-            } catch {
-                # If the load endpoint returns an error, continue to poll the registry below —
-                # some backends may already be loading the model asynchronously.
-                Write-Host " [load-request issued]" -ForegroundColor Yellow -NoNewline
-            }
-
-            # 2) Poll registry until the model appears as loaded (or timeout)
+            
+            $payload = @{
+                model = $model.name
+                messages = @(@{ role = "user"; content = "init" })
+                max_tokens = 10
+            } | ConvertTo-Json -Depth 3
+            
             $loaded = $false
-            $waitSec = 0
-            $maxWait = 240   # total wait for registry (seconds)
-            $pollInterval = 3
-            while ($waitSec -lt $maxWait) {
+            $maxAttempts = 4
+            for ($attempt = 1; $attempt -le $maxAttempts; $attempt++) {
                 try {
-                    $modelsResp = Invoke-RestMethod -Uri "$ServerUrl/api/v1/models" -TimeoutSec 10 -ErrorAction Stop
-                    $entry = $modelsResp.data | Where-Object { $_.id -eq $model.name -or $_.model_name -eq $model.name }
-                    if ($entry -and $entry.loaded) {
-                        $loaded = $true
-                        break
-                    }
-                } catch {
-                    # ignore transient registry read errors and retry
-                }
-                Start-Sleep -Seconds $pollInterval
-                $waitSec += $pollInterval
-            }
+                    $attemptTimeout = 40
+                    $response = Invoke-RestMethod `
+                        -Method Post `
+                        -Uri "$ServerUrl/api/v1/chat/completions" `
+                        -Headers @{ "Content-Type" = "application/json" } `
+                        -Body $payload `
+                        -TimeoutSec $attemptTimeout `
+                        -ErrorAction Stop
 
+                    Write-Host " [OK]" -ForegroundColor Green
+                    $successCount++
+                    $loaded = $true
+                    break
+                } catch {
+                    if ($attempt -lt $maxAttempts) {
+                        Write-Host " [retry $attempt]" -ForegroundColor Yellow -NoNewline
+                        Start-Sleep -Seconds 5
+                    }
+                }
+            }
             if (-not $loaded) {
                 Write-Host " [FAIL]" -ForegroundColor Red
-                Write-ColorOutput "    Error: model did not register as loaded within ${maxWait}s" "Red"
+                Write-ColorOutput "    Error: $($_.Exception.Message)" "Red"
                 $failCount++
-                continue
             }
-
-            # 3) Warm-up probe depending on model kind (non-LLM models use appropriate endpoint)
-            $isLLM = ($model.name -match 'Qwen|Phi|Gemma|Llama|OPT|Mistral')
-            $isAudio = ($model.name -match 'Whisper|whisper')
-
-            if ($isLLM) {
-                try {
-                    $probe = @{ model = $model.name; messages = @(@{ role = 'user'; content = 'init' }); max_tokens = 8 } | ConvertTo-Json
-                    Invoke-RestMethod -Method Post -Uri "$ServerUrl/api/v1/chat/completions" -Headers @{ 'Content-Type' = 'application/json' } -Body $probe -TimeoutSec 30 -ErrorAction Stop
-                } catch {
-                    Write-ColorOutput "    Warm-up probe failed for LLM (non-fatal): $($_.Exception.Message)" "Yellow"
-                }
-            } elseif ($isAudio) {
-                # skip chat probe for audio models; optionally probe transcription endpoint with tiny sample
-                Write-Host " [audio]" -ForegroundColor Green -NoNewline
-            } else {
-                # generic: skip warm-up or use a health probe if available
-                Write-Host " [probe-skip]" -ForegroundColor Green -NoNewline
-            }
-
-            Write-Host " [OK]" -ForegroundColor Green
-            $successCount++
         } catch {
             Write-Host " [FAIL]" -ForegroundColor Red
             Write-ColorOutput "    Error: $($_.Exception.Message)" "Red"
             $failCount++
         }
     }
-
+    
     Write-ColorOutput ""
     Write-ColorOutput "Model loading summary: $successCount loaded, $failCount failed" `
         $(if ($failCount -gt 0) { "Red" } else { "Green" })
-
+    
     return $failCount -eq 0
 }
 
