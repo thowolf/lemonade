@@ -182,6 +182,11 @@ Deployment-Lösung zum Ausführen mehrerer Lemonade Server Instanzen auf verschi
   - Verlinke neue Scripts aus Hauptdokumentation
   - Füge FAQ-Einträge hinzu für häufige Fragen
 
+- [ ] T020 Add parser-based startup-script validation and CI smoke-test
+  - Create `tests/verify_start_lemonade_syntax.ps1` to run `Parser]::ParseFile()` and fail on syntax errors
+  - Add CI job (or Azure/gha check) that runs the PowerShell parse check on PRs affecting `scripts/**/*.ps1` or `docs/**/*.ps1`
+  - **Acceptance**: `pwsh -NoProfile -File tests/verify_start_lemonade_syntax.ps1` returns exit code 0 on main branch; PRs that introduce parse errors fail the job
+
 ## Dependencies (Story Completion Order)
 
 ```

@@ -10,6 +10,7 @@
 - [x] Focused on user value and business needs
 - [x] Written for non-technical stakeholders
 - [x] All mandatory sections completed
+- [x] Startup scripts (PowerShell/Bash) include parser-based smoke-tests and are validated by CI (e.g. `pwsh` ParseFile check)
 
 ## Requirement Completeness
 

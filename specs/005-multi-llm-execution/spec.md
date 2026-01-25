@@ -112,6 +112,7 @@ Nutzer möchten sehen, welche Server-Instanzen laufen, welche Modelle geladen si
 - **FR-010**: System MUSS klare Fehlermeldungen bei Port-Konflikten oder Startfehlern liefern
 - **FR-011**: Jede Server-Instanz MUSS ihre eigene Backend-Konfiguration haben können (llamacpp backend, ctx-size, etc.)
 - **FR-012**: System MUSS mit unzureichendem Speicher umgehen können (graceful degradation)
+- **FR-013**: Startup- und Betriebs-Skripte (PowerShell/Bash) MÜSSEN syntaktisch gültig sein und eine parser-basierte Smoke-Test-Abdeckung haben (z. B. `pwsh` Parse-Check in CI).
 
 ### Key Entities
 
@@ -129,3 +130,4 @@ Nutzer möchten sehen, welche Server-Instanzen laufen, welche Modelle geladen si
 - **SC-004**: Port-Konflikte werden zu 100% erkannt bevor Server startet
 - **SC-005**: Server-Instanzen können in unter 5 Sekunden gestartet werden (nach Modell-Ladezeit)
 - **SC-006**: System-Ressourcennutzung (CPU, RAM) ist bei mehreren Instanzen vorhersehbar
+- **SC-007**: PowerShell/Bash startup-scripts parsen fehlerfrei mit parser-basiertem Smoke-Test (`pwsh` ParseFile check) und sind in CI abgesichert
