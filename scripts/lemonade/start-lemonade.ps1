@@ -427,7 +427,7 @@ try {
             "--port", $ServerPort,
             "--max-loaded-models", "4", "1", "1", "1",
             "--log-level", "error",
-            "--llamacpp-args", "`"--flash-attn on`""
+            "--llamacpp-args", "--flash-attn on"
         )
         
         $logDir = Join-Path $RepoRoot "logs"
@@ -544,7 +544,7 @@ try {
     Write-ColorOutput "  .\start-lemonade.ps1                                      # Load default enabled models" "Gray"
     Write-ColorOutput "  .\start-lemonade.ps1 -LoadModels 'qwen-coder-30b'         # Load by alias" "Gray"
     Write-ColorOutput "  .\start-lemonade.ps1 -LoadModels 'phi-3-mini','phi-4'     # Load multiple by alias" "Gray"
-    Write-ColorOutput "  .\start-lemonade.ps1 -LoadModels 'Qwen3-Coder-30B-A3B-Instruct-GGUF' -Force  # Full name + restart" "Gray"
+    Write-ColorOutput '  .\start-lemonade.ps1 -LoadModels "Qwen3-Coder-30B-A3B-Instruct-GGUF" -Force  # Full name + restart' "Gray"
     Write-ColorOutput ""
     
 } catch {
