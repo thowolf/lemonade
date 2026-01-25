@@ -163,8 +163,31 @@ lemonade-server pull GLM-4.7-Flash-GGUF
 
 </details>
 
+#### Quick: enable GLM‑4.7 (repo default: disabled)
+
+- Pull + load (curl):
+
+```bash
+curl -sSf -X POST http://localhost:8000/api/v1/pull -H 'Content-Type: application/json' -d '{"model_name":"GLM-4.7-Flash-GGUF"}'
+curl -sSf -X POST http://localhost:8000/api/v1/load -H 'Content-Type: application/json' -d '{"model_name":"GLM-4.7-GGUF"}'
+```
+
+- PowerShell one-liner:
+
+```powershell
+Invoke-RestMethod -Uri http://localhost:8000/api/v1/pull -Method Post -Body (@{ model_name='GLM-4.7-Flash-GGUF' } | ConvertTo-Json)
+```
+
+- To start Lemonade once with the model enabled:
+
+```powershell
+.\scripts\lemonade\start-lemonade.ps1 -LoadModels 'glm-4.7' -Force
+```
+
+> If the model doesn't appear in `GET /api/v1/models?show_all=true`, pull it first.
+
 <details>
-<summary>Gemma3-4b-it-FLM</summary>
+<summary>Gemma3-4b-it-FLM</summary> 
 
 ```bash
 lemonade-server pull Gemma3-4b-it-FLM
@@ -879,6 +902,29 @@ lemonade-server pull GLM-4.7-Flash-GGUF
 </table>
 
 </details>
+
+#### Quick: enable GLM‑4.7 (repo default: disabled)
+
+- Pull + load (curl):
+
+```bash
+curl -sSf -X POST http://localhost:8000/api/v1/pull -H 'Content-Type: application/json' -d '{"model_name":"GLM-4.7-Flash-GGUF"}'
+curl -sSf -X POST http://localhost:8000/api/v1/load -H 'Content-Type: application/json' -d '{"model_name":"GLM-4.7-GGUF"}'
+```
+
+- PowerShell one-liner:
+
+```powershell
+Invoke-RestMethod -Uri http://localhost:8000/api/v1/pull -Method Post -Body (@{ model_name='GLM-4.7-Flash-GGUF' } | ConvertTo-Json)
+```
+
+- To start Lemonade once with the model enabled:
+
+```powershell
+.\scripts\lemonade\start-lemonade.ps1 -LoadModels 'glm-4.7' -Force
+```
+
+> If the model doesn't appear in `GET /api/v1/models?show_all=true`, pull it first.
 
 <details>
 <summary>granite-4.0-h-tiny-GGUF</summary>
