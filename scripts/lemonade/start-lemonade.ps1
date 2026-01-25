@@ -199,67 +199,90 @@ function Wait-ServerReady {
 
 function Load-Models {
     Write-ColorOutput "[3/4] Loading enabled models with context sizes..." "Cyan"
-    
+
     $modelsToLoadList = @($ModelsToLoad | Where-Object { $_.enabled -eq $true })
-    
+
     if ($modelsToLoadList.Count -eq 0) {
         Write-ColorOutput "  No models enabled for loading" "Yellow"
         return $true
     }
-    
+
     $successCount = 0
     $failCount = 0
-    
+
     foreach ($model in $modelsToLoadList) {
         try {
             Write-Host "  Loading $($model.name) (ctx: $($model.context))..." -NoNewline -ForegroundColor Cyan
-            
-            $payload = @{
-                model = $model.name
-                messages = @(@{ role = "user"; content = "init" })
-                max_tokens = 10
-            } | ConvertTo-Json -Depth 3
-            
-            $loaded = $false
-            $maxAttempts = 4
-            for ($attempt = 1; $attempt -le $maxAttempts; $attempt++) {
-                try {
-                    $attemptTimeout = 40
-                    $response = Invoke-RestMethod `
-                        -Method Post `
-                        -Uri "$ServerUrl/api/v1/chat/completions" `
-                        -Headers @{ "Content-Type" = "application/json" } `
-                        -Body $payload `
-                        -TimeoutSec $attemptTimeout `
-                        -ErrorAction Stop
 
-                    Write-Host " [OK]" -ForegroundColor Green
-                    $successCount++
-                    $loaded = $true
-                    break
-                } catch {
-                    if ($attempt -lt $maxAttempts) {
-                        Write-Host " [retry $attempt]" -ForegroundColor Yellow -NoNewline
-                        Start-Sleep -Seconds 5
-                    }
-                }
+            # 1) Request load via the dedicated load endpoint (idempotent)
+            $loadBody = @{ model_name = $model.name; ctx_size = [int]$model.context } | ConvertTo-Json
+            try {
+                Invoke-RestMethod -Method Post -Uri "$ServerUrl/api/v1/load" -Headers @{ 'Content-Type' = 'application/json' } -Body $loadBody -TimeoutSec 900 -ErrorAction Stop
+            } catch {
+                # If the load endpoint returns an error, continue to poll the registry below —
+                # some backends may already be loading the model asynchronously.
+                Write-Host " [load-request issued]" -ForegroundColor Yellow -NoNewline
             }
+
+            # 2) Poll registry until the model appears as loaded (or timeout)
+            $loaded = $false
+            $waitSec = 0
+            $maxWait = 240   # total wait for registry (seconds)
+            $pollInterval = 3
+            while ($waitSec -lt $maxWait) {
+                try {
+                    $modelsResp = Invoke-RestMethod -Uri "$ServerUrl/api/v1/models" -TimeoutSec 10 -ErrorAction Stop
+                    $entry = $modelsResp.data | Where-Object { $_.id -eq $model.name -or $_.model_name -eq $model.name }
+                    if ($entry -and $entry.loaded) {
+                        $loaded = $true
+                        break
+                    }
+                } catch {
+                    # ignore transient registry read errors and retry
+                }
+                Start-Sleep -Seconds $pollInterval
+                $waitSec += $pollInterval
+            }
+
             if (-not $loaded) {
                 Write-Host " [FAIL]" -ForegroundColor Red
-                Write-ColorOutput "    Error: $($_.Exception.Message)" "Red"
+                Write-ColorOutput "    Error: model did not register as loaded within ${maxWait}s" "Red"
                 $failCount++
+                continue
             }
+
+            # 3) Warm-up probe depending on model kind (non-LLM models use appropriate endpoint)
+            $isLLM = ($model.name -match 'Qwen|Phi|Gemma|Llama|OPT|Mistral')
+            $isAudio = ($model.name -match 'Whisper|whisper')
+
+            if ($isLLM) {
+                try {
+                    $probe = @{ model = $model.name; messages = @(@{ role = 'user'; content = 'init' }); max_tokens = 8 } | ConvertTo-Json
+                    Invoke-RestMethod -Method Post -Uri "$ServerUrl/api/v1/chat/completions" -Headers @{ 'Content-Type' = 'application/json' } -Body $probe -TimeoutSec 30 -ErrorAction Stop
+                } catch {
+                    Write-ColorOutput "    Warm-up probe failed for LLM (non-fatal): $($_.Exception.Message)" "Yellow"
+                }
+            } elseif ($isAudio) {
+                # skip chat probe for audio models; optionally probe transcription endpoint with tiny sample
+                Write-Host " [audio]" -ForegroundColor Green -NoNewline
+            } else {
+                # generic: skip warm-up or use a health probe if available
+                Write-Host " [probe-skip]" -ForegroundColor Green -NoNewline
+            }
+
+            Write-Host " [OK]" -ForegroundColor Green
+            $successCount++
         } catch {
             Write-Host " [FAIL]" -ForegroundColor Red
             Write-ColorOutput "    Error: $($_.Exception.Message)" "Red"
             $failCount++
         }
     }
-    
+
     Write-ColorOutput ""
     Write-ColorOutput "Model loading summary: $successCount loaded, $failCount failed" `
         $(if ($failCount -gt 0) { "Red" } else { "Green" })
-    
+
     return $failCount -eq 0
 }
 
