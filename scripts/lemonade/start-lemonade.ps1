@@ -427,7 +427,7 @@ try {
             "--port", $ServerPort,
             "--max-loaded-models", "4", "1", "1", "1",
             "--log-level", "error",
-            "--llamacpp-args", "--flash-attn on"
+            "--llamacpp-args", "--flash-attn=on"
         )
         
         $logDir = Join-Path $RepoRoot "logs"
