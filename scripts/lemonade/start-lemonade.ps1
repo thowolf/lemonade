@@ -63,7 +63,6 @@ function Format-ContextSize {
 # - Fall back to an embedded static list if the catalog cannot be fetched
 
 $DefaultEnabledIds = @(
-    'Qwen3-Next-80B-A3B-Instruct-GGUF',
     'Qwen3-Coder-30B-A3B-Instruct-GGUF',
     'Gemma-3-4b-it-GGUF',
     'Whisper-Large-v3-Turbo'
@@ -120,10 +119,11 @@ if ($catalog) {
     Write-ColorOutput "  WARNING: could not fetch model catalog from server — falling back to embedded defaults" "Yellow"
     # fallback static minimal list (kept for offline/dev scenarios)
     $ModelsToLoad = @(
-        @{ name = 'Qwen3-Coder-30B-A3B-Instruct-GGUF'; alias='qwen-coder-30b'; enabled=$true;  context=32768; description='Coding/Tools' },
+        @{ name = 'Qwen3-Coder-30B-A3B-Instruct-GGUF'; alias='qwen-coder-30b'; enabled=$false;  context=32768; description='Coding/Tools' },
         @{ name = 'Gemma-3-4b-it-GGUF';                    alias='gemma-3-4b';    enabled=$true;  context=16384; description='Fast Responses' },
         @{ name = 'Whisper-Large-v3-Turbo';               alias='whisper';       enabled=$true;  context=8192;  description='Audio Transcription' },
-        @{ name = 'Phi-4-mini-instruct-GGUF';              alias='phi-4';         enabled=$false; context=16384; description='Latest Phi (Compact)' }
+        @{ name = 'Phi-4-mini-instruct-GGUF';              alias='phi-4';         enabled=$true; context=16384; description='Latest Phi (Compact)' },
+        @{ name = 'GLM-4.7-GGUF';                         alias='glm-4.7';       enabled=$false; context=8192;  description='GLM 4.7 — compact instruction model (add to catalog when available)' }
     )
 }
 
@@ -544,7 +544,7 @@ try {
     Write-ColorOutput "  .\start-lemonade.ps1                                      # Load default enabled models" "Gray"
     Write-ColorOutput "  .\start-lemonade.ps1 -LoadModels 'qwen-coder-30b'         # Load by alias" "Gray"
     Write-ColorOutput "  .\start-lemonade.ps1 -LoadModels 'phi-3-mini','phi-4'     # Load multiple by alias" "Gray"
-    Write-ColorOutput "  .\start-lemonade.ps1 -LoadModels 'Qwen3-Next-80B-A3B-Instruct-GGUF' -Force  # Full name + restart" "Gray"
+    Write-ColorOutput "  .\start-lemonade.ps1 -LoadModels 'Qwen3-Coder-30B-A3B-Instruct-GGUF' -Force  # Full name + restart" "Gray"
     Write-ColorOutput ""
     
 } catch {
